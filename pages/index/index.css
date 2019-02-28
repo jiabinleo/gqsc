@@ -1,0 +1,53 @@
+/**index.wxss**/
+.page-section {
+  width: 100%;
+}
+.page-section_center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.page-section:last-child {
+  margin-bottom: 0;
+}
+.page-section-gap {
+  box-sizing: border-box;
+}
+.page-section-spacing {
+  box-sizing: border-box;
+}
+.page-section-spacing image {
+  width: 100%;
+}
+/*导航*/
+.nav view {
+  display: inline-block;
+  width: 50%;
+  border-radius: 0;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 82rpx;
+}
+.select {
+  width: 100%;
+}
+.select view {
+  display: inline-block;
+  width: 33.3%;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 82rpx;
+}
+.navA {
+  background: #c6c6c6;
+  color: #eeeeee;
+}
+.section scroll-view {
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+  font-size: 24rpx;
+}
+.section scroll-view view {
+  line-height: 50rpx;
+}

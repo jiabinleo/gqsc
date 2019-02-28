@@ -1,0 +1,63 @@
+<!--index.wxml-->
+<view class="container">
+
+  <view>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取权限页面要怎么做呢？？？</button>
+    <block wx:else>
+      <view class="page-section page-section-spacing swiper">
+        <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
+          <block wx:for="{{bannerList}}" wx:key="*this">
+            <swiper-item>
+              <view class="swiper-item">
+                <image src="{{imgUrl + item.bannerImg}}" mode="widthFix"></image>
+              </view>
+            </swiper-item>
+          </block>
+        </swiper>
+      </view>
+      <block>
+        <view class="nav">
+          <view class="{{navActive ? 'navA' : ''}}" bindtap="gongying">
+            供应
+          </view>
+          <view class="{{navActive ? '' : 'navA'}}" bindtap="qiugou">
+            求购
+          </view>
+        </view>
+      </block>
+      <block>
+        <view class="select">
+          <view class="nav1" bindtap="fenlei">选择分类</view>
+          <view class="nav1" bindtap="diqu">选择地区</view>
+          <view class="nav1" bindtap="paixu">排序方式</view>
+        </view>
+      </block>
+      <block>
+        <view class="section">
+          <scroll-view bindtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <block wx:for="{{treeOne}}" wx:key="*this">
+              <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+            </block>
+          </scroll-view>
+          <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <block wx:for="{{treeTwo}}" wx:key="*this">
+              <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+            </block>
+          </scroll-view>
+          <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+            <block wx:for="{{treeThree}}" wx:key="*this">
+              <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+            </block>
+          </scroll-view>
+        </view>
+      </block>
+      <!-- <view class="btn-area">
+        <button size="mini" bindtap="tap">click me to scroll into view</button>
+      </view> -->
+      <block wx:if="{{navActive}}">
+      </block>
+      <block wx:else>
+      </block>
+    </block>
+  </view>
+</view>
