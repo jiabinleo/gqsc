@@ -35,12 +35,15 @@
   display: inline-block;
   width: 33.3%;
   text-align: center;
-  font-size: 24rpx;
+  font-size: 28rpx;
   line-height: 82rpx;
 }
 .navA {
   background: #c6c6c6;
   color: #eeeeee;
+}
+.section {
+  overflow: hidden;
 }
 .section scroll-view {
   display: inline-block;
@@ -50,4 +53,65 @@
 }
 .section scroll-view view {
   line-height: 50rpx;
+}
+.newList {
+  padding: 0 35rpx;
+  margin-bottom: 50rpx;
+}
+.newList .userMsg {
+  overflow: hidden;
+}
+.newList .userMsg .userImg {
+  float: left;
+}
+.newList .userMsg .userImg image {
+  width: 56rpx;
+  height: 56rpx;
+}
+.newList .userMsg .username {
+  margin-top: -4rpx;
+  float: left;
+  margin-left: 16rpx;
+  width: 600rpx;
+}
+.newList .userMsg .username .name {
+  overflow: hidden;
+  font-size: 26rpx;
+}
+.newList .userMsg .username .name .namel {
+  float: left;
+}
+.newList .userMsg .username .name .time {
+  float: right;
+  font-size: 24rpx;
+  color: #999999;
+}
+.newList .userMsg .username .address {
+  margin-top: -18rpx;
+}
+.newList .userMsg .username .address text {
+  font-size: 16rpx;
+  background: #3fbef1;
+  color: #fff;
+  padding: 4rpx;
+  border-radius: 20rpx;
+}
+.newList .title {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 36rpx;
+}
+.newList .detail {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 36rpx;
+}
+.newList .imgFile {
+  margin-top: 35rpx;
+}
+.newList .imgFile image {
+  width: 220rpx;
+  height: 140rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
 }

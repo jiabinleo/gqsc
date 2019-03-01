@@ -1,0 +1,25 @@
+<view class="userMsg">
+  <view class="userImg">
+    <image src="{{marketSupply.icon}}" mode="widthFix"></image>
+  </view>
+  <view class="username">
+    <view class="name">
+      <view class="namel">{{marketSupply.userName?marketSupply.userName:'悦农通'}}</view>
+      <view class="time">{{marketSupply.publishTime}}</view>
+    </view>
+    <view class="address">
+      <text>{{marketSupply.area}}</text>
+    </view>
+  </view>
+</view>
+<view class="title">
+  <text>{{marketSupply.title}}</text>
+</view>
+<view class="detail">
+  <text>{{marketSupply.detail}}</text>
+</view>
+<view class="imgFile">
+  <block wx:for="{{marketSupply.fileList}}" wx:key="*this">
+    <image src="{{item}}" mode="aspectFill"></image>
+  </block>
+</view>

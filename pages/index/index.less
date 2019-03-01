@@ -40,12 +40,11 @@
 
 .select {
   width: 100%;
-
   view {
     display: inline-block;
     width: 33.3%;
     text-align: center;
-    font-size: 24rpx;
+    font-size: 28rpx;
     line-height: 82rpx;
   }
 }
@@ -56,13 +55,75 @@
 }
 
 .section {
+  overflow: hidden;
   scroll-view {
     display: inline-block;
     width: 33%;
     text-align: center;
     font-size: 24rpx;
-    view{
+    view {
       line-height: 50rpx;
+    }
+  }
+}
+.newList {
+  padding: 0 35rpx;
+  margin-bottom: 50rpx;
+  .userMsg {
+    overflow: hidden;
+    .userImg {
+      float: left;
+      image {
+        width: 56rpx;
+        height: 56rpx;
+      }
+    }
+    .username {
+      margin-top: -4rpx;
+      float: left;
+      margin-left: 16rpx;
+      width: 600rpx;
+      .name {
+        overflow: hidden;
+        font-size: 26rpx;
+        .namel {
+          float: left;
+        }
+        .time {
+          float: right;
+          font-size: 24rpx;
+          color: #999999;
+        }
+      }
+      .address {
+        margin-top: -18rpx;
+        text {
+          font-size: 16rpx;
+          background: #3fbef1;
+          color: #fff;
+          padding: 4rpx;
+          border-radius: 20rpx;
+        }
+      }
+    }
+  }
+  .title {
+    font-size: 24rpx;
+    color: #666666;
+    line-height: 36rpx;
+  }
+  .detail {
+    font-size: 24rpx;
+    color: #999999;
+    line-height: 36rpx;
+  }
+  .imgFile {
+    margin-top: 35rpx;
+    image {
+      width: 220rpx;
+      height: 140rpx;
+      margin-right: 10rpx;
+      margin-top: 10rpx;
     }
   }
 }

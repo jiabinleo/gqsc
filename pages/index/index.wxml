@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view id="j_page" class="container">
 
   <view>
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取权限页面要怎么做呢？？？</button>
@@ -33,18 +33,18 @@
         </view>
       </block>
       <block>
-        <view class="section">
-          <scroll-view bindtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <view class="section" style="height: {{viewHeight}}px;">
+          <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
             <block wx:for="{{treeOne}}" wx:key="*this">
               <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
             </block>
           </scroll-view>
-          <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+          <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
             <block wx:for="{{treeTwo}}" wx:key="*this">
-              <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+              <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
             </block>
           </scroll-view>
-          <scroll-view scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+          <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
             <block wx:for="{{treeThree}}" wx:key="*this">
               <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
             </block>
@@ -54,9 +54,39 @@
       <!-- <view class="btn-area">
         <button size="mini" bindtap="tap">click me to scroll into view</button>
       </view> -->
-      <block wx:if="{{navActive}}">
-      </block>
-      <block wx:else>
+      <block wx:for="{{newList}}" wx:key="*this">
+        <view class="newList">
+          <view catchtap="onTouch" data-id="{{item.id}}">
+            <view class="userMsg">
+              <view class="userImg">
+                <image src="{{item.icon}}" mode="widthFix"></image>
+              </view>
+              <view class="username">
+                <view class="name">
+                  <view class="namel">{{item.userName?item.userName:'悦农通'}}</view>
+                  <view class="time">{{item.publishTime}}</view>
+                </view>
+                <view class="address">
+                  <text>{{item.area}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="title">
+              <text>{{item.title}}</text>
+            </view>
+            <view class="detail">
+              <text>{{item.detail}}</text>
+            </view>
+            <view class="imgFile">
+              <block wx:for="{{item.fileList}}" wx:key="*this">
+                <image src="{{item}}" mode="aspectFill"></image>
+              </block>
+            </view>
+          </view>
+          <view>
+            电钻
+          </view>
+        </view>
       </block>
     </block>
   </view>
