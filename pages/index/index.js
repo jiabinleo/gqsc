@@ -28,8 +28,7 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [
-      {
+    getAllTreePaixu: [{
         text: "不限",
         id: ""
       },
@@ -292,30 +291,24 @@ Page({
       } else {
         console.log(this.data.treeTwo);
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: this.data.treeTwo[0].id
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: this.data.treeTwo[0].id
+          }]
         });
       }
     } else {
       this.setData({
-        treeTwo: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeTwo: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
       this.setData({
-        treeThree: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeThree: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
     }
   },
@@ -328,12 +321,10 @@ Page({
         });
       } else {
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: e.target.id.split("t")[1]
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: e.target.id.split("t")[1]
+          }]
         });
       }
     } else {
@@ -344,6 +335,7 @@ Page({
           px: false,
           viewHeight: 0
         });
+        this.data.pageData.pageNum = 1
         this.data.pageData.order = this.data.getAllTreePaixu[
           e.target.dataset.id
         ].id;
@@ -414,8 +406,7 @@ Page({
       },
       success: function(res) {
         wx.request({
-          url:
-            "http://120.78.209.238:50010/v1/area/getParentList?id=" +
+          url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
@@ -452,8 +443,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -498,8 +488,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -525,5 +514,11 @@ Page({
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
+  },
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh()
+    // this.onLoad()
+    console.log(this.data.pageData)
+    console.log('下拉刷新')
   }
 });
