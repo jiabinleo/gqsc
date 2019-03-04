@@ -28,8 +28,7 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [
-      {
+    getAllTreePaixu: [{
         text: "不限",
         id: ""
       },
@@ -65,12 +64,12 @@ Page({
     }
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  onLoad: function() {
+  onLoad: function () {
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
@@ -109,7 +108,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         _this.setData({
           bannerList: res.data.data.bannerList
         });
@@ -121,7 +120,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeFenlei: res.data.data.trees
@@ -135,7 +134,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeDiqu: res.data.data.trees
@@ -147,7 +146,7 @@ Page({
     this.loadInfo();
   },
   //nav
-  gongying: function() {
+  gongying: function () {
     this.setData({
       navActive: true,
       fl: false,
@@ -159,7 +158,7 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function() {
+  qiugou: function () {
     this.setData({
       navActive: false,
       fl: false,
@@ -292,30 +291,24 @@ Page({
       } else {
         console.log(this.data.treeTwo);
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: this.data.treeTwo[0].id
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: this.data.treeTwo[0].id
+          }]
         });
       }
     } else {
       this.setData({
-        treeTwo: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeTwo: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
       this.setData({
-        treeThree: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeThree: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
     }
   },
@@ -328,12 +321,10 @@ Page({
         });
       } else {
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: e.target.id.split("t")[1]
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: e.target.id.split("t")[1]
+          }]
         });
       }
     } else {
@@ -344,6 +335,7 @@ Page({
           px: false,
           viewHeight: 0
         });
+        this.data.pageData.pageNum = 1
         this.data.pageData.order = this.data.getAllTreePaixu[
           e.target.dataset.id
         ].id;
@@ -366,45 +358,45 @@ Page({
     this.getPage(this.data.pageData);
   },
   //定位
-  loadInfo: function() {
+  loadInfo: function () {
     var that = this;
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function(res) {
+      success: function (res) {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
         that.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function(latitude, longitude) {
+  loadCity: function (latitude, longitude) {
     var that = this;
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function(data) {
+      success: function (data) {
         // console.log(data);
       },
-      fail: function(info) {}
+      fail: function (info) {}
     });
 
     myAmapFun.getWeather({
-      success: function(data) {
+      success: function (data) {
         that.setData({
           weather: data
         });
         that.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function(info) {
+      fail: function (info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function(adcode) {
+  liveData: function (adcode) {
     console.log(adcode);
     var that = this;
     wx.request({
@@ -412,15 +404,14 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         wx.request({
-          url:
-            "http://120.78.209.238:50010/v1/area/getParentList?id=" +
+          url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
           },
-          success: function(res) {
+          success: function (res) {
             that.data.pageData.areaId =
               res.data.data.list[res.data.data.list.length - 1].id;
             that.getPage(that.data.pageData);
@@ -429,7 +420,7 @@ Page({
       }
     });
   },
-  getPage: function(pageData) {
+  getPage: function (pageData) {
     console.log(pageData);
     var that = this;
     var icon = null;
@@ -446,14 +437,13 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         var newsList = res.data.data.page.rows;
         for (let i = 0; i < res.data.data.page.rows.length; i++) {
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -471,7 +461,7 @@ Page({
       }
     });
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
     var that = this;
@@ -489,7 +479,7 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         if (that.data.newList.length === res.data.data.page.total) {
           return;
         }
@@ -498,8 +488,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -521,9 +510,15 @@ Page({
       }
     });
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
+  },
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh()
+    // this.onLoad()
+    console.log(this.data.pageData)
+    console.log('下拉刷新')
   }
 });
