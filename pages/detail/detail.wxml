@@ -1,25 +1,77 @@
-<view class="userMsg">
-  <view class="userImg">
-    <image src="{{marketSupply.icon}}" mode="widthFix"></image>
-  </view>
-  <view class="username">
-    <view class="name">
-      <view class="namel">{{marketSupply.userName?marketSupply.userName:'悦农通'}}</view>
-      <view class="time">{{marketSupply.publishTime}}</view>
+<view class="wrap">
+  <view class="userMsg">
+    <view class="userImg">
+      <image src="{{marketSupply.icon}}" mode="widthFix"></image>
     </view>
-    <view class="address">
-      <text>{{marketSupply.area}}</text>
+    <view class="username">
+      <view class="name">
+        <view class="namel">{{marketSupply.userName?marketSupply.userName:'悦农通'}}</view>
+        <view class="time">{{publishTime}}</view>
+      </view>
+      <view class="address">
+        <text>{{marketSupply.area}}</text>
+      </view>
     </view>
   </view>
-</view>
-<view class="title">
-  <text>{{marketSupply.title}}</text>
-</view>
-<view class="detail">
-  <text>{{marketSupply.detail}}</text>
-</view>
-<view class="imgFile">
-  <block wx:for="{{marketSupply.fileList}}" wx:key="*this">
-    <image src="{{item}}" mode="aspectFill"></image>
-  </block>
+  <view class="title">
+    <text>{{marketSupply.title}}</text>
+  </view>
+  <view class="detail">
+    <text>{{marketSupply.detail}}</text>
+  </view>
+  <view class='table'>
+    <view>
+      <text class="left">所在区域</text>
+      <text class="right">{{marketSupply.area}}</text>
+    </view>
+    <view>
+      <text class="left">供应类型</text>
+      <text class="right">{{marketSupply.cropName}}</text>
+    </view>
+    <view>
+      <text class="left">供应总量</text>
+      <text class="right">{{marketSupply.totalAmount}}斤</text>
+    </view>
+    <view>
+      <text class="left">起售量</text>
+      <text class="right">{{marketSupply.minAmount}}斤</text>
+    </view>
+    <view>
+      <text class="left">供应价格</text>
+      <text class="right">{{marketSupply.price}}元/斤</text>
+    </view>
+    <view>
+      <text class="left">联系人</text>
+      <text class="right">{{marketSupply.userName}}</text>
+    </view>
+    <view>
+      <text class="left">联系电话</text>
+      <text class="right">{{marketSupply.telephone}}</text>
+    </view>
+    <view>
+      <text class="left">供货截止日期</text>
+      <text class="right">{{supplyTime}}</text>
+    </view>
+  </view>
+  <view class="imgFile">
+    <block wx:for="{{fileList}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill"></image>
+    </block>
+  </view>
+  <view class='bottom'>
+    <view class='left' bindtap="tel">
+      <image src="../../images/7a4e3f53f3722f2b0694cc83653945d.png" mode="widthFix"></image>
+      <text>联系供应方</text>
+    </view>
+    <view class='right'>
+      <view class='dz'>
+        <image src="{{isZan}}" mode="widthFix"></image>
+        <view>点赞</view>
+      </view>
+      <view class='sc'>
+        <image src="{{isCollection}}" mode="widthFix"></image>
+        <view>点赞</view>
+      </view>
+    </view>
+  </view>
 </view>

@@ -2,8 +2,8 @@
 <view id="j_page" class="container">
 
   <view>
-   <!--<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取权限页面要怎么做呢？？？</button>
-       <block wx:else>-->
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取权限页面要怎么做呢？？？</button>
+    <block wx:else>
       <view class="page-section page-section-spacing swiper">
         <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
           <block wx:for="{{bannerList}}" wx:key="*this">
@@ -83,11 +83,32 @@
               </block>
             </view>
           </view>
-          <view>
-            电钻
+          <view class="rddz">
+            <view class="dz">
+              <image src="../../images/dz.png" mode='widthFix'></image>
+              <text>10人点赞</text>
+            </view>
+            <view class="rd">
+              <image src="../../images/rd.png" mode='widthFix'></image>
+              <text>10人阅读</text>
+            </view>
           </view>
         </view>
       </block>
-    <!--</block>-->
+    </block>
+  </view>
+</view>
+<view class='footer'>
+  <view class="nav">
+    <image src="../../images/gq.png"></image>
+    <text>供求市场</text>
+  </view>
+  <view class="nav">
+    <image src="../../images/gq.png"></image>
+    <text>供求市场</text>
+  </view>
+  <view class="nav" bindtap='bindUserTap'>
+    <image src="../../images/gq.png"></image>
+    <text>供求市场</text>
   </view>
 </view>

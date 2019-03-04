@@ -1,1 +1,131 @@
-/* pages/detail/detail.wxss */
+.wrap {
+  padding: 35rpx;
+}
+.wrap .userMsg {
+  overflow: hidden;
+}
+.wrap .userMsg .userImg {
+  float: left;
+}
+.wrap .userMsg .userImg image {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+}
+.wrap .userMsg .username {
+  margin-top: -4rpx;
+  float: left;
+  margin-left: 16rpx;
+  width: 600rpx;
+}
+.wrap .userMsg .username .name {
+  overflow: hidden;
+  font-size: 26rpx;
+}
+.wrap .userMsg .username .name .namel {
+  float: left;
+}
+.wrap .userMsg .username .name .time {
+  float: right;
+  font-size: 24rpx;
+  color: #999999;
+}
+.wrap .userMsg .username .address {
+  margin-top: -18rpx;
+}
+.wrap .userMsg .username .address text {
+  font-size: 16rpx;
+  background: #3fbef1;
+  color: #fff;
+  padding: 4rpx;
+  border-radius: 20rpx;
+}
+.wrap .title {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 60rpx;
+}
+.wrap .detail {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 40rpx;
+}
+.wrap .table {
+  font-size: 26rpx;
+  color: #999999;
+  line-height: 60rpx;
+}
+.wrap .table view {
+  overflow: hidden;
+}
+.wrap .table view .left {
+  float: left;
+}
+.wrap .table view .right {
+  float: right;
+}
+.wrap .imgFile {
+  margin-top: 20rpx;
+}
+.wrap .imgFile image {
+  width: 295rpx;
+  height: 193rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+  border-radius: 10rpx;
+}
+.wrap .bottom {
+  margin-top: 30rpx;
+  overflow: hidden;
+  height: 92rpx;
+  border-top: 1rpx solid #d3d3d3;
+}
+.wrap .bottom text {
+  font-size: 26rpx;
+  color: #999999;
+}
+.wrap .bottom .left {
+  float: left;
+  width: 49%;
+  height: 52rpx;
+  line-height: 52rpx;
+  margin: 20rpx 0;
+  text-align: center;
+  border-right: solid 1rpx #d3d3d3;
+}
+.wrap .bottom .left image {
+  width: 36rpx;
+  height: 36rpx;
+  vertical-align: middle;
+  margin-right: 10rpx;
+}
+.wrap .bottom .right {
+  float: left;
+  overflow: hidden;
+  height: 92rpx;
+  text-align: center;
+  width: 50%;
+  color: #999999;
+}
+.wrap .bottom .right .dz {
+  float: left;
+  width: 50%;
+}
+.wrap .bottom .right .dz image {
+  width: 30rpx;
+  height: 30rpx;
+}
+.wrap .bottom .right .dz view {
+  font-size: 26rpx;
+}
+.wrap .bottom .right .sc {
+  float: left;
+  width: 50%;
+}
+.wrap .bottom .right .sc image {
+  width: 30rpx;
+  height: 30rpx;
+}
+.wrap .bottom .right .sc view {
+  font-size: 26rpx;
+}
