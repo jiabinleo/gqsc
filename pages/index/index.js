@@ -61,7 +61,10 @@ Page({
       pageNum: 1,
       pageSize: 3,
       order: ""
-    }
+    },
+    token: null,
+    user: null,
+    openid: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -75,6 +78,7 @@ Page({
     });
   },
   onLoad: function () {
+    console.log('/////////////////////')
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
@@ -101,6 +105,16 @@ Page({
           })
         }
       })
+    }
+    //获取用户信息
+    if (wx.getStorageSync('openid')) {
+      this.data.openid = wx.getStorageSync('openid')
+    }
+    if (wx.getStorageSync('token')) {
+      this.data.token = wx.getStorageSync('token')
+    }
+    if (wx.getStorageSync('user')) {
+      this.data.token = wx.getStorageSync('user')
     }
     //banner
     if (app.globalData.imgUrl) {
@@ -528,11 +542,47 @@ Page({
     console.log('下拉刷新')
   },
   getUserInfo: function (e) {
-    console.log(e)
+
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+    console.log(e.detail.userInfo)
+    var userInfo = e.detail.userInfo
+    this.setData({
+      openid: wx.getStorageSync('openid')
+    })
+    this.autoLogin(wx.getStorageSync('openid'), userInfo.avatarUrl, userInfo.nickName, userInfo.gender)
+
+  },
+  autoLogin: function (openId, icon, userName, sex) {
+    wx.request({
+      url: "http://120.78.209.238:50010/v1/user/otherLogin",
+      method: "post",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        "otherLogin": "wx",
+        "openId": openId,
+        "icon": icon,
+        "userName": userName,
+        "sex": sex
+      },
+      success: (res) => {
+        console.log(res)
+        if (res.data.code == 0) {
+          wx.setStorageSync('token', res.data.data.token)
+          wx.setStorageSync('user', res.data.data.user)
+          console.log(res.data.data.token)
+          this.setData({
+            token: res.data.data.token,
+            user: res.data.data.user
+          })
+          this.onLoad()
+        }
+      }
     })
   }
 });

@@ -7,7 +7,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    user:{
+      icon:null
+    }
   },
 
   /**
@@ -15,35 +17,20 @@ Page({
    */
   onLoad: function (options) {
     console.log(app.globalData.userInfo)
-    
-    // wx.login({
-    //   success: function (res) {
-    //     if (res.code) {
-    //       //发起网络请求
-    //       console.log(res.code)
-    //       wx.request({
-    //         url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx2623aa28384009f5&secret=0063ddf49973e5cb547661200a8e3b21&js_code=' + res.code + '&grant_type=authorization_code',
-    //         data: {
-    //           code: res.code
-    //         },
-    //         success: function (res) {
-    //           console.log(res)
-    //         }
-    //       })
-    //     } else {
-    //       console.log('获取用户登录态失败！' + res.errMsg)
-    //     }
+    if (wx.getStorageSync('user')) {
+      this.setData({
+        user: wx.getStorageSync('user'),
+      })
+    }
+    // wx.checkSession({
+    //   success: function () {
+    //     //session 未过期，并且在本生命周期一直有效
+    //   },
+    //   fail: function () {
+    //     //登录态过期
+    //     wx.login() //重新登录
     //   }
-    // });
-    wx.checkSession({
-      success: function () {
-        //session 未过期，并且在本生命周期一直有效
-      },
-      fail: function () {
-        //登录态过期
-        wx.login() //重新登录
-      }
-    })
+    // })
   },
 
   /**
