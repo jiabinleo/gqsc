@@ -55,20 +55,33 @@
   color: #eeeeee;
 }
 
-.section {
-  overflow: hidden;
+.section-wrap {
+  height: 0;
+  width: 100%;
+  position: relative;
 
-  scroll-view {
-    display: inline-block;
-    width: 33%;
-    text-align: center;
-    font-size: 24rpx;
+  .section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #ffffff;
+    z-index: 100%;
+    width: 100%;
+    overflow: hidden;
 
-    view {
-      line-height: 50rpx;
+    scroll-view {
+      display: inline-block;
+      width: 33%;
+      text-align: center;
+      font-size: 24rpx;
+
+      view {
+        line-height: 50rpx;
+      }
     }
   }
 }
+
 
 .newList {
   padding: 0 35rpx;

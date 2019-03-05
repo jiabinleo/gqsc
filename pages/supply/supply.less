@@ -1,0 +1,96 @@
+/* pages/supply/supply.wxss */
+
+.wrap {
+    padding: 0 35rpx;
+
+    view {
+        border-bottom: solid 1rpx #eeeeee;
+        font-size: 28rpx;
+        line-height: 86rpx;
+        overflow: hidden;
+
+        text {
+            color: #666666;
+        }
+
+        input {
+            line-height: 86rpx;
+            height: 86rpx;
+            color: #999999;
+            width: 500rpx;
+            float: right;
+            text-align: right;
+        }
+
+        .sr {
+            line-height: 86rpx;
+            height: 86rpx;
+            color: #999999;
+            width: 500rpx;
+            float: right;
+            text-align: right;
+            border: none;
+        }
+    }
+
+    textarea {
+        padding: 20rpx 0;
+        width: 100%;
+        font-size: 28rpx;
+        color: #999999;
+    }
+}
+
+.upfile {
+    margin: 0 35rpx;
+
+    image {
+        width: 227rpx;
+        height: 151rpx;
+        margin-left: 3rpx;
+
+        &:nth-of-type(3n + 1) {
+            margin-left: 0;
+        }
+    }
+}
+
+.fenlei-close {
+    display: none;
+}
+
+.fenlei {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .section {
+        margin: 200rpx 35rpx 35rpx 35rpx;
+        width: 680rpx;
+        height: 400rpx;
+        background: #d3d3d3;
+        overflow: hidden;
+        padding: 35rpx 0;
+
+        scroll-view {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            width: 33%;
+            text-align: center;
+            font-size: 24rpx;
+
+            view {
+                line-height: 50rpx;
+            }
+        }
+    }
+}
+
+.save {
+    margin:  35rpx;
+}

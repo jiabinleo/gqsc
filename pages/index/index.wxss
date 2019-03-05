@@ -42,16 +42,27 @@
   background: #c6c6c6;
   color: #eeeeee;
 }
-.section {
+.section-wrap {
+  height: 0;
+  width: 100%;
+  position: relative;
+}
+.section-wrap .section {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #ffffff;
+  z-index: 100%;
+  width: 100%;
   overflow: hidden;
 }
-.section scroll-view {
+.section-wrap .section scroll-view {
   display: inline-block;
   width: 33%;
   text-align: center;
   font-size: 24rpx;
 }
-.section scroll-view view {
+.section-wrap .section scroll-view view {
   line-height: 50rpx;
 }
 .newList {

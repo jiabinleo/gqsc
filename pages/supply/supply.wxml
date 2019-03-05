@@ -1,2 +1,77 @@
-<!--pages/supply/supply.wxml-->
-<text>pages/supply/supply.wxml</text>
+<view class="wrap">
+  <view>
+    <text>标题</text>
+    <input type="text" bindinput="titleFn" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供应类型</text>
+    <view class="sr" bindtap="fenlei">{{type}}</view>
+  </view>
+  <view>
+    <text>供应区域</text>
+    <view class="sr" bindtap="diqu">{{are}}</view>
+  </view>
+  <view>
+    <text>总数量（斤）</text>
+    <input type="text" bindinput='totalAmountFn' placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>起售量（斤）</text>
+    <input type="text" bindinput='minAmountFn' placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供应价格</text>
+    <input type="text" bindinput='priceFn' placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供货截止日期</text>
+    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="supplyTimeFn">
+      <view>{{supplyTime}}</view>
+    </picker>
+  </view>
+  <view>
+    <text>联系人</text>
+    <input type="text" bindinput="contactsFn" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>联系电话</text>
+    <input type="text" bindinput="telephoneFn" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>商品详情</text>
+  </view>
+  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder="请输入商品详情" />
+</view>
+<!-- 图片上传 -->
+<block>
+  <view class="upfile">
+    <view>上传图片</view>
+    <block wx:for="{{upfile}}" wx:key="*this">
+      <image src="{{imgUrl+item}}" mode="widthFix"></image>
+    </block>
+    <image catchtap="chooseImage" mode="widthFix" src="../../images/039.png"></image>
+  </view>
+</block>
+<!--供应类型-->
+<block>
+  <view catchtap="hideFenlei" class='{{fenlei}}'>
+    <view catchtap="zsmp" class="section" style="height: 400rpx;">
+      <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeOne}}" wx:key="*this">
+          <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+      <scroll-view catchtap="twoTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeTwo}}" wx:key="*this">
+          <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+      <scroll-view catchtap="threeTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeThree}}" wx:key="*this">
+          <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</block>
+<button class="save" type="primary" bindtap="save">提交</button>

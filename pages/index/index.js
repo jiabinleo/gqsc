@@ -9,7 +9,6 @@ var markersData = {
 };
 Page({
   data: {
-    motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
@@ -68,17 +67,17 @@ Page({
     mask: 'mask-close'
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  bindUserTap: function () {
+  bindUserTap: function() {
     wx.navigateTo({
       url: "../userCenter/userCenter"
     });
   },
-  onLoad: function () {
+  onLoad: function() {
     console.log('/////////////////////')
     var _this = this;
     if (app.globalData.userInfo) {
@@ -128,7 +127,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function (res) {
+      success: function(res) {
         _this.setData({
           bannerList: res.data.data.bannerList
         });
@@ -140,7 +139,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function (res) {
+      success: function(res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeFenlei: res.data.data.trees
@@ -154,7 +153,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function (res) {
+      success: function(res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeDiqu: res.data.data.trees
@@ -167,7 +166,7 @@ Page({
     console.log()
   },
   //nav
-  gongying: function () {
+  gongying: function() {
     this.setData({
       navActive: true,
       fl: false,
@@ -179,7 +178,7 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function () {
+  qiugou: function() {
     this.setData({
       navActive: false,
       fl: false,
@@ -379,45 +378,45 @@ Page({
     this.getPage(this.data.pageData);
   },
   //定位
-  loadInfo: function () {
+  loadInfo: function() {
     var that = this;
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function (res) {
+      success: function(res) {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
         that.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function (latitude, longitude) {
+  loadCity: function(latitude, longitude) {
     var that = this;
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function (data) {
+      success: function(data) {
         // console.log(data);
       },
-      fail: function (info) {}
+      fail: function(info) {}
     });
 
     myAmapFun.getWeather({
-      success: function (data) {
+      success: function(data) {
         that.setData({
           weather: data
         });
         that.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function (info) {
+      fail: function(info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function (adcode) {
+  liveData: function(adcode) {
     console.log(adcode);
     var that = this;
     wx.request({
@@ -425,14 +424,14 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function (res) {
+      success: function(res) {
         wx.request({
           url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
           },
-          success: function (res) {
+          success: function(res) {
             that.data.pageData.areaId =
               res.data.data.list[res.data.data.list.length - 1].id;
             that.getPage(that.data.pageData);
@@ -441,7 +440,7 @@ Page({
       }
     });
   },
-  getPage: function (pageData) {
+  getPage: function(pageData) {
     console.log(pageData);
     var that = this;
     var icon = null;
@@ -452,13 +451,14 @@ Page({
         "Content-Type": "application/json"
       },
       data: {
+        cropId: pageData.cropId,
         type: pageData.type,
         areaId: pageData.areaId,
         pageNum: pageData.pageNum,
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function (res) {
+      success: function(res) {
         var newsList = res.data.data.page.rows;
         for (let i = 0; i < res.data.data.page.rows.length; i++) {
           icon = res.data.data.page.rows[i].icon;
@@ -482,7 +482,7 @@ Page({
       }
     });
   },
-  onReachBottom: function () {
+  onReachBottom: function() {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
     var that = this;
@@ -500,7 +500,7 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function (res) {
+      success: function(res) {
         if (that.data.newList.length === res.data.data.page.total) {
           return;
         }
@@ -531,7 +531,7 @@ Page({
       }
     });
   },
-  onTouch: function (e) {
+  onTouch: function(e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
@@ -542,7 +542,7 @@ Page({
     console.log(this.data.pageData)
     console.log('下拉刷新')
   },
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
 
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
@@ -557,7 +557,7 @@ Page({
     this.autoLogin(wx.getStorageSync('openid'), userInfo.avatarUrl, userInfo.nickName, userInfo.gender)
 
   },
-  autoLogin: function (openId, icon, userName, sex) {
+  autoLogin: function(openId, icon, userName, sex) {
     wx.request({
       url: "http://120.78.209.238:50010/v1/user/otherLogin",
       method: "post",
@@ -586,23 +586,23 @@ Page({
       }
     })
   },
-  close: function () {
+  close: function() {
     this.setData({
       mask: 'mask-close'
     })
   },
-  open: function () {
+  open: function() {
     this.setData({
       mask: 'mask'
     })
   },
-  preventTouchMove: function () {},
-  supply: function () {
+  preventTouchMove: function() {},
+  supply: function() {
     wx.navigateTo({
       url: "../supply/supply"
     });
   },
-  buy: function () {
+  buy: function() {
     wx.navigateTo({
       url: "../buy/buy"
     });

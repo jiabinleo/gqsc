@@ -33,22 +33,24 @@
         </view>
       </block>
       <block>
-        <view class="section" style="height: {{viewHeight}}px;">
-          <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-            <block wx:for="{{treeOne}}" wx:key="*this">
-              <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
-            </block>
-          </scroll-view>
-          <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-            <block wx:for="{{treeTwo}}" wx:key="*this">
-              <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
-            </block>
-          </scroll-view>
-          <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-            <block wx:for="{{treeThree}}" wx:key="*this">
-              <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
-            </block>
-          </scroll-view>
+        <view class='section-wrap'>
+          <view class="section" style="height: {{viewHeight}}px;">
+            <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+              <block wx:for="{{treeOne}}" wx:key="*this">
+                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+              </block>
+            </scroll-view>
+            <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+              <block wx:for="{{treeTwo}}" wx:key="*this">
+                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+              </block>
+            </scroll-view>
+            <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+              <block wx:for="{{treeThree}}" wx:key="*this">
+                <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+              </block>
+            </scroll-view>
+          </view>
         </view>
       </block>
       <!-- <view class="btn-area">
@@ -86,11 +88,11 @@
           <view class="rddz">
             <view class="dz">
               <image src="../../images/dz.png" mode='widthFix'></image>
-              <text>10人点赞</text>
+              <text>{{item.zan}}人点赞</text>
             </view>
             <view class="rd">
               <image src="../../images/rd.png" mode='widthFix'></image>
-              <text>10人阅读</text>
+              <text>{{item.reading}}人阅读</text>
             </view>
           </view>
         </view>
