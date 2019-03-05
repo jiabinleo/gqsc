@@ -64,7 +64,8 @@ Page({
     },
     token: null,
     user: null,
-    openid: null
+    openid: null,
+    mask: 'mask-close'
   },
   //事件处理函数
   bindViewTap: function () {
@@ -584,5 +585,26 @@ Page({
         }
       }
     })
+  },
+  close: function () {
+    this.setData({
+      mask: 'mask-close'
+    })
+  },
+  open: function () {
+    this.setData({
+      mask: 'mask'
+    })
+  },
+  preventTouchMove: function () {},
+  supply: function () {
+    wx.navigateTo({
+      url: "../supply/supply"
+    });
+  },
+  buy: function () {
+    wx.navigateTo({
+      url: "../buy/buy"
+    });
   }
 });
