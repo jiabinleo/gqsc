@@ -27,9 +27,9 @@
       </block>
       <block>
         <view class="select">
-          <view class="nav1" bindtap="fenlei">选择分类</view>
-          <view class="nav1" bindtap="diqu">选择地区</view>
-          <view class="nav1" bindtap="paixu">排序方式</view>
+          <view class="nav1" bindtap="fenlei">{{flMsg}}</view>
+          <view class="nav1" bindtap="diqu">{{dqMsg}}</view>
+          <view class="nav1" bindtap="paixu">{{pxMsg}}</view>
         </view>
       </block>
       <block>

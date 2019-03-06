@@ -1,2 +1,79 @@
-<!--pages/buy/buy.wxml-->
-<text>pages/buy/buy.wxml</text>
+<view class="wrap">
+  <view>
+    <text>标题</text>
+    <input type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供应类型</text>
+    <view class="sr" bindtap="fenlei">{{type}}</view>
+  </view>
+  <view>
+    <text>供应区域</text>
+    <image class='loc' bindtap='locFn' src="../../images/loc.png" mode="widthFix"></image>
+    <view class="sr" bindtap="diqu">{{are}}</view>
+  </view>
+  <view>
+    <text>总数量（斤）</text>
+    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>起售量（斤）</text>
+    <input type="text" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供应价格</text>
+    <input type="text" bindinput='priceFn' placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>供货截止日期</text>
+    <picker mode="date" value="{{date}}" start="2010-12-31" end="2999-12-31" bindchange="supplyTimeFn">
+      <view class="sr">{{supplyTime}}</view>
+    </picker>
+  </view>
+  <view>
+    <text>联系人</text>
+    <input type="text" bindinput="contactsFn" placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>联系电话</text>
+    <input type="text" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入'></input>
+  </view>
+  <view>
+    <text>商品详情</text>
+  </view>
+  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" placeholder="请输入商品详情" />
+</view>
+<!-- 图片上传 -->
+<view class="line"></view>
+<block>
+  <view class="upfile">
+    <view>上传图片</view>
+    <block wx:for="{{upfile}}" wx:key="*this">
+      <image src="{{imgUrl+item}}" mode="aspectFill"></image>
+    </block>
+    <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
+  </view>
+</block>
+<!--供应类型-->
+<block>
+  <view catchtap="hideFenlei" class='{{fenlei}}' catchtouchmove="preventTouchMove">
+    <view catchtap="zsmp" class="section" style="height: 400rpx;">
+      <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeOne}}" wx:key="*this">
+          <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+      <scroll-view catchtap="twoTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeTwo}}" wx:key="*this">
+          <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+      <scroll-view catchtap="threeTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+        <block wx:for="{{treeThree}}" wx:key="*this">
+          <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+        </block>
+      </scroll-view>
+    </view>
+  </view>
+</block>
+<button class="save" type="primary" bindtap="save">确认信息</button>

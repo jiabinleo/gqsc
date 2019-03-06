@@ -1,41 +1,22 @@
-// pages/userCenter/userCenter.js
-
-var app = getApp();
+// pages/myRelease/myRelease.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    user: {
-      icon: null
-    }
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(app.globalData.userInfo)
-    if (wx.getStorageSync('user')) {
-      this.setData({
-        user: wx.getStorageSync('user'),
-      })
-    }
     wx.setNavigationBarTitle({
-      title: '我的'
+      title: '我的发布'
     })
   },
-  bindReleaseTap: function() {
-    wx.navigateTo({
-      url: "../myRelease/myRelease"
-    });
-  },
-  bindCollectionTap: function() {
-    wx.navigateTo({
-      url: "../myCollection/myCollection"
-    });
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

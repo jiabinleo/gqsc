@@ -1,10 +1,12 @@
 {
   "pages": [
+    "pages/myRelease/myRelease",
     "pages/index/index",
     "pages/supply/supply",
-    "pages/userCenter/userCenter",
-    "pages/detail/detail",
     "pages/buy/buy",
+    "pages/userCenter/userCenter",
+    "pages/myCollection/myCollection",
+    "pages/detail/detail",
     "pages/logs/logs"
   ],
   "window": {

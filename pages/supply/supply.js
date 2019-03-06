@@ -18,7 +18,7 @@ Page({
     upfile: [],
     imgUrl: null,
     _areaId: null,
-    _categoryId: null,
+    _cropId: null,
     _title: null,
     _detail: null,
     _contacts: null,
@@ -28,13 +28,13 @@ Page({
     _supplyTime: null,
     _type: 1,
     _price: null,
-    supplyTime: '请选择截止日期'
+    supplyTime: "请选择截止日期"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     //分类
     wx.request({
       url: "http://120.78.209.238:50010/v1/goodsCategory/getAllTree",
@@ -68,6 +68,9 @@ Page({
         imgUrl: app.globalData.imgUrl
       });
     }
+    wx.setNavigationBarTitle({
+      title: '发布供应'
+    })
   },
   fenlei() {
     this.setData({
@@ -176,70 +179,70 @@ Page({
         fenlei: "fenlei-close"
       });
       this.setData({
-        _categoryId: e.target.id.split('t')[1]
-      })
+        _cropId: e.target.id.split("t")[1]
+      });
     } else if (this.data.dq) {
       this.setData({
         are: e._relatedInfo.anchorTargetText,
         fenlei: "fenlei-close"
       });
       this.setData({
-        _areaId: e.target.id.split('t')[1]
-      })
+        _areaId: e.target.id.split("t")[1]
+      });
     }
   },
-  hideFenlei: function () {
+  hideFenlei: function() {
     this.setData({
       fenlei: "fenlei-close"
     });
   },
-  zsmp: function () {},
+  zsmp: function() {},
   //数据双向绑定
-  titleFn: function (e) {
+  titleFn: function(e) {
     this.setData({
       _title: e.detail.value
-    })
+    });
   },
-  totalAmountFn: function (e) {
+  totalAmountFn: function(e) {
     this.setData({
       _totalAmount: e.detail.value
-    })
+    });
   },
-  minAmountFn: function (e) {
+  minAmountFn: function(e) {
     this.setData({
       _minAmount: e.detail.value
-    })
+    });
   },
-  priceFn: function (e) {
+  priceFn: function(e) {
     this.setData({
       _price: e.detail.value
-    })
+    });
   },
-  contactsFn: function (e) {
+  contactsFn: function(e) {
     this.setData({
       _contacts: e.detail.value
-    })
+    });
   },
-  telephoneFn: function (e) {
+  telephoneFn: function(e) {
     this.setData({
       _telephone: e.detail.value
-    })
+    });
   },
-  detailFn: function (e) {
+  detailFn: function(e) {
     this.setData({
       _detail: e.detail.value
-    })
+    });
   },
-  supplyTimeFn: function (e) {
-    console.log(e.detail.value)
+  supplyTimeFn: function(e) {
+    console.log(e.detail.value);
 
     this.setData({
       supplyTime: e.detail.value,
       _supplyTime: e.detail.value
-    })
+    });
   },
   //上传图片
-  chooseImage: function () {
+  chooseImage: function() {
     var openid = wx.getStorageSync("openid");
     var that = this;
     wx.chooseImage({
@@ -258,31 +261,31 @@ Page({
           },
           formData: {},
           success: res => {
-            console.log(res.data)
-            var result = JSON.parse(res.data)
+            console.log(res.data);
+            var result = JSON.parse(res.data);
             var file = this.data.upfile;
             file.push(result.path);
             this.setData({
               upfile: file
             });
           },
-          fail: function (res) {
+          fail: function(res) {
             console.log("fail");
           }
         });
       }
     });
   },
-  save: function () {
-    var upfiles = this.data.upfile
-    var _fileList = ""
+  save: function() {
+    var upfiles = this.data.upfile;
+    var _fileList = "";
     for (let i = 0; i < upfiles.length; i++) {
-      _fileList += upfiles[i] + ","
+      _fileList += upfiles[i] + ",";
     }
-    _fileList = _fileList.slice(0, _fileList.length - 1)
+    _fileList = _fileList.slice(0, _fileList.length - 1);
     var data = {
       areaId: this.data._areaId,
-      categoryId: this.data._categoryId,
+      cropId: this.data._cropId,
       title: this.data._title,
       detail: this.data._detail,
       contacts: this.data._contacts,
@@ -291,52 +294,103 @@ Page({
       totalAmount: this.data._totalAmount,
       price: this.data._price,
       supplyTime: this.data._supplyTime,
-      type: this.data._type
-    }
-    var my_token = wx.getStorageSync('token')
+      type: this.data._type,
+      fileList: _fileList
+    };
+    var my_token = wx.getStorageSync("token");
     wx.request({
       url: "http://120.78.209.238:50010/v1/supply/save",
       method: "POST",
       header: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/json;charset=UTF-8",
+        login_token: my_token
       },
       data: data,
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader("login_token", my_token);
-      },
       success: res => {
-        console.log(res)
-        // wx.navigateBack({
-        //   delta: 1
-        // })
-        wx.showToast({
-          title: '供应信息发布成功',
-          icon: 'success',
-          duration: 2000
-        })
+        console.log(res);
+        if (res.data.code === "0") {
+          console.log('000000')
+          wx.showToast({
+            title: "供应信息发布成功",
+            icon: "success",
+            duration: 102000
+          });
+        } else if (res.data.code === "9") {
+          console.log('99999999')
+          wx.showToast({
+            title: "正在重新登录",
+            icon: "none",
+            duration: 2000
+          });
+          this.autoLogin(
+            app.globalData.openid,
+            app.globalData.userInfo.avatarUrl,
+            app.globalData.userInfo.nickName,
+            app.globalData.userInfo.gender
+          );
+        }
       }
     });
   },
-
+  autoLogin: function(openId, icon, userName, sex) {
+    wx.request({
+      url: "http://120.78.209.238:50010/v1/user/otherLogin",
+      method: "post",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        otherLogin: "wx",
+        openId: openId,
+        icon: icon,
+        userName: userName,
+        sex: sex
+      },
+      success: res => {
+        console.log(res);
+        if (res.data.code == 0) {
+          wx.setStorageSync("token", res.data.data.token);
+          wx.setStorageSync("user", res.data.data.user);
+          console.log(res.data.data.token);
+          this.setData({
+            token: res.data.data.token,
+            user: res.data.data.user
+          });
+          this.save();
+        }
+      }
+    });
+  },
+  locFn: function() {
+    var address = wx.getStorageSync("address");
+    console.log(address);
+    if (address) {
+      this.setData({
+        _areaId: address.id,
+        are: address.areaName
+      });
+    }
+  },
+  preventTouchMove: function() {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -346,11 +400,11 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {},
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {}
+  onShareAppMessage: function() {}
   // preventTouchMove: function() {}
 });

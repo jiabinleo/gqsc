@@ -1,6 +1,6 @@
 //app.js
 App({
-  onLaunch: function () {
+  onLaunch: function() {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
@@ -18,8 +18,7 @@ App({
               code: res.code
             },
             success: (res) => {
-              console.log(res.data.openid)
-              wx.setStorageSync('openid', res.data.openid)
+              this.globalData.openid = res.data.openid
             }
           })
         } else {
@@ -46,11 +45,26 @@ App({
           })
         }
       }
+    });
+    wx.checkSession({
+      success() {
+        // session_key 未过期，并且在本生命周期一直有效
+        console.log('////')
+        wx.login() // 重新登录
+
+      },
+      fail() {
+        // session_key 已经失效，需要重新执行登录流程
+        console.log('////')
+
+        wx.login() // 重新登录
+      }
     })
   },
 
   globalData: {
     userInfo: null,
-    imgUrl: "http://120.78.209.238:50000"
+    imgUrl: "http://120.78.209.238:50000",
+    openid:null
   }
 })

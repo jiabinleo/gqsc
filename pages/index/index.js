@@ -11,7 +11,7 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    canIUse: wx.canIUse("button.open-type.getUserInfo"),
     //
     bannerList: [],
     indicatorDots: true,
@@ -27,7 +27,8 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [{
+    getAllTreePaixu: [
+      {
         text: "不限",
         id: ""
       },
@@ -52,6 +53,9 @@ Page({
     fl: false,
     dq: false,
     px: false,
+    flMsg: "选择分类",
+    dqMsg: "选择地区",
+    pxMsg: "排序方式",
     newList: [],
     pageData: {
       cropId: "",
@@ -63,8 +67,7 @@ Page({
     },
     token: null,
     user: null,
-    openid: null,
-    mask: 'mask-close'
+    mask: "mask-close"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -78,13 +81,13 @@ Page({
     });
   },
   onLoad: function() {
-    console.log('/////////////////////')
+    console.log("/////////////////////");
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
-      })
+      });
     } else if (this.data.canIUse) {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
@@ -92,29 +95,26 @@ Page({
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
-        })
-      }
+        });
+      };
     } else {
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
-          app.globalData.userInfo = res.userInfo
+          app.globalData.userInfo = res.userInfo;
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true
-          })
+          });
         }
-      })
+      });
     }
     //获取用户信息
-    if (wx.getStorageSync('openid')) {
-      this.data.openid = wx.getStorageSync('openid')
+    if (wx.getStorageSync("token")) {
+      this.data.token = wx.getStorageSync("token");
     }
-    if (wx.getStorageSync('token')) {
-      this.data.token = wx.getStorageSync('token')
-    }
-    if (wx.getStorageSync('user')) {
-      this.data.token = wx.getStorageSync('user')
+    if (wx.getStorageSync("user")) {
+      this.data.user = wx.getStorageSync("user");
     }
     //banner
     if (app.globalData.imgUrl) {
@@ -163,7 +163,7 @@ Page({
     });
     //定位
     this.loadInfo();
-    console.log()
+    console.log();
   },
   //nav
   gongying: function() {
@@ -311,24 +311,30 @@ Page({
       } else {
         console.log(this.data.treeTwo);
         this.setData({
-          treeThree: [{
-            text: "全部",
-            id: this.data.treeTwo[0].id
-          }]
+          treeThree: [
+            {
+              text: "全部",
+              id: this.data.treeTwo[0].id
+            }
+          ]
         });
       }
     } else {
       this.setData({
-        treeTwo: [{
-          text: "全部",
-          id: e.target.id.split("t")[1]
-        }]
+        treeTwo: [
+          {
+            text: "全部",
+            id: e.target.id.split("t")[1]
+          }
+        ]
       });
       this.setData({
-        treeThree: [{
-          text: "全部",
-          id: e.target.id.split("t")[1]
-        }]
+        treeThree: [
+          {
+            text: "全部",
+            id: e.target.id.split("t")[1]
+          }
+        ]
       });
     }
   },
@@ -341,10 +347,12 @@ Page({
         });
       } else {
         this.setData({
-          treeThree: [{
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }]
+          treeThree: [
+            {
+              text: "全部",
+              id: e.target.id.split("t")[1]
+            }
+          ]
         });
       }
     } else {
@@ -355,7 +363,7 @@ Page({
           px: false,
           viewHeight: 0
         });
-        this.data.pageData.pageNum = 1
+        this.data.pageData.pageNum = 1;
         this.data.pageData.order = this.data.getAllTreePaixu[
           e.target.dataset.id
         ].id;
@@ -366,8 +374,14 @@ Page({
   threeTag(e) {
     if (this.data.fl) {
       this.data.pageData.cropId = e.target.id.split("t")[1];
+      this.setData({
+        flMsg: e._relatedInfo.anchorTargetText
+      });
     } else if (this.data.dq) {
       this.data.pageData.areaId = e.target.id.split("t")[1];
+      this.setData({
+        dqMsg: e._relatedInfo.anchorTargetText
+      });
     }
     this.setData({
       fl: false,
@@ -420,13 +434,14 @@ Page({
     console.log(adcode);
     var that = this;
     wx.request({
-      url: "http://120.78.209.238:50010/v1/area/getAreaIdByCode?code=" + 110000,
+      url: "http://120.78.209.238:50010/v1/area/getAreaIdByCode?code=" + adcode,
       header: {
         "Content-Type": "application/json"
       },
       success: function(res) {
         wx.request({
-          url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
+          url:
+            "http://120.78.209.238:50010/v1/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
@@ -435,6 +450,11 @@ Page({
             that.data.pageData.areaId =
               res.data.data.list[res.data.data.list.length - 1].id;
             that.getPage(that.data.pageData);
+            console.log();
+            wx.setStorageSync(
+              "address",
+              res.data.data.list[res.data.data.list.length - 1]
+            );
           }
         });
       }
@@ -464,16 +484,19 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {} else {
+            if (icon.indexOf("/")) {
+            } else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
             newsList[i].icon = "";
           }
-          newsList[i].fileList = fileList.split(",");
-          for (let j = 0; j < newsList[i].fileList.length; j++) {
-            newsList[i].fileList[j] =
-              that.data.imgUrl + newsList[i].fileList[j];
+          if (newsList[i].fileList) {
+            newsList[i].fileList = fileList.split(",");
+            for (let j = 0; j < newsList[i].fileList.length; j++) {
+              newsList[i].fileList[j] =
+                that.data.imgUrl + newsList[i].fileList[j];
+            }
           }
         }
         that.setData({
@@ -509,16 +532,19 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {} else {
+            if (icon.indexOf("/")) {
+            } else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
             newsList[i].icon = "";
           }
-          newsList[i].fileList = fileList.split(",");
-          for (let j = 0; j < newsList[i].fileList.length; j++) {
-            newsList[i].fileList[j] =
-              that.data.imgUrl + newsList[i].fileList[j];
+          if (newsList[i].fileList) {
+            newsList[i].fileList = fileList.split(",");
+            for (let j = 0; j < newsList[i].fileList.length; j++) {
+              newsList[i].fileList[j] =
+                that.data.imgUrl + newsList[i].fileList[j];
+            }
           }
         }
         for (let i = 0; i < newsList.length; i++) {
@@ -537,25 +563,25 @@ Page({
     });
   },
   onPullDownRefresh() {
-    wx.stopPullDownRefresh()
-    // this.onLoad()
-    console.log(this.data.pageData)
-    console.log('下拉刷新')
+    wx.stopPullDownRefresh();
+    this.onLoad();
+    console.log(this.data.pageData);
+    console.log("下拉刷新");
   },
   getUserInfo: function(e) {
-
-    app.globalData.userInfo = e.detail.userInfo
+    app.globalData.userInfo = e.detail.userInfo;
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-    console.log(e.detail.userInfo)
-    var userInfo = e.detail.userInfo
-    this.setData({
-      openid: wx.getStorageSync('openid')
-    })
-    this.autoLogin(wx.getStorageSync('openid'), userInfo.avatarUrl, userInfo.nickName, userInfo.gender)
-
+    });
+    console.log(e.detail.userInfo);
+    var userInfo = e.detail.userInfo;
+    this.autoLogin(
+      this.globalData.openid,
+      userInfo.avatarUrl,
+      userInfo.nickName,
+      userInfo.gender
+    );
   },
   autoLogin: function(openId, icon, userName, sex) {
     wx.request({
@@ -565,46 +591,52 @@ Page({
         "Content-Type": "application/json"
       },
       data: {
-        "otherLogin": "wx",
-        "openId": openId,
-        "icon": icon,
-        "userName": userName,
-        "sex": sex
+        otherLogin: "wx",
+        openId: openId,
+        icon: icon,
+        userName: userName,
+        sex: sex
       },
-      success: (res) => {
-        console.log(res)
+      success: res => {
+        console.log(res);
         if (res.data.code == 0) {
-          wx.setStorageSync('token', res.data.data.token)
-          wx.setStorageSync('user', res.data.data.user)
-          console.log(res.data.data.token)
+          wx.setStorageSync("token", res.data.data.token);
+          wx.setStorageSync("user", res.data.data.user);
+          console.log(res.data.data.token);
           this.setData({
             token: res.data.data.token,
             user: res.data.data.user
-          })
-          this.onLoad()
+          });
+          this.onLoad();
         }
       }
-    })
+    });
   },
   close: function() {
     this.setData({
-      mask: 'mask-close'
-    })
+      mask: "mask-close"
+    });
   },
   open: function() {
     this.setData({
-      mask: 'mask'
-    })
+      mask: "mask"
+    });
   },
   preventTouchMove: function() {},
   supply: function() {
     wx.navigateTo({
       url: "../supply/supply"
     });
+    this.setData({
+      mask: "mask-close"
+    });
   },
   buy: function() {
     wx.navigateTo({
       url: "../buy/buy"
+    });
+    this.setData({
+      mask: "mask-close"
     });
   }
 });

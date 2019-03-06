@@ -1,1 +1,115 @@
-/* pages/buy/buy.wxss */
+/* pages/supply/supply.wxss */
+.wrap {
+  padding: 0 35rpx;
+}
+.wrap view {
+  border-bottom: solid 1rpx #eeeeee;
+  font-size: 28rpx;
+  line-height: 86rpx;
+  overflow: hidden;
+}
+.wrap view text {
+  color: #666666;
+}
+.wrap view .loc {
+  width: 30rpx;
+  padding: 10rpx;
+  vertical-align: -16rpx;
+}
+.wrap view input {
+  line-height: 86rpx;
+  height: 86rpx;
+  color: #999999;
+  width: 500rpx;
+  float: right;
+  text-align: right;
+}
+.wrap view .sr {
+  line-height: 86rpx;
+  height: 86rpx;
+  color: #999999;
+  width: 500rpx;
+  float: right;
+  text-align: right;
+  border: none;
+}
+.wrap view picker {
+  float: right;
+  border: none;
+}
+.wrap view picker view {
+  border: none;
+  color: #999999;
+}
+.wrap textarea {
+  padding: 20rpx 0;
+  margin-bottom: 30rpx;
+  width: 100%;
+  font-size: 28rpx;
+  color: #999999;
+}
+.line {
+  width: 100%;
+  height: 20rpx;
+  background: #eeeeee;
+}
+.upfile {
+  margin: 0 35rpx;
+}
+.upfile view {
+  font-size: 28rpx;
+  color: #666666;
+  padding: 30rpx 0;
+  margin-bottom: 24rpx;
+  border-bottom: #eeeeee solid 1rpx;
+}
+.upfile image {
+  width: 220rpx;
+  height: 150rpx;
+  margin-left: 10rpx;
+}
+.upfile image:nth-of-type(3n + 1) {
+  margin-left: 0;
+}
+.fenlei-close {
+  display: none;
+}
+.fenlei {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  z-index: 200;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.fenlei .section {
+  margin: 200rpx 35rpx 35rpx 35rpx;
+  width: 680rpx;
+  height: 400rpx;
+  background: #ffffff;
+  overflow: hidden;
+  padding: 35rpx 0;
+  border-radius: 10rpx;
+}
+.fenlei .section scroll-view {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  width: 33%;
+  border-right: solid #eeeeee 1rpx;
+}
+.fenlei .section scroll-view:last-of-type {
+  border: none;
+}
+.fenlei .section scroll-view view {
+  line-height: 50rpx;
+  color: #999999;
+  font-size: 24rpx;
+  text-align: center;
+}
+.save {
+  margin: 35rpx;
+  background: #27a6e6;
+}

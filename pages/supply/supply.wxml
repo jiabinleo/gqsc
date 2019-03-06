@@ -1,7 +1,7 @@
 <view class="wrap">
   <view>
     <text>标题</text>
-    <input type="text" bindinput="titleFn" placeholder='请输入'></input>
+    <input type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>供应类型</text>
@@ -9,52 +9,54 @@
   </view>
   <view>
     <text>供应区域</text>
+    <image class='loc' bindtap='locFn' src="../../images/loc.png" mode="widthFix"></image>
     <view class="sr" bindtap="diqu">{{are}}</view>
   </view>
   <view>
     <text>总数量（斤）</text>
-    <input type="text" bindinput='totalAmountFn' placeholder='请输入'></input>
+    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>起售量（斤）</text>
-    <input type="text" bindinput='minAmountFn' placeholder='请输入'></input>
+    <input type="text" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>供应价格</text>
-    <input type="text" bindinput='priceFn' placeholder='请输入'></input>
+    <input type="text" bindinput='priceFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>供货截止日期</text>
-    <picker mode="date" value="{{date}}" start="2015-09-01" end="2017-09-01" bindchange="supplyTimeFn">
-      <view>{{supplyTime}}</view>
+    <picker mode="date" value="{{date}}" start="2010-12-31" end="2999-12-31" bindchange="supplyTimeFn">
+      <view class="sr">{{supplyTime}}</view>
     </picker>
   </view>
   <view>
     <text>联系人</text>
-    <input type="text" bindinput="contactsFn" placeholder='请输入'></input>
+    <input type="text" bindinput="contactsFn" placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>联系电话</text>
-    <input type="text" bindinput="telephoneFn" placeholder='请输入'></input>
+    <input type="text" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入11位手机号码'></input>
   </view>
   <view>
     <text>商品详情</text>
   </view>
-  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder="请输入商品详情" />
+  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" placeholder="请输入商品详情" />
 </view>
 <!-- 图片上传 -->
+<view class="line"></view>
 <block>
   <view class="upfile">
     <view>上传图片</view>
     <block wx:for="{{upfile}}" wx:key="*this">
-      <image src="{{imgUrl+item}}" mode="widthFix"></image>
+      <image src="{{imgUrl+item}}" mode="aspectFill"></image>
     </block>
-    <image catchtap="chooseImage" mode="widthFix" src="../../images/039.png"></image>
+    <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
   </view>
 </block>
 <!--供应类型-->
 <block>
-  <view catchtap="hideFenlei" class='{{fenlei}}'>
+  <view catchtap="hideFenlei" class='{{fenlei}}' catchtouchmove="preventTouchMove">
     <view catchtap="zsmp" class="section" style="height: 400rpx;">
       <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeOne}}" wx:key="*this">
@@ -74,4 +76,4 @@
     </view>
   </view>
 </block>
-<button class="save" type="primary" bindtap="save">提交</button>
+<button class="save" type="primary" bindtap="save">确认信息</button>
