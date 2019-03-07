@@ -27,8 +27,7 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [
-      {
+    getAllTreePaixu: [{
         text: "不限",
         id: ""
       },
@@ -67,20 +66,21 @@ Page({
     },
     token: null,
     user: null,
-    mask: "mask-close"
+    mask: "mask-close",
+    openid: null
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  bindUserTap: function() {
+  bindUserTap: function () {
     wx.navigateTo({
       url: "../userCenter/userCenter"
     });
   },
-  onLoad: function() {
+  onLoad: function () {
     console.log("/////////////////////");
     var _this = this;
     if (app.globalData.userInfo) {
@@ -127,7 +127,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         _this.setData({
           bannerList: res.data.data.bannerList
         });
@@ -139,7 +139,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeFenlei: res.data.data.trees
@@ -153,7 +153,7 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.code === "0") {
           _this.setData({
             getAllTreeDiqu: res.data.data.trees
@@ -166,7 +166,7 @@ Page({
     console.log();
   },
   //nav
-  gongying: function() {
+  gongying: function () {
     this.setData({
       navActive: true,
       fl: false,
@@ -178,7 +178,7 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function() {
+  qiugou: function () {
     this.setData({
       navActive: false,
       fl: false,
@@ -311,30 +311,24 @@ Page({
       } else {
         console.log(this.data.treeTwo);
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: this.data.treeTwo[0].id
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: this.data.treeTwo[0].id
+          }]
         });
       }
     } else {
       this.setData({
-        treeTwo: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeTwo: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
       this.setData({
-        treeThree: [
-          {
-            text: "全部",
-            id: e.target.id.split("t")[1]
-          }
-        ]
+        treeThree: [{
+          text: "全部",
+          id: e.target.id.split("t")[1]
+        }]
       });
     }
   },
@@ -347,12 +341,10 @@ Page({
         });
       } else {
         this.setData({
-          treeThree: [
-            {
-              text: "全部",
-              id: e.target.id.split("t")[1]
-            }
-          ]
+          treeThree: [{
+            text: "全部",
+            id: e.target.id.split("t")[1]
+          }]
         });
       }
     } else {
@@ -392,45 +384,45 @@ Page({
     this.getPage(this.data.pageData);
   },
   //定位
-  loadInfo: function() {
+  loadInfo: function () {
     var that = this;
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function(res) {
+      success: function (res) {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
         that.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function(latitude, longitude) {
+  loadCity: function (latitude, longitude) {
     var that = this;
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function(data) {
+      success: function (data) {
         // console.log(data);
       },
-      fail: function(info) {}
+      fail: function (info) {}
     });
 
     myAmapFun.getWeather({
-      success: function(data) {
+      success: function (data) {
         that.setData({
           weather: data
         });
         that.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function(info) {
+      fail: function (info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function(adcode) {
+  liveData: function (adcode) {
     console.log(adcode);
     var that = this;
     wx.request({
@@ -438,15 +430,14 @@ Page({
       header: {
         "Content-Type": "application/json"
       },
-      success: function(res) {
+      success: function (res) {
         wx.request({
-          url:
-            "http://120.78.209.238:50010/v1/area/getParentList?id=" +
+          url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
           },
-          success: function(res) {
+          success: function (res) {
             that.data.pageData.areaId =
               res.data.data.list[res.data.data.list.length - 1].id;
             that.getPage(that.data.pageData);
@@ -460,7 +451,7 @@ Page({
       }
     });
   },
-  getPage: function(pageData) {
+  getPage: function (pageData) {
     console.log(pageData);
     var that = this;
     var icon = null;
@@ -478,14 +469,13 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         var newsList = res.data.data.page.rows;
         for (let i = 0; i < res.data.data.page.rows.length; i++) {
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -505,7 +495,7 @@ Page({
       }
     });
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
     var that = this;
@@ -523,7 +513,7 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         if (that.data.newList.length === res.data.data.page.total) {
           return;
         }
@@ -532,8 +522,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = that.data.imgUrl + icon;
             }
           } else {
@@ -557,7 +546,7 @@ Page({
       }
     });
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
@@ -568,22 +557,48 @@ Page({
     console.log(this.data.pageData);
     console.log("下拉刷新");
   },
-  getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo;
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+  getUserInfo: function (e) {
+    wx.login({
+      success: (res) => {
+        console.log(res)
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=wx2623aa28384009f5&secret=0063ddf49973e5cb547661200a8e3b21&js_code=' + res.code + '&grant_type=authorization_code',
+            data: {
+              code: res.code
+            },
+            success: (res) => {
+              if (res.data.openid) {
+                app.globalData.userInfo = e.detail.userInfo;
+                this.setData({
+                  userInfo: e.detail.userInfo,
+                  hasUserInfo: true
+                });
+                console.log(e.detail.userInfo);
+                var userInfo = e.detail.userInfo;
+                this.setData({
+                  openid: res.data.openid
+                })
+                this.autoLogin(
+                  res.data.openid,
+                  userInfo.avatarUrl,
+                  userInfo.nickName,
+                  userInfo.gender
+                );
+              } else {
+                this.getUserInfo()
+              }
+            }
+          })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
     });
-    console.log(e.detail.userInfo);
-    var userInfo = e.detail.userInfo;
-    this.autoLogin(
-      this.globalData.openid,
-      userInfo.avatarUrl,
-      userInfo.nickName,
-      userInfo.gender
-    );
   },
-  autoLogin: function(openId, icon, userName, sex) {
+  autoLogin: function (openId, icon, userName, sex) {
     wx.request({
       url: "http://120.78.209.238:50010/v1/user/otherLogin",
       method: "post",
@@ -612,18 +627,18 @@ Page({
       }
     });
   },
-  close: function() {
+  close: function () {
     this.setData({
       mask: "mask-close"
     });
   },
-  open: function() {
+  open: function () {
     this.setData({
       mask: "mask"
     });
   },
-  preventTouchMove: function() {},
-  supply: function() {
+  preventTouchMove: function () {},
+  supply: function () {
     wx.navigateTo({
       url: "../supply/supply"
     });
@@ -631,7 +646,7 @@ Page({
       mask: "mask-close"
     });
   },
-  buy: function() {
+  buy: function () {
     wx.navigateTo({
       url: "../buy/buy"
     });

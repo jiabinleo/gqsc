@@ -313,7 +313,7 @@ Page({
           wx.showToast({
             title: "供应信息发布成功",
             icon: "success",
-            duration: 102000
+            duration: 2000
           });
         } else if (res.data.code === "9") {
           console.log('99999999')

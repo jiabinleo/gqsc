@@ -1,0 +1,111 @@
+/* pages/myRelease/myRelease.wxss */
+.menu {
+    height: 80rpx;
+    width: 100%;
+    border-bottom: solid 1rpx #eeeeee;
+    padding: 0 35rpx;
+
+    view {
+        float: left;
+        width: 340rpx;
+        text-align: center;
+
+        &.btn {
+            text {
+                color: #32B5EE;
+                border-bottom: solid 2rpx #32B5EE;
+            }
+
+        }
+
+        text {
+            display: inline-block;
+            font-size: 26rpx;
+            color: #999999;
+            line-height: 80rpx;
+
+        }
+    }
+}
+
+.list-wrap {
+    padding: 0 35rpx;
+    font-size: 22rpx;
+
+    .list {
+        border-bottom: solid 1rpx #d3d3d3;
+        padding: 35rpx 0;
+        overflow: hidden;
+        height: 150rpx;
+
+        .left {
+            float: left;
+            width: 220rpx;
+
+            image {
+                width: 220rpx;
+                height: 146rpx;
+                border-radius: 10rpx;
+            }
+        }
+
+        .center {
+            width: 356rpx;
+            margin-left: 16rpx;
+            float: left;
+            margin-right: 12rpx;
+
+            .title {
+                text-overflow: -o-ellipsis-lastline;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                align-content: center;
+                height: 32rpx;
+                color: #333333;
+            }
+
+            .detail {
+                text-overflow: -o-ellipsis-lastline;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                align-content: center;
+                height: 90rpx;
+                color: #666666;
+            }
+
+            .areaTime {
+                font-size: 20rpx;
+
+                text {
+                    color: #999999;
+
+                    &:last-of-type {
+                        padding-left: 10rpx;
+                    }
+                }
+            }
+        }
+
+        .right {
+            position: relative;
+            width: 60rpx;
+            float: right;
+            height: 150rpx;
+
+            image {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 50rpx;
+                height: 50rpx;
+
+            }
+        }
+    }
+}
