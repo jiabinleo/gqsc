@@ -652,5 +652,12 @@ Page({
     this.setData({
       mask: "mask-close"
     });
+  },
+  dianzan: function (e) {
+    console.log(e.currentTarget.dataset.iz)
+    console.log(e.currentTarget.dataset.id)
+    if (e.currentTarget.dataset.iz) {
+      
+    } else {}
   }
 });

@@ -86,9 +86,10 @@
             </view>
           </view>
           <view class="rddz">
-            <view class="dz">
-              <image src="../../images/dz.png" mode='widthFix'></image>
-              <text>{{item.zan}}人点赞</text>
+            <view class="dz" data-id="{{item.id}}" data-iz="{{item.isZan}}" bindtap='dianzan'>
+              <image wx:if="{{item.isZan}}" src="../../images/dz_pre.png" mode='widthFix'></image>
+              <image wx:else src="../../images/dz.png" mode='widthFix'></image>
+              <text>{{item.zan}}人收藏</text>
             </view>
             <view class="rd">
               <image src="../../images/rd.png" mode='widthFix'></image>
