@@ -15,7 +15,8 @@ Page({
     imgUrl: null,
     modalFlag: true,
     btn1: 'btn',
-    btn2: ''
+    btn2: '',
+    pageType: 1
   },
 
   /**
@@ -185,6 +186,9 @@ Page({
     var pageData = this.data.pageData
     pageData.type = Number(e.currentTarget.dataset.type)
     pageData.pageNum = 1
+    this.setData({
+      pageType: e.currentTarget.dataset.type
+    })
     if (e.currentTarget.dataset.type == '1') {
       this.setData({
         btn1: 'btn',
@@ -200,6 +204,23 @@ Page({
       pageData: pageData
     })
     this.getMyPage()
+  },
+  touchList: function (e) {
+    console.log(e.currentTarget.dataset.id)
+    console.log('=======')
+  },
+  onTouch: function (e) {
+    console.log(e.currentTarget.dataset.type)
+    if (e.currentTarget.dataset.type == 1) {
+      wx.navigateTo({
+        url: "../mySupply/mySupply?id=" + e.currentTarget.dataset.id
+      });
+    } else if (e.currentTarget.dataset.type == 2) {
+      wx.navigateTo({
+        url: "../myBuy/myBuy?id=" + e.currentTarget.dataset.id
+      });
+    }
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

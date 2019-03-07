@@ -1,0 +1,137 @@
+/* pages/supply/supply.wxss */
+
+.wrap {
+    padding: 0 35rpx;
+
+    view {
+        border-bottom: solid 1rpx #eeeeee;
+        font-size: 28rpx;
+        line-height: 86rpx;
+        overflow: hidden;
+
+        text {
+            color: #666666;
+        }
+
+        .loc {
+            width: 30rpx;
+            padding: 10rpx;
+            vertical-align: -16rpx;
+        }
+
+        input {
+            line-height: 86rpx;
+            height: 86rpx;
+            color: #999999;
+            width: 500rpx;
+            float: right;
+            text-align: right;
+        }
+
+        .sr {
+            line-height: 86rpx;
+            height: 86rpx;
+            color: #999999;
+            width: 500rpx;
+            float: right;
+            text-align: right;
+            border: none;
+        }
+
+        picker {
+            float: right;
+            border: none;
+
+            view {
+                border: none;
+                color: #999999;
+            }
+        }
+    }
+
+    textarea {
+        padding: 20rpx 0;
+        margin-bottom: 30rpx;
+        width: 100%;
+        font-size: 28rpx;
+        color: #999999;
+    }
+}
+
+.line {
+    width: 100%;
+    height: 20rpx;
+    background: #eeeeee;
+}
+
+.upfile {
+    margin: 0 35rpx;
+
+    view {
+        font-size: 28rpx;
+        color: #666666;
+        padding: 30rpx 0;
+        margin-bottom: 24rpx;
+        border-bottom: #eeeeee solid 1rpx;
+    }
+
+    image {
+        width: 220rpx;
+        height: 150rpx;
+        margin-left: 10rpx;
+
+        // margin-top: 24rpx;
+        &:nth-of-type(3n + 1) {
+            margin-left: 0;
+        }
+    }
+}
+
+.fenlei-close {
+    display: none;
+}
+
+.fenlei {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: 200;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .section {
+        margin: 200rpx 35rpx 35rpx 35rpx;
+        width: 680rpx;
+        height: 400rpx;
+        background: #ffffff;
+        overflow: hidden;
+        padding: 35rpx 0;
+        border-radius: 10rpx;
+
+        scroll-view {
+            margin: 0;
+            padding: 0;
+            display: inline-block;
+            width: 33%;
+            border-right: solid #eeeeee 1rpx;
+
+            &:last-of-type {
+                border: none;
+            }
+
+            view {
+                line-height: 50rpx;
+                color: #999999;
+                font-size: 24rpx;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.save {
+    margin: 35rpx;
+    background: #27a6e6;
+}

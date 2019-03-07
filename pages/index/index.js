@@ -81,7 +81,6 @@ Page({
     });
   },
   onLoad: function () {
-    console.log("/////////////////////");
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({

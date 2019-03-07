@@ -371,6 +371,28 @@ Page({
       });
     }
   },
+  delImg: function (e) {
+    console.log(e)
+    this.setData({
+      modalFlag: false
+    })
+    wx.showModal({
+      title: "确定删除",
+      content: '第 ' + (e.currentTarget.dataset.index + 1) + ' 张图片',
+      confirmColor: '#3CC51F',
+      success: res => {
+        if (res.confirm) {
+          var upfile = this.data.upfile
+          upfile.splice(e.currentTarget.dataset.index, 1)
+          this.setData({
+            upfile: upfile
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
   preventTouchMove: function() {},
   /**
    * 生命周期函数--监听页面初次渲染完成

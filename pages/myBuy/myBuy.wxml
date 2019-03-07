@@ -1,7 +1,7 @@
 <view class="wrap">
   <view>
     <text>标题</text>
-    <input type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput="titleFn" placeholder-class="sr" value='{{_title}}' placeholder='请输入标题'></input>
   </view>
   <view>
     <text>求购类型</text>
@@ -14,15 +14,15 @@
   </view>
   <view>
     <text>总数量（斤）</text>
-    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" value='{{totalAmount}}' placeholder='请输入'></input>
   </view>
   <view>
     <text>起购量（斤）</text>
-    <input type="text" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput='minAmountFn' placeholder-class="sr" value='{{minAmount}}' placeholder='请输入'></input>
   </view>
   <view>
     <text>求购价格</text>
-    <input type="text" bindinput='priceFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput='priceFn' placeholder-class="sr" value='{{price}}' placeholder='请输入'></input>
   </view>
   <view>
     <text>求购截止日期</text>
@@ -32,16 +32,16 @@
   </view>
   <view>
     <text>联系人</text>
-    <input type="text" bindinput="contactsFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput="contactsFn" placeholder-class="sr" value='{{contacts}}' placeholder='请输入'></input>
   </view>
   <view>
     <text>联系电话</text>
-    <input type="text" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input type="text" bindinput="telephoneFn" placeholder-class="sr" value='{{telephone}}' placeholder='请输入'></input>
   </view>
   <view>
     <text>商品详情</text>
   </view>
-  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" placeholder="请输入商品详情" />
+  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" value="{{detail}}" placeholder="请输入商品详情" />
 </view>
 <!-- 图片上传 -->
 <view class="line"></view>
@@ -49,7 +49,7 @@
   <view class="upfile">
     <view>上传图片</view>
     <block wx:for="{{upfile}}" wx:key="*this">
-      <image catchtap="delImg" data-index="{{index}}" src="{{imgUrl+item}}" mode="aspectFill"></image>
+      <image  catchtap="delImg" data-index="{{index}}" src="{{imgUrl+item}}" mode="aspectFill"></image>
     </block>
     <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
   </view>

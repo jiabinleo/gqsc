@@ -12,6 +12,12 @@ Page({
     fenlei: "fenlei-close",
     type: "请选择类型",
     are: "请选择地区",
+    totalAmount: '',
+    minAmount: '',
+    price: '',
+    contacts: '',
+    telephone: '',
+    detail: '',
     getAllTreeDiqu: [],
     fl: false,
     dq: false,
@@ -19,7 +25,7 @@ Page({
     imgUrl: null,
     _areaId: null,
     _cropId: null,
-    _title: null,
+    _title: "请输入标题",
     _detail: null,
     _contacts: null,
     _telephone: null,
@@ -28,13 +34,67 @@ Page({
     _supplyTime: null,
     _type: 1,
     _price: null,
-    supplyTime: "请选择截止日期"
+    supplyTime: "请选择截止日期",
+    id: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
+    console.log(options.id)
+    //获取数据
+    this.setData({
+      id: options.id
+    })
+    wx.request({
+      url: "http://120.78.209.238:50010/v1/supply/detail/" + options.id,
+      header: {
+        "Content-Type": "application/json"
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          console.log(res.data.data.marketSupply)
+          console.log(res.data.data.marketSupply.title)
+          var fileList = res.data.data.marketSupply.fileList
+          console.log(fileList)
+          var fileListArr = []
+          if (fileList) {
+            fileListArr = fileList.split(',')
+          }
+          console.log(fileListArr)
+          var supplyTime = res.data.data.marketSupply.supplyTime
+          var supplyTimeStr = ""
+          if (supplyTime) {
+            var supplyTimeStr = supplyTime.split(' ')[0]
+          } else {
+            supplyTimeStr = supplyTime
+          }
+          this.setData({
+            _title: res.data.data.marketSupply.title,
+            type: res.data.data.marketSupply.cropName,
+            _cropId: res.data.data.marketSupply.cropId,
+            are: res.data.data.marketSupply.area,
+            _areaId: res.data.data.marketSupply.areaId,
+            totalAmount: res.data.data.marketSupply.totalAmount,
+            _totalAmount: res.data.data.marketSupply.totalAmount,
+            minAmount: res.data.data.marketSupply.minAmount,
+            _minAmount: res.data.data.marketSupply.minAmount,
+            price: res.data.data.marketSupply.price,
+            _price: res.data.data.marketSupply.price,
+            supplyTime: supplyTimeStr,
+            _supplyTime: supplyTimeStr,
+            contacts: res.data.data.marketSupply.contacts,
+            _contacts: res.data.data.marketSupply.contacts,
+            telephone: res.data.data.marketSupply.telephone,
+            _telephone: res.data.data.marketSupply.telephone,
+            detail: res.data.data.marketSupply.detail,
+            _detail: res.data.data.marketSupply.detail,
+            upfile: fileListArr
+          })
+        }
+      }
+    });
     //分类
     wx.request({
       url: "http://120.78.209.238:50010/v1/goodsCategory/getAllTree",
@@ -69,7 +129,7 @@ Page({
       });
     }
     wx.setNavigationBarTitle({
-      title: '发布供应'
+      title: '我发布的供应'
     })
   },
   fenlei() {
@@ -191,49 +251,49 @@ Page({
       });
     }
   },
-  hideFenlei: function() {
+  hideFenlei: function () {
     this.setData({
       fenlei: "fenlei-close"
     });
   },
-  zsmp: function() {},
+  zsmp: function () {},
   //数据双向绑定
-  titleFn: function(e) {
+  titleFn: function (e) {
     this.setData({
       _title: e.detail.value
     });
   },
-  totalAmountFn: function(e) {
+  totalAmountFn: function (e) {
     this.setData({
       _totalAmount: e.detail.value
     });
   },
-  minAmountFn: function(e) {
+  minAmountFn: function (e) {
     this.setData({
       _minAmount: e.detail.value
     });
   },
-  priceFn: function(e) {
+  priceFn: function (e) {
     this.setData({
       _price: e.detail.value
     });
   },
-  contactsFn: function(e) {
+  contactsFn: function (e) {
     this.setData({
       _contacts: e.detail.value
     });
   },
-  telephoneFn: function(e) {
+  telephoneFn: function (e) {
     this.setData({
       _telephone: e.detail.value
     });
   },
-  detailFn: function(e) {
+  detailFn: function (e) {
     this.setData({
       _detail: e.detail.value
     });
   },
-  supplyTimeFn: function(e) {
+  supplyTimeFn: function (e) {
     console.log(e.detail.value);
 
     this.setData({
@@ -242,7 +302,7 @@ Page({
     });
   },
   //上传图片
-  chooseImage: function() {
+  chooseImage: function () {
     var openid = wx.getStorageSync("openid");
     var that = this;
     wx.chooseImage({
@@ -269,14 +329,14 @@ Page({
               upfile: file
             });
           },
-          fail: function(res) {
+          fail: function (res) {
             console.log("fail");
           }
         });
       }
     });
   },
-  save: function() {
+  save: function () {
     var upfiles = this.data.upfile;
     var _fileList = "";
     for (let i = 0; i < upfiles.length; i++) {
@@ -284,6 +344,7 @@ Page({
     }
     _fileList = _fileList.slice(0, _fileList.length - 1);
     var data = {
+      id: this.data.id,
       areaId: this.data._areaId,
       cropId: this.data._cropId,
       title: this.data._title,
@@ -311,13 +372,13 @@ Page({
         if (res.data.code === "0") {
           console.log('000000')
           wx.showToast({
-            title: "供应信息发布成功",
+            title: "修改成功",
             icon: "success",
             duration: 2000
           });
-          wx.navigateBack({
-            delta: 1
-          })
+          // wx.navigateBack({
+          //   delta: 1
+          // })
         } else if (res.data.code === "9") {
           console.log('99999999')
           wx.showToast({
@@ -335,7 +396,7 @@ Page({
       }
     });
   },
-  autoLogin: function(openId, icon, userName, sex) {
+  autoLogin: function (openId, icon, userName, sex) {
     wx.request({
       url: "http://120.78.209.238:50010/v1/user/otherLogin",
       method: "post",
@@ -364,7 +425,7 @@ Page({
       }
     });
   },
-  locFn: function() {
+  locFn: function () {
     var address = wx.getStorageSync("address");
     console.log(address);
     if (address) {
@@ -374,7 +435,8 @@ Page({
       });
     }
   },
-  delImg: function(e) {
+  preventTouchMove: function () {},
+  delImg: function (e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -396,26 +458,25 @@ Page({
       }
     })
   },
-  preventTouchMove: function() {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -425,11 +486,11 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function () {}
   // preventTouchMove: function() {}
 });

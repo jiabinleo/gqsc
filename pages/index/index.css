@@ -125,9 +125,12 @@
 }
 .newList .imgFile image {
   width: 220rpx;
-  height: 140rpx;
-  margin-right: 10rpx;
+  height: 146rpx;
+  margin-left: 10rpx;
   margin-top: 10rpx;
+}
+.newList .imgFile image:nth-of-type(3n+1) {
+  margin-left: 0;
 }
 .newList .rddz {
   overflow: hidden;

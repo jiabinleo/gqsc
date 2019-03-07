@@ -9,7 +9,7 @@
           <block wx:for="{{bannerList}}" wx:key="*this">
             <swiper-item>
               <view class="swiper-item">
-                <image src="{{imgUrl + item.bannerImg}}" mode="widthFix"></image>
+                <image lazy-load="true" src="{{imgUrl + item.bannerImg}}" mode="widthFix"></image>
               </view>
             </swiper-item>
           </block>

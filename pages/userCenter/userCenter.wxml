@@ -18,3 +18,34 @@
     </view>
   </view>
 </view>
+<view class='footer'>
+  <view class="nav" bindtap='bindIndexTap'>
+    <image src="../../images/gq.png"></image>
+    <text>首页</text>
+  </view>
+  <view class="nav" bindtap="open">
+    <image src="../../images/gq.png"></image>
+    <text>发布</text>
+  </view>
+  <view class="nav" bindtap='bindUserTap'>
+    <image src="../../images/gq.png"></image>
+    <text>我的</text>
+  </view>
+</view>
+<view class="{{mask}}" catchtouchmove="preventTouchMove">
+  <view class='bottom'>
+    <image class="close" bindtap="close" src="../../images/close-gray.png"></image>
+    <view class='nav'>
+      <view bindtap="supply">
+        <image src='../../images/035.png'></image>
+        <text>发布供应</text>
+      </view>
+    </view>
+    <view class='nav'>
+      <view bindtap='buy'>
+        <image src='../../images/036.png'></image>
+        <text>发布求购</text>
+      </view>
+    </view>
+  </view>
+</view>
