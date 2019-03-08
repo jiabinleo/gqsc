@@ -16,6 +16,7 @@ Page({
     fl: false,
     dq: false,
     upfile: [],
+    upfileWx: [],
     imgUrl: null,
     _areaId: null,
     _cropId: null,
@@ -243,14 +244,17 @@ Page({
   },
   //上传图片
   chooseImage: function() {
-    var openid = wx.getStorageSync("openid");
-    var that = this;
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
       sourceType: ["album", "camera"],
       success: res => {
         var tempFilePaths = res.tempFilePaths;
+        var fileWx = this.data.upfileWx;
+        fileWx.push(tempFilePaths[0]);
+        this.setData({
+          upfileWx: fileWx
+        });
         wx.uploadFile({
           url: "http://120.78.209.238:50001/upload/img",
           filePath: tempFilePaths[0],

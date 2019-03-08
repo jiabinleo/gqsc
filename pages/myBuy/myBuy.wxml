@@ -48,8 +48,8 @@
 <block>
   <view class="upfile">
     <view>上传图片</view>
-    <block wx:for="{{upfile}}" wx:key="*this">
-      <image  catchtap="delImg" data-index="{{index}}" src="{{imgUrl+item}}" mode="aspectFill"></image>
+    <block wx:for="{{upfileWx}}" wx:key="*this">
+      <image  catchtap="delImg" data-index="{{index}}" src="{{iitem}}" mode="aspectFill"></image>
     </block>
     <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
   </view>

@@ -244,8 +244,6 @@ Page({
   },
   //上传图片
   chooseImage: function() {
-    var openid = wx.getStorageSync("openid");
-    var that = this;
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
