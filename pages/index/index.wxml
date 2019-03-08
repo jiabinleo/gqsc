@@ -37,17 +37,17 @@
           <view class="section" style="height: {{viewHeight}}px;">
             <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
               <block wx:for="{{treeOne}}" wx:key="*this">
-                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
               </block>
             </scroll-view>
             <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
               <block wx:for="{{treeTwo}}" wx:key="*this">
-                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green">{{item.text}}</view>
+                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
               </block>
             </scroll-view>
             <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
               <block wx:for="{{treeThree}}" wx:key="*this">
-                <view id="t{{item.id}}" class="scroll-view-item bc_green">{{item.text}}</view>
+                <view id="t{{item.id}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
               </block>
             </scroll-view>
           </view>

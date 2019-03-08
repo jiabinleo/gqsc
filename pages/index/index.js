@@ -67,20 +67,23 @@ Page({
     token: null,
     user: null,
     mask: "mask-close",
-    openid: null
+    openid: null,
+    active1: null,
+    active2: null,
+    active3: null
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  bindUserTap: function() {
+  bindUserTap: function () {
     wx.navigateTo({
       url: "../userCenter/userCenter"
     });
   },
-  onLoad: function() {
+  onLoad: function () {
     var _this = this;
     if (app.globalData.userInfo) {
       this.setData({
@@ -175,25 +178,31 @@ Page({
     console.log();
   },
   //nav
-  gongying: function() {
+  gongying: function () {
     this.setData({
       navActive: true,
       fl: false,
       dq: false,
       px: false,
-      viewHeight: 0
+      viewHeight: 0,
+      active1: null,
+      active2: null,
+      active3: null
     });
     this.data.pageData.type = 1;
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function() {
+  qiugou: function () {
     this.setData({
       navActive: false,
       fl: false,
       dq: false,
       px: false,
-      viewHeight: 0
+      viewHeight: 0,
+      active1: null,
+      active2: null,
+      active3: null
     });
     this.data.pageData.type = 2;
     this.data.pageData.pageNum = 1;
@@ -218,6 +227,11 @@ Page({
     });
   },
   fenlei() {
+    this.setData({
+      active1: null,
+      active2: null,
+      active3: null
+    })
     if (this.data.fl) {
       this.setData({
         fl: false,
@@ -251,6 +265,11 @@ Page({
     }
   },
   diqu() {
+    this.setData({
+      active1: null,
+      active2: null,
+      active3: null
+    })
     if (this.data.dq) {
       this.setData({
         fl: false,
@@ -285,6 +304,11 @@ Page({
     }
   },
   paixu() {
+    this.setData({
+      active1: null,
+      active2: null,
+      active3: null
+    })
     if (this.data.px) {
       this.setData({
         fl: false,
@@ -307,7 +331,9 @@ Page({
     });
   },
   oneTag(e) {
-    console.log(e);
+    this.setData({
+      active1: e.target.dataset.id
+    })
     if (this.data.treeOne[e.target.dataset.id].children.length) {
       this.setData({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
@@ -342,6 +368,9 @@ Page({
     }
   },
   twoTag(e) {
+    this.setData({
+      active2: e.target.dataset.id
+    })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
       console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
@@ -376,6 +405,9 @@ Page({
     }
   },
   threeTag(e) {
+    this.setData({
+      active3: e.target.dataset.id
+    })
     if (this.data.fl) {
       this.data.pageData.cropId = e.target.id.split("t")[1];
       this.setData({
@@ -396,45 +428,45 @@ Page({
     this.getPage(this.data.pageData);
   },
   //定位
-  loadInfo: function() {
+  loadInfo: function () {
     var that = this;
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function(res) {
+      success: function (res) {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
         that.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function(latitude, longitude) {
+  loadCity: function (latitude, longitude) {
     var that = this;
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function(data) {
+      success: function (data) {
         // console.log(data);
       },
-      fail: function(info) {}
+      fail: function (info) {}
     });
 
     myAmapFun.getWeather({
-      success: function(data) {
+      success: function (data) {
         that.setData({
           weather: data
         });
         that.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function(info) {
+      fail: function (info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function(adcode) {
+  liveData: function (adcode) {
     console.log(adcode);
     var that = this;
     wx.request({
@@ -463,7 +495,7 @@ Page({
       }
     });
   },
-  getPage: function(pageData) {
+  getPage: function (pageData) {
     console.log(pageData);
     var that = this;
     var icon = null;
@@ -483,7 +515,7 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         var newsList = res.data.data.page.rows;
         for (let i = 0; i < res.data.data.page.rows.length; i++) {
           icon = res.data.data.page.rows[i].icon;
@@ -509,7 +541,7 @@ Page({
       }
     });
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
     var that = this;
@@ -529,7 +561,7 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function(res) {
+      success: function (res) {
         if (that.data.newList.length === res.data.data.page.total) {
           return;
         }
@@ -562,7 +594,7 @@ Page({
       }
     });
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
@@ -586,7 +618,7 @@ Page({
     console.log(this.data.pageData);
     console.log("下拉刷新");
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     wx.login({
       success: res => {
         console.log(res);
@@ -629,7 +661,7 @@ Page({
       }
     });
   },
-  autoLogin: function(openId, icon, userName, sex) {
+  autoLogin: function (openId, icon, userName, sex) {
     wx.request({
       url: "http://120.78.209.238:50010/v1/user/otherLogin",
       method: "post",
@@ -658,18 +690,18 @@ Page({
       }
     });
   },
-  close: function() {
+  close: function () {
     this.setData({
       mask: "mask-close"
     });
   },
-  open: function() {
+  open: function () {
     this.setData({
       mask: "mask"
     });
   },
-  preventTouchMove: function() {},
-  supply: function() {
+  preventTouchMove: function () {},
+  supply: function () {
     wx.navigateTo({
       url: "../supply/supply"
     });
@@ -677,7 +709,7 @@ Page({
       mask: "mask-close"
     });
   },
-  buy: function() {
+  buy: function () {
     wx.navigateTo({
       url: "../buy/buy"
     });
@@ -685,7 +717,7 @@ Page({
       mask: "mask-close"
     });
   },
-  shouCang: function(e) {
+  shouCang: function (e) {
     console.log(e.currentTarget.dataset.iz);
     console.log(e.currentTarget.dataset.id);
     console.log(e.currentTarget.dataset.index);
@@ -755,5 +787,5 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {}
+  onShow: function () {}
 });
