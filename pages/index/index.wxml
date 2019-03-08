@@ -86,10 +86,10 @@
             </view>
           </view>
           <view class="rddz">
-            <view class="dz" data-id="{{item.id}}" data-iz="{{item.isZan}}" bindtap='dianzan'>
-              <image wx:if="{{item.isZan}}" src="../../images/dz_pre.png" mode='widthFix'></image>
-              <image wx:else src="../../images/dz.png" mode='widthFix'></image>
-              <text>{{item.zan}}人收藏</text>
+            <view class="dz" data-index="{{index}}" data-id="{{item.id}}" data-iz="{{item.isCollection}}" bindtap='shouCang'>
+              <image wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
+              <image wx:else src="../../images/sc.png" mode='widthFix'></image>
+              <text>{{item.collectionNum}}人收藏</text>
             </view>
             <view class="rd">
               <image src="../../images/rd.png" mode='widthFix'></image>

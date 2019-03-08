@@ -376,9 +376,9 @@ Page({
             icon: "success",
             duration: 2000
           });
-          // wx.navigateBack({
-          //   delta: 1
-          // })
+          wx.navigateBack({
+            delta: 1
+          })
         } else if (res.data.code === "9") {
           console.log('99999999')
           wx.showToast({

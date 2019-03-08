@@ -83,11 +83,14 @@
         margin-top: 20rpx;
 
         image {
-            width: 295rpx;
-            height: 193rpx;
-            margin-right: 10rpx;
+            width: 330rpx;
+            height: 214rpx;
             margin-top: 10rpx;
             border-radius: 10rpx;
+
+            &:nth-of-type(2n) {
+                margin-left: 20rpx;
+            }
         }
     }
 
@@ -107,52 +110,18 @@
             width: 49%;
             height: 52rpx;
             line-height: 52rpx;
-            margin : 20rpx 0;
+            margin: 20rpx 0;
             text-align: center;
-            border-right: solid 1rpx #d3d3d3;
+
+            &:first-of-type {
+                border-right: solid 1rpx #d3d3d3;
+            }
 
             image {
                 width: 36rpx;
                 height: 36rpx;
                 vertical-align: middle;
                 margin-right: 10rpx;
-            }
-        }
-
-        .right {
-            float: left;
-            overflow: hidden;
-            height: 92rpx;
-            text-align: center;
-            width: 50%;
-            color: #999999;
-
-            .dz {
-                float: left;
-                width: 50%;
-
-                image {
-                    width: 30rpx;
-                    height: 30rpx;
-                }
-
-                view {
-                    font-size: 26rpx;
-                }
-            }
-
-            .sc {
-                float: left;
-                width: 50%;
-
-                image {
-                    width: 30rpx;
-                    height: 30rpx;
-                }
-
-                view {
-                    font-size: 26rpx;
-                }
             }
         }
     }

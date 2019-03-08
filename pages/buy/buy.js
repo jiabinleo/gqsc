@@ -247,7 +247,7 @@ Page({
     var that = this;
     wx.chooseImage({
       count: 1,
-      sizeType: ["original", "compressed"],
+      sizeType: ["compressed"],
       sourceType: ["album", "camera"],
       success: res => {
         var tempFilePaths = res.tempFilePaths;
@@ -297,40 +297,114 @@ Page({
       type: this.data._type,
       fileList: _fileList
     };
-    var my_token = wx.getStorageSync("token");
-    wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/save",
-      method: "POST",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        login_token: my_token
-      },
-      data: data,
-      success: res => {
-        console.log(res);
-        if (res.data.code === "0") {
-          console.log('000000')
-          wx.showToast({
-            title: "供应信息发布成功",
-            icon: "success",
-            duration: 2000
-          });
-        } else if (res.data.code === "9") {
-          console.log('99999999')
-          wx.showToast({
-            title: "正在重新登录",
-            icon: "none",
-            duration: 2000
-          });
-          this.autoLogin(
-            app.globalData.openid,
-            app.globalData.userInfo.avatarUrl,
-            app.globalData.userInfo.nickName,
-            app.globalData.userInfo.gender
-          );
+    if (!data.title) {
+      wx.showToast({
+        title: "请输入标题",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.cropId) {
+      wx.showToast({
+        title: "请选择供应类型",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.areaId) {
+      wx.showToast({
+        title: "请选择地区",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.totalAmount) {
+      wx.showToast({
+        title: "请输入总数量",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.minAmount) {
+      wx.showToast({
+        title: "请输入起售量",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.price) {
+      wx.showToast({
+        title: "请输入供应价格",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.supplyTime) {
+      wx.showToast({
+        title: "请选择供货截止日期",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.contacts) {
+      wx.showToast({
+        title: "请输入联系人",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.telephone) {
+      wx.showToast({
+        title: "请输入11位手机号码",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.detail) {
+      wx.showToast({
+        title: "请输入商品详情",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.fileList) {
+      wx.showToast({
+        title: "请上传至少一张图片",
+        icon: "none",
+        duration: 1000
+      });
+    } else {
+      var my_token = wx.getStorageSync("token");
+      wx.request({
+        url: "http://120.78.209.238:50010/v1/supply/save",
+        method: "POST",
+        header: {
+          "Content-Type": "application/json;charset=UTF-8",
+          login_token: my_token
+        },
+        data: data,
+        success: res => {
+          console.log(res);
+          if (res.data.code === "0") {
+            console.log('000000')
+            wx.showToast({
+              title: "供应信息发布成功",
+              icon: "success",
+              duration: 2000
+            });
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1
+              }, 2000)
+            })
+          } else if (res.data.code === "9") {
+            console.log('99999999')
+            wx.showToast({
+              title: "正在重新登录",
+              icon: "none",
+              duration: 2000
+            });
+            this.autoLogin(
+              app.globalData.openid,
+              app.globalData.userInfo.avatarUrl,
+              app.globalData.userInfo.nickName,
+              app.globalData.userInfo.gender
+            );
+          }
         }
-      }
-    });
+      });
+    }
+
   },
   autoLogin: function(openId, icon, userName, sex) {
     wx.request({
@@ -371,7 +445,7 @@ Page({
       });
     }
   },
-  delImg: function (e) {
+  delImg: function(e) {
     console.log(e)
     this.setData({
       modalFlag: false

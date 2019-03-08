@@ -1,7 +1,7 @@
 <view class="wrap">
   <view>
     <text>标题</text>
-    <input type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input focus="true" type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>供应类型</text>
@@ -14,11 +14,11 @@
   </view>
   <view>
     <text>总数量（斤）</text>
-    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>起售量（斤）</text>
-    <input type="text" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>供应价格</text>
@@ -36,7 +36,7 @@
   </view>
   <view>
     <text>联系电话</text>
-    <input type="text" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入11位手机号码'></input>
+    <input type="number" maxlength="11" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入11位手机号码'></input>
   </view>
   <view>
     <text>商品详情</text>
@@ -48,8 +48,8 @@
 <block>
   <view class="upfile">
     <view>上传图片</view>
-    <block wx:for="{{upfile}}" wx:key="*this">
-      <image catchtap="delImg" data-index="{{index}}" src="{{imgUrl+item}}" mode="aspectFill"></image>
+    <block wx:for="{{upfileWx}}" wx:key="*this">
+      <image catchtap="delImg" data-index="{{index}}" src="{{item}}" mode="aspectFill"></image>
     </block>
     <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
   </view>

@@ -68,11 +68,13 @@
   margin-top: 20rpx;
 }
 .wrap .imgFile image {
-  width: 295rpx;
-  height: 193rpx;
-  margin-right: 10rpx;
+  width: 330rpx;
+  height: 214rpx;
   margin-top: 10rpx;
   border-radius: 10rpx;
+}
+.wrap .imgFile image:nth-of-type(2n) {
+  margin-left: 20rpx;
 }
 .wrap .bottom {
   margin-top: 30rpx;
@@ -91,6 +93,8 @@
   line-height: 52rpx;
   margin: 20rpx 0;
   text-align: center;
+}
+.wrap .bottom .left:first-of-type {
   border-right: solid 1rpx #d3d3d3;
 }
 .wrap .bottom .left image {
@@ -98,34 +102,4 @@
   height: 36rpx;
   vertical-align: middle;
   margin-right: 10rpx;
-}
-.wrap .bottom .right {
-  float: left;
-  overflow: hidden;
-  height: 92rpx;
-  text-align: center;
-  width: 50%;
-  color: #999999;
-}
-.wrap .bottom .right .dz {
-  float: left;
-  width: 50%;
-}
-.wrap .bottom .right .dz image {
-  width: 30rpx;
-  height: 30rpx;
-}
-.wrap .bottom .right .dz view {
-  font-size: 26rpx;
-}
-.wrap .bottom .right .sc {
-  float: left;
-  width: 50%;
-}
-.wrap .bottom .right .sc image {
-  width: 30rpx;
-  height: 30rpx;
-}
-.wrap .bottom .right .sc view {
-  font-size: 26rpx;
 }

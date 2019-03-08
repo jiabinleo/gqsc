@@ -1,2 +1,20 @@
-<!--pages/myCollection/myCollection.wxml-->
-<text>pages/myCollection/myCollection.wxml</text>
+<view class="list-wrap">
+  <block wx:for="{{pageRows}}" wx:key="*this">
+    <view class="list" data-id="{{item.id}}" data-detailId="{{item.detailId}}" data-type="{{pageType}}" catchtap="onTouch">
+      <view class="left">
+        <image lazy-load="true" src="{{item.icon}}" mode="aspectFill"></image>
+      </view>
+      <view class="center">
+        <view class="title">{{item.title}}</view>
+        <view class="detail">{{item.brief}}</view>
+        <view class="areaTime ">
+          <text>{{item.area}}</text>
+          <text>{{item.time}}</text>
+        </view>
+      </view>
+      <view class="right" catchtap="delMsg" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" data-detailId="{{item.detailId}}">
+        <image lazy-load="true" src="../../images/del.png" mode="widthFix"></image>
+      </view>
+    </view>
+  </block>
+</view>

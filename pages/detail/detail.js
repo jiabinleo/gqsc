@@ -10,9 +10,9 @@ Page({
     fileList: [],
     publishTime: '',
     supplyTime: '',
-    isZan: '',
-    isCollection: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    isCollection: false,
+    priceDW: ""
   },
 
   /**
@@ -24,50 +24,53 @@ Page({
         imgUrl: app.globalData.imgUrl
       });
     }
-    var that = this
-    console.log(options.id)
-    console.log(44)
+    console.log(options)
+    var my_token = wx.getStorageSync("token");
     wx.request({
       url: "http://120.78.209.238:50010/v1/supply/detail/" + options.id,
       header: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "login_token": my_token
       },
-      success: function(res) {
+      success: res => {
         var _marketSupply = res.data.data.marketSupply
+        this.setData({
+          isCollection: _marketSupply.isCollection
+        })
         var icon = _marketSupply.icon
         if (icon) {
           if (icon.indexOf("/")) {} else {
-            _marketSupply.icon = that.data.imgUrl + icon;
+            _marketSupply.icon = this.data.imgUrl + icon;
           }
         } else {
           _marketSupply.icon = "";
         }
         var _fileList = []
-        for (let i = 0; i < _marketSupply.fileList.split(',').length; i++) {
-          _fileList.push(that.data.imgUrl + _marketSupply.fileList.split(',')[i])
+        if (_marketSupply.fileList) {
+          for (let i = 0; i < _marketSupply.fileList.split(',').length; i++) {
+            _fileList.push(this.data.imgUrl + _marketSupply.fileList.split(',')[i])
+          }
+        } else {
+          _fileList = _marketSupply.fileList
         }
+
         var publishTime = _marketSupply.publishTime.split(' ')[0]
         var supplyTime = _marketSupply.supplyTime.split(' ')[0].split('-')
         var _supplyTime = supplyTime[0] + '年' + supplyTime[1] + '月' + supplyTime[2] + '日'
-        if (_marketSupply.isZan) {
-          that.setData({
-            isZan: '../../images/dz_pre.png'
-          })
+        console.log(_marketSupply.price)
+        var reg = /^[0-9]+.?[0-9]*$/
+        if (!reg.test(_marketSupply.price)) {
+          if (_marketSupply.price) {} else {
+            this.setData({
+              priceDW: "面议"
+            })
+          }
         } else {
-          that.setData({
-            isZan: '../../images/dz.png'
+          this.setData({
+            priceDW: "元/斤"
           })
         }
-        if (_marketSupply.isCollection) {
-          that.setData({
-            isCollection: '../../images/sc_pre.png'
-          })
-        } else {
-          that.setData({
-            isCollection: '../../images/sc.png'
-          })
-        }
-        that.setData({
+        this.setData({
           marketSupply: _marketSupply,
           fileList: _fileList,
           publishTime: publishTime,
@@ -79,7 +82,75 @@ Page({
     });
 
   },
-
+  shouCang: function(e) {
+    console.log(e)
+    console.log(e.currentTarget.dataset.iz);
+    console.log(e.currentTarget.dataset.id);
+    console.log(e.currentTarget.dataset.index);
+    var my_token = wx.getStorageSync("token");
+    if (e.currentTarget.dataset.iz) {
+      wx.request({
+        url: "http://120.78.209.238:50010/v1/user/collection/cancel",
+        method: "post",
+        header: {
+          "Content-Type": "application/json",
+          login_token: my_token
+        },
+        data: {
+          "id": e.currentTarget.dataset.id,
+          "code": "gqsc"
+        },
+        success: res => {
+          console.log(res);
+          if (res.data.code === "0") {
+            this.setData({
+              isCollection: false
+            })
+            wx.showToast({
+              title: '取消收藏',
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        }
+      });
+    } else {
+      wx.request({
+        url: "http://120.78.209.238:50010/v1/user/collection/save",
+        method: "post",
+        header: {
+          "Content-Type": "application/json",
+          login_token: my_token
+        },
+        data: {
+          "id": e.currentTarget.dataset.id,
+          "code": "gqsc"
+        },
+        success: res => {
+          console.log(res);
+          if (res.data.code === "0") {
+            this.setData({
+              isCollection: true
+            })
+            wx.showToast({
+              title: '收藏成功',
+              icon: 'success',
+              duration: 2000
+            })
+          }
+        }
+      });
+    }
+  },
+  ylImg: function() {
+    console.log("预览图片")
+    if (this.data.fileList) {
+      wx.previewImage({
+        current: this.data.fileList[0], // 当前显示图片的http链接
+        urls: this.data.fileList // 需要预览的图片http链接列表
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -105,13 +176,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
 
   },
 

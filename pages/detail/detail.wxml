@@ -38,7 +38,7 @@
     </view>
     <view>
       <text class="left">供应价格</text>
-      <text class="right">{{marketSupply.price}}元/斤</text>
+      <text class="right">{{marketSupply.price}}{{priceDW}}</text>
     </view>
     <view>
       <text class="left">联系人</text>
@@ -55,7 +55,7 @@
   </view>
   <view class="imgFile">
     <block wx:for="{{fileList}}" wx:key="*this">
-      <image lazy-load="true" src="{{item}}" mode="aspectFill"></image>
+      <image bindtap='ylImg' lazy-load="true" src="{{item}}" mode="aspectFill"></image>
     </block>
   </view>
   <view class='bottom'>
@@ -63,15 +63,10 @@
       <image src="../../images/7a4e3f53f3722f2b0694cc83653945d.png" mode="widthFix"></image>
       <text>联系供应方</text>
     </view>
-    <view class='right'>
-      <view class='dz'>
-        <image src="{{isZan}}" mode="widthFix"></image>
-        <view>点赞</view>
-      </view>
-      <view class='sc'>
-        <image src="{{isCollection}}" mode="widthFix"></image>
-        <view>点赞</view>
-      </view>
+    <view class='left' data-id="{{marketSupply.id}}" data-iz="{{isCollection}}" bindtap='shouCang'>
+      <image wx:if="{{isCollection}}" src="../../images/sc_pre.png" mode="widthFix"></image>
+      <image wx:else src="../../images/sc.png" mode="widthFix"></image>
+      <text>收藏</text>
     </view>
   </view>
 </view>
