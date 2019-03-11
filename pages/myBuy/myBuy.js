@@ -36,7 +36,10 @@ Page({
     _type: 2,
     _price: null,
     supplyTime: "请选择截止日期",
-    id: null
+    id: null,
+    active1: null,
+    active2: null,
+    active3: null
   },
 
   /**
@@ -55,15 +58,11 @@ Page({
       },
       success: res => {
         if (res.data.code === "0") {
-          console.log(res.data.data.marketSupply)
-          console.log(res.data.data.marketSupply.title)
           var fileList = res.data.data.marketSupply.fileList
-          console.log(fileList)
           var fileListArr = []
           if (fileList) {
             fileListArr = fileList.split(',')
           }
-          console.log(fileListArr)
           var supplyTime = res.data.data.marketSupply.supplyTime
           var supplyTimeStr = ""
           if (supplyTime) {
@@ -72,11 +71,11 @@ Page({
             supplyTimeStr = supplyTime
           }
           var fileImg = [],
-          upfile = [];
-        for (let i = 0; i < fileListArr.length; i++) {
-          fileImg.push(this.data.imgUrl + fileListArr[i])
-          upfile.push(fileListArr[i])
-        }
+            upfile = [];
+          for (let i = 0; i < fileListArr.length; i++) {
+            fileImg.push(this.data.imgUrl + fileListArr[i])
+            upfile.push(fileListArr[i])
+          }
           this.setData({
             _title: res.data.data.marketSupply.title,
             type: res.data.data.marketSupply.cropName,
@@ -144,7 +143,10 @@ Page({
     this.setData({
       fenlei: "fenlei",
       fl: true,
-      dq: false
+      dq: false,
+      active1: null,
+      active2: null,
+      active3: null
     });
     if (this.data.getAllTreeFenlei) {
       this.setData({
@@ -167,7 +169,10 @@ Page({
     this.setData({
       fenlei: "fenlei",
       fl: false,
-      dq: true
+      dq: true,
+      active1: null,
+      active2: null,
+      active3: null
     });
     if (this.data.getAllTreeDiqu) {
       this.setData({
@@ -187,7 +192,11 @@ Page({
     }
   },
   oneTag(e) {
-    console.log();
+    this.setData({
+      active1: e.target.dataset.id,
+      active2: null,
+      active3: null
+    })
     if (this.data.treeOne[e.target.dataset.id].children.length) {
       this.setData({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
@@ -222,6 +231,9 @@ Page({
     }
   },
   twoTag(e) {
+    this.setData({
+      active2: e.target.dataset.id
+    })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
       console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
@@ -478,7 +490,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+
   },
 
   /**

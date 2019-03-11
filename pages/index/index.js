@@ -130,7 +130,6 @@ Page({
         "Content-Type": "application/json"
       },
       success: res => {
-        console.log(res)
         if (res.data.code == "0") {
           this.setData({
             bannerList: res.data.data.bannerList
@@ -171,7 +170,6 @@ Page({
               children: []
             })
             for (let j = 0; j < treeFenlei[i].children.length; j++) {
-              console.log(treeFenlei[i].children[j])
               treeFenlei[i].children[j].children.unshift({
                 id: treeFenlei[i].children[j].id,
                 pid: treeFenlei[i].children[j].pid,
@@ -179,7 +177,6 @@ Page({
               })
             }
           }
-          console.log(treeFenlei)
           this.setData({
             getAllTreeFenlei: treeFenlei
           });
@@ -212,7 +209,6 @@ Page({
               children: []
             })
             for (let j = 0; j < treeDiqu[i].children.length; j++) {
-              console.log(treeDiqu[i].children[j])
               treeDiqu[i].children[j].children.unshift({
                 id: treeDiqu[i].children[j].id,
                 pid: treeDiqu[i].children[j].pid,
@@ -543,7 +539,7 @@ Page({
               res.data.data.list[res.data.data.list.length - 1]
             );
             this.setData({
-              dqMsg:res.data.data.list[res.data.data.list.length - 1].areaName
+              dqMsg: res.data.data.list[res.data.data.list.length - 1].areaName
             })
           }
         });

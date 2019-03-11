@@ -36,7 +36,10 @@ Page({
     _type: 1,
     _price: null,
     supplyTime: "请选择截止日期",
-    id: null
+    id: null,
+    active1: null,
+    active2: null,
+    active3: null
   },
 
   /**
@@ -144,7 +147,10 @@ Page({
     this.setData({
       fenlei: "fenlei",
       fl: true,
-      dq: false
+      dq: false,
+      active1: null,
+      active2: null,
+      active3: null
     });
     if (this.data.getAllTreeFenlei) {
       this.setData({
@@ -167,7 +173,10 @@ Page({
     this.setData({
       fenlei: "fenlei",
       fl: false,
-      dq: true
+      dq: true,
+      active1: null,
+      active2: null,
+      active3: null
     });
     if (this.data.getAllTreeDiqu) {
       this.setData({
@@ -187,7 +196,11 @@ Page({
     }
   },
   oneTag(e) {
-    console.log();
+    this.setData({
+      active1: e.target.dataset.id,
+      active2: null,
+      active3: null
+    })
     if (this.data.treeOne[e.target.dataset.id].children.length) {
       this.setData({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
@@ -222,6 +235,9 @@ Page({
     }
   },
   twoTag(e) {
+    this.setData({
+      active2: e.target.dataset.id
+    })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
       console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
@@ -239,8 +255,6 @@ Page({
     }
   },
   threeTag(e) {
-    console.log(e._relatedInfo.anchorTargetText);
-    console.log(e.target);
     if (this.data.fl) {
       this.setData({
         type: e._relatedInfo.anchorTargetText,
