@@ -71,6 +71,12 @@ Page({
           } else {
             supplyTimeStr = supplyTime
           }
+          var fileImg = [],
+            upfile = [];
+          for (let i = 0; i < fileListArr.length; i++) {
+            fileImg.push(this.data.imgUrl + fileListArr[i])
+            upfile.push(fileListArr[i])
+          }
           this.setData({
             _title: res.data.data.marketSupply.title,
             type: res.data.data.marketSupply.cropName,
@@ -91,7 +97,8 @@ Page({
             _telephone: res.data.data.marketSupply.telephone,
             detail: res.data.data.marketSupply.detail,
             _detail: res.data.data.marketSupply.detail,
-            upfile: fileListArr
+            upfileWx: fileImg,
+            upfile: upfile
           })
         }
       }
