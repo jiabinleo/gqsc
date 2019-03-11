@@ -51,7 +51,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  background: #ffffff;
+  background: #eeeeee;
   z-index: 100%;
   width: 100%;
   overflow: hidden;
@@ -64,6 +64,7 @@
 }
 .section-wrap .section scroll-view view {
   line-height: 50rpx;
+  margin: 0 50rpx;
 }
 .section-wrap .section scroll-view view.active {
   color: #3fbef1;

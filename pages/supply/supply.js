@@ -35,7 +35,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     //分类
     wx.request({
       url: "http://120.78.209.238:50010/v1/goodsCategory/getAllTree",
@@ -192,49 +192,49 @@ Page({
       });
     }
   },
-  hideFenlei: function() {
+  hideFenlei: function () {
     this.setData({
       fenlei: "fenlei-close"
     });
   },
-  zsmp: function() {},
+  zsmp: function () {},
   //数据双向绑定
-  titleFn: function(e) {
+  titleFn: function (e) {
     this.setData({
       _title: e.detail.value
     });
   },
-  totalAmountFn: function(e) {
+  totalAmountFn: function (e) {
     this.setData({
       _totalAmount: e.detail.value
     });
   },
-  minAmountFn: function(e) {
+  minAmountFn: function (e) {
     this.setData({
       _minAmount: e.detail.value
     });
   },
-  priceFn: function(e) {
+  priceFn: function (e) {
     this.setData({
       _price: e.detail.value
     });
   },
-  contactsFn: function(e) {
+  contactsFn: function (e) {
     this.setData({
       _contacts: e.detail.value
     });
   },
-  telephoneFn: function(e) {
+  telephoneFn: function (e) {
     this.setData({
       _telephone: e.detail.value
     });
   },
-  detailFn: function(e) {
+  detailFn: function (e) {
     this.setData({
       _detail: e.detail.value
     });
   },
-  supplyTimeFn: function(e) {
+  supplyTimeFn: function (e) {
     console.log(e.detail.value);
 
     this.setData({
@@ -243,7 +243,7 @@ Page({
     });
   },
   //上传图片
-  chooseImage: function() {
+  chooseImage: function () {
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
@@ -274,14 +274,14 @@ Page({
               upfile: file
             });
           },
-          fail: function(res) {
+          fail: function (res) {
             console.log("fail");
           }
         });
       }
     });
   },
-  save: function() {
+  save: function () {
     var upfiles = this.data.upfile;
     var _fileList = "";
     for (let i = 0; i < upfiles.length; i++) {
@@ -411,7 +411,7 @@ Page({
       });
     }
   },
-  autoLogin: function(openId, icon, userName, sex) {
+  autoLogin: function (openId, icon, userName, sex) {
     wx.request({
       url: "http://120.78.209.238:50010/v1/user/otherLogin",
       method: "post",
@@ -440,17 +440,17 @@ Page({
       }
     });
   },
-  locFn: function() {
+  locFn: function () {
     var address = wx.getStorageSync("address");
     console.log(address);
     if (address) {
       this.setData({
         _areaId: address.id,
-        are: address.areaName
+        are: address.fullName
       });
     }
   },
-  delImg: function(e) {
+  delImg: function (e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -472,26 +472,26 @@ Page({
       }
     })
   },
-  preventTouchMove: function() {},
+  preventTouchMove: function () {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -501,11 +501,11 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {},
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {}
+  onShareAppMessage: function () {}
   // preventTouchMove: function() {}
 });

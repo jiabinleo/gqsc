@@ -156,6 +156,33 @@ Page({
           this.setData({
             getAllTreeFenlei: res.data.data.trees
           });
+          var treeFenlei = this.data.getAllTreeFenlei
+          treeFenlei.unshift({
+            id: "",
+            pid: "",
+            text: "全部",
+            children: []
+          })
+          for (let i = 0; i < treeFenlei.length; i++) {
+            treeFenlei[i].children.unshift({
+              id: treeFenlei[i].id,
+              pid: treeFenlei[i].pid,
+              text: treeFenlei[i].text,
+              children: []
+            })
+            for (let j = 0; j < treeFenlei[i].children.length; j++) {
+              console.log(treeFenlei[i].children[j])
+              treeFenlei[i].children[j].children.unshift({
+                id: treeFenlei[i].children[j].id,
+                pid: treeFenlei[i].children[j].pid,
+                text: treeFenlei[i].children[j].text
+              })
+            }
+          }
+          console.log(treeFenlei)
+          this.setData({
+            getAllTreeFenlei: treeFenlei
+          });
         }
       }
     });
@@ -169,6 +196,32 @@ Page({
         if (res.data.code === "0") {
           this.setData({
             getAllTreeDiqu: res.data.data.trees
+          });
+          var treeDiqu = this.data.getAllTreeDiqu
+          treeDiqu.unshift({
+            id: "",
+            pid: "",
+            text: "全部",
+            children: []
+          })
+          for (let i = 0; i < treeDiqu.length; i++) {
+            treeDiqu[i].children.unshift({
+              id: treeDiqu[i].id,
+              pid: treeDiqu[i].pid,
+              text: treeDiqu[i].text,
+              children: []
+            })
+            for (let j = 0; j < treeDiqu[i].children.length; j++) {
+              console.log(treeDiqu[i].children[j])
+              treeDiqu[i].children[j].children.unshift({
+                id: treeDiqu[i].children[j].id,
+                pid: treeDiqu[i].children[j].pid,
+                text: treeDiqu[i].children[j].text
+              })
+            }
+          }
+          this.setData({
+            getAllTreeDiqu: treeDiqu
           });
         }
       }
@@ -252,7 +305,6 @@ Page({
         treeOne: this.data.getAllTreeFenlei
       });
       if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
         this.setData({
           treeTwo: this.data.treeOne[0].children
         });
@@ -332,7 +384,9 @@ Page({
   },
   oneTag(e) {
     this.setData({
-      active1: e.target.dataset.id
+      active1: e.target.dataset.id,
+      active2: null,
+      active3: null
     })
     if (this.data.treeOne[e.target.dataset.id].children.length) {
       this.setData({
@@ -405,9 +459,7 @@ Page({
     }
   },
   threeTag(e) {
-    this.setData({
-      active3: e.target.dataset.id
-    })
+    console.log(e._relatedInfo.anchorTargetText)
     if (this.data.fl) {
       this.data.pageData.cropId = e.target.id.split("t")[1];
       this.setData({
@@ -490,6 +542,9 @@ Page({
               "address",
               res.data.data.list[res.data.data.list.length - 1]
             );
+            this.setData({
+              dqMsg:res.data.data.list[res.data.data.list.length - 1].areaName
+            })
           }
         });
       }

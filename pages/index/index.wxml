@@ -61,7 +61,7 @@
           <view catchtap="onTouch" data-id="{{item.id}}">
             <view class="userMsg">
               <view class="userImg">
-                <image src="{{item.icon}}" mode="widthFix"></image>
+                <image lazy-load="true" src="{{item.icon}}" mode="widthFix"></image>
               </view>
               <view class="username">
                 <view class="name">
@@ -81,18 +81,18 @@
             </view>
             <view class="imgFile">
               <block wx:for="{{item.fileList}}" wx:key="*this">
-                <image src="{{item}}" mode="aspectFill"></image>
+                <image lazy-load="true" src="{{item}}" mode="aspectFill"></image>
               </block>
             </view>
           </view>
           <view class="rddz">
             <view class="dz" data-index="{{index}}" data-id="{{item.id}}" data-iz="{{item.isCollection}}" bindtap='shouCang'>
-              <image wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
-              <image wx:else src="../../images/sc.png" mode='widthFix'></image>
+              <image lazy-load="true" wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
+              <image lazy-load="true" wx:else src="../../images/sc.png" mode='widthFix'></image>
               <text>{{item.collectionNum}}人收藏</text>
             </view>
             <view class="rd">
-              <image src="../../images/rd.png" mode='widthFix'></image>
+              <image lazy-load="true" src="../../images/rd.png" mode='widthFix'></image>
               <text>{{item.reading}}人阅读</text>
             </view>
           </view>

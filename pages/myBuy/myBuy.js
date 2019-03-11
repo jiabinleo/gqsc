@@ -442,7 +442,7 @@ Page({
     if (address) {
       this.setData({
         _areaId: address.id,
-        are: address.areaName
+        are: address.fullName
       });
     }
   },
