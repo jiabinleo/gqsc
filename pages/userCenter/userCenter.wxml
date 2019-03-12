@@ -1,9 +1,13 @@
 <view class="myCenter">
   <view class="userBg">
-    <image src="{{user.icon}}" mode="widthFix"></image>
-    <view>
-      <text>尊敬的用户 : {{user.userName}}</text>
-    </view>
+    <block>
+    <button wx:if="{{!hasUserInfo && canIUse}}" class='getUserInfo' open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录 </button>
+      <image wx:else src="{{user.icon}}" mode="widthFix"></image>
+      <view>
+        <text wx:if="{{!hasUserInfo && canIUse}}">请登录</text>
+        <text wx:else>尊敬的用户 : {{user.userName}}</text>
+      </view>
+    </block>
   </view>
   <view class="list">
     <view bindtap='bindReleaseTap'>
@@ -20,15 +24,15 @@
 </view>
 <view class='footer'>
   <view class="nav" bindtap='bindIndexTap'>
-    <image src="../../images/gq.png"></image>
+    <image src="../../images/tab_shichang_2.png"></image>
     <text>首页</text>
   </view>
   <view class="nav" bindtap="open">
-    <image src="../../images/gq.png"></image>
+    <image src="../../images/tab_more_btn_add.png"></image>
     <text>发布</text>
   </view>
   <view class="nav" bindtap='bindUserTap'>
-    <image src="../../images/gq.png"></image>
+    <image src="../../images/tab_shichang_pre4.png"></image>
     <text>我的</text>
   </view>
 </view>

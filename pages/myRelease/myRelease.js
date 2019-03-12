@@ -16,7 +16,8 @@ Page({
     modalFlag: true,
     btn1: 'btn',
     btn2: '',
-    pageType: 1
+    pageType: 1,
+    loca50010: null
   },
 
   /**
@@ -29,13 +30,18 @@ Page({
     wx.setNavigationBarTitle({
       title: '我的发布'
     })
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      })
+    }
     this.getMyPage()
   },
   getMyPage: function () {
     var pageData = this.data.pageData
     var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/getMyPage",
+      url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
         login_token: my_token
@@ -78,7 +84,7 @@ Page({
   },
   autoLogin: function (openId, icon, userName, sex) {
     wx.request({
-      url: "http://120.78.209.238:50010/v1/user/otherLogin",
+      url: this.data.loca50010 + "/user/otherLogin",
       method: "post",
       header: {
         "Content-Type": "application/json"
@@ -110,7 +116,7 @@ Page({
     var pageData = this.data.pageData;
     var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/getMyPage",
+      url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
         login_token: my_token
@@ -157,7 +163,7 @@ Page({
         if (res.confirm) {
           var my_token = wx.getStorageSync("token");
           wx.request({
-            url: "http://120.78.209.238:50010/v1/supply/cancel/" + e.currentTarget.dataset.id,
+            url: this.data.loca50010 + "/supply/cancel/" + e.currentTarget.dataset.id,
             header: {
               "Content-Type": "application/json",
               login_token: my_token

@@ -14,7 +14,6 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
@@ -30,7 +29,6 @@ App({
         // session_key 未过期，并且在本生命周期一直有效
         console.log('////')
         wx.login() // 重新登录
-
       },
       fail() {
         // session_key 已经失效，需要重新执行登录流程
@@ -43,7 +41,8 @@ App({
 
   globalData: {
     userInfo: null,
-    imgUrl: "http://120.78.209.238:50000",
-    openid:null
+    imgUrl: "https://www.kwantler.com.cn",
+    uploadImg: 'https://www.kwantler.com.cn:50001',
+    loca50010: 'https://www.kwantler.com.cn/v1',
   }
 })

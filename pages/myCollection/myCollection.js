@@ -16,26 +16,32 @@ Page({
     modalFlag: true,
     btn1: 'btn',
     btn2: '',
-    pageType: 1
+    pageType: 1,
+    loca50010: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.setData({
       imgUrl: app.globalData.imgUrl
     })
     wx.setNavigationBarTitle({
       title: '我的收藏'
     })
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      })
+    }
     this.getMyPage()
   },
-  getMyPage: function() {
+  getMyPage: function () {
     var pageData = this.data.pageData
     var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/user/collection/list",
+      url: this.data.loca50010 + "/user/collection/list",
       header: {
         "Content-Type": "application/json",
         login_token: my_token
@@ -72,9 +78,9 @@ Page({
       }
     });
   },
-  autoLogin: function(openId, icon, userName, sex) {
+  autoLogin: function (openId, icon, userName, sex) {
     wx.request({
-      url: "http://120.78.209.238:50010/v1/user/otherLogin",
+      url: this.data.loca50010 + "/user/otherLogin",
       method: "post",
       header: {
         "Content-Type": "application/json"
@@ -101,46 +107,7 @@ Page({
       }
     });
   },
-  // onReachBottom: function () {
-  //   this.data.pageData.pageNum += 1;
-  //   var pageData = this.data.pageData;
-  //   var my_token = wx.getStorageSync("token");
-  //   wx.request({
-  //     url: "http://120.78.209.238:50010/v1/user/collection/cancel",
-  //     method: "POST",
-  //     header: {
-  //       "Content-Type": "application/json",
-  //       login_token: my_token
-  //     },
-  //     data: {
-  //       id: e.currentTarget.dataset.detailid,
-  //       code: 'gqsc'
-  //     },
-  //     success: res => {
-  //       if (this.data.pageRows.length === res.data.data.page.total) {
-  //         return;
-  //       }
-  //       var newsList = res.data.data.page.rows;
-  //       for (let i = 0; i < newsList.length; i++) {
-  //         if (newsList[i].fileList) {
-  //           newsList[i].imgFile0 = newsList[i].fileList.split(',')[0]
-  //           newsList[i].time = newsList[i].publishTime.split(' ')[0]
-  //           this.data.pageRows.push(newsList[i]);
-  //         } else {
-  //           newsList[i].imgFile0 = newsList[i].fileList
-  //           newsList[i].time = newsList[i].publishTime
-  //           this.data.pageRows.push(newsList[i]);
-  //         }
-
-  //       }
-  //       var news = this.data.pageRows;
-  //       this.setData({
-  //         pageRows: news
-  //       });
-  //     }
-  //   });
-  // },
-  delMsg: function(e) {
+  delMsg: function (e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -153,7 +120,7 @@ Page({
         if (res.confirm) {
           var my_token = wx.getStorageSync("token");
           wx.request({
-            url: "http://120.78.209.238:50010/v1/user/collection/cancel",
+            url: this.data.loca50010 + "/user/collection/cancel",
             method: "POST",
             header: {
               "Content-Type": "application/json",
@@ -182,7 +149,7 @@ Page({
       }
     })
   },
-  gq: function(e) {
+  gq: function (e) {
     console.log(e.currentTarget.dataset.type)
     var pageData = this.data.pageData
     pageData.type = Number(e.currentTarget.dataset.type)
@@ -206,7 +173,7 @@ Page({
     })
     this.getMyPage()
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.detailid
     });
@@ -219,35 +186,35 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.onLoad();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  preventTouchMove: function() {},
+  preventTouchMove: function () {},
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -255,7 +222,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

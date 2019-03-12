@@ -7,25 +7,125 @@ Page({
    * 页面的初始数据
    */
   data: {
-    user: {
-      icon: null
-    },
-    mask: "mask-close"
+    user: {},
+    mask: "mask-close",
+    canIUse: wx.canIUse("button.open-type.getUserInfo"),
+    token: null,
+    loca50010: null,
+    userInfo: {},
+    hasUserInfo: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log(app.globalData.userInfo)
+  onLoad: function () {
+    if (wx.getStorageSync('token')) {
+      this.setData({
+        token: wx.getStorageSync('token')
+      })
+    }
     if (wx.getStorageSync('user')) {
       this.setData({
-        user: wx.getStorageSync('user'),
+        user: wx.getStorageSync('user')
       })
+    }
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      })
+    }
+    //获取用户信息
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      });
+    } else if (this.data.canIUse) {
+      console.log("000")
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true
+        });
+      };
+    } else {
+      console.log("000")
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo;
+          console.log(res)
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          });
+        }
+      });
     }
     wx.setNavigationBarTitle({
       title: '我的'
     })
+  },
+  getUserInfo: function (e) {
+    wx.login({
+      success: res => {
+        console.log(res);
+        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: "https://api.weixin.qq.com/sns/jscode2session?appid=wx2623aa28384009f5&secret=0063ddf49973e5cb547661200a8e3b21&js_code=" +
+              res.code +
+              "&grant_type=authorization_code",
+            data: {
+              code: res.code
+            },
+            success: res => {
+              if (res.data.openid) {
+                console.log(res)
+                console.log(e)
+                app.globalData.userInfo = e.detail.userInfo;
+                this.autoLogin(
+                  res.data.openid,
+                  e.detail.userInfo.avatarUrl,
+                  e.detail.userInfo.nickName,
+                  e.detail.userInfo.gender
+                );
+              } else {
+                this.getUserInfo();
+              }
+            }
+          });
+        } else {
+          console.log("获取用户登录态失败！" + res.errMsg);
+        }
+      }
+    });
+  },
+  autoLogin: function (openId, icon, userName, sex) {
+    wx.request({
+      url: this.data.loca50010 + "/user/otherLogin",
+      method: "post",
+      header: {
+        "Content-Type": "application/json"
+      },
+      data: {
+        otherLogin: "wx",
+        openId: openId,
+        icon: icon,
+        userName: userName,
+        sex: sex
+      },
+      success: res => {
+        if (res.data.code == 0) {
+          console.log(res)
+          wx.setStorageSync('token', res.data.data.token)
+          wx.setStorageSync('user', res.data.data.user)
+          // wx.setStorageSync('openId', openId)
+          this.onLoad();
+        }
+      }
+    });
   },
   bindReleaseTap: function () {
     wx.navigateTo({

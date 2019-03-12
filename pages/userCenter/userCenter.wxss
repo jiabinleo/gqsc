@@ -1,15 +1,22 @@
 /* pages/userCenter/userCenter.wxss */
 .myCenter .userBg {
   margin: 0rpx 35rpx;
+  padding-top: 40rpx;
   text-align: center;
   width: 680rpx;
-  height: 256rpx;
+  height: 216rpx;
   background: linear-gradient(-5deg, #1ea0e3, #32b5ee, #35bcf0);
   box-shadow: 0px 5px 13px 2px rgba(49, 180, 238, 0.3);
   border-radius: 5px;
 }
+.myCenter .userBg button {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 6rpx solid #ffffff;
+  background-image: url("https://wx.qlogo.cn/mmopen/vi_32/ic5U3c7ibwk0mWghDkjxWo8ZTCicXRU4icEpRRtTveCEIicicV1FP8cRJXXI6sVIzDPfOVxLBMnGXHiazvcXrL4AsuHNg/132");
+}
 .myCenter .userBg image {
-  margin-top: 40rpx;
   width: 120rpx;
   height: 120rpx;
   border-radius: 50%;
@@ -48,6 +55,7 @@
   height: 22rpx;
 }
 .footer {
+  position: relative;
   width: 100%;
   height: 98rpx;
   padding-top: 20rpx;
@@ -61,15 +69,29 @@
   float: left;
   text-align: center;
 }
+.footer .nav:nth-of-type(2) {
+  position: absolute;
+  top: 44rpx;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.footer .nav:nth-of-type(2) image {
+  width: 100rpx;
+  height: 100rpx;
+}
+.footer .nav:last-of-type {
+  float: right;
+}
 .footer .nav image {
-  width: 52rpx;
-  height: 40rpx;
+  width: 60rpx;
+  height: 60rpx;
 }
 .footer .nav text {
   display: block;
   text-align: center;
   color: #999999;
-  font-size: 20rpx;
+  font-size: 26rpx;
+  margin-top: -10rpx;
 }
 .mask {
   position: fixed;

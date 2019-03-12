@@ -32,16 +32,28 @@ Page({
     supplyTime: "请选择截止日期",
     active1: null,
     active2: null,
-    active3: null
+    active3: null,
+    loca50010: null,
+    uploadImg: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      })
+    }
+    if (app.globalData.uploadImg) {
+      this.setData({
+        uploadImg: app.globalData.uploadImg
+      })
+    }
     //分类
     wx.request({
-      url: "http://120.78.209.238:50010/v1/goodsCategory/getAllTree",
+      url: this.data.loca50010 + "/goodsCategory/getAllTree",
       header: {
         "Content-Type": "application/json"
       },
@@ -55,7 +67,7 @@ Page({
     });
     //地区
     wx.request({
-      url: "http://120.78.209.238:50010/v1/area/getAllTree",
+      url: this.data.loca50010 + "/area/getAllTree",
       header: {
         "Content-Type": "application/json"
       },
@@ -270,7 +282,7 @@ Page({
           upfileWx: fileWx
         });
         wx.uploadFile({
-          url: "http://120.78.209.238:50001/upload/img",
+          url: this.data.uploadImg + "/upload/img",
           filePath: tempFilePaths[0],
           name: "imgFile",
           header: {
@@ -384,7 +396,7 @@ Page({
     } else {
       var my_token = wx.getStorageSync("token");
       wx.request({
-        url: "http://120.78.209.238:50010/v1/supply/save",
+        url: this.data.loca50010 + "/supply/save",
         method: "POST",
         header: {
           "Content-Type": "application/json;charset=UTF-8",
@@ -426,7 +438,7 @@ Page({
   },
   autoLogin: function (openId, icon, userName, sex) {
     wx.request({
-      url: "http://120.78.209.238:50010/v1/user/otherLogin",
+      url: this.data.loca50010 + "/user/otherLogin",
       method: "post",
       header: {
         "Content-Type": "application/json"

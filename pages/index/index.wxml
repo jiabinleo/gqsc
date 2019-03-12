@@ -1,134 +1,132 @@
 <!--index.wxml-->
-<view id="j_page" class="container">
-
-  <view>
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <view class="page-section page-section-spacing swiper">
-        <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
-          <block wx:for="{{bannerList}}" wx:key="*this">
-            <swiper-item>
-              <view class="swiper-item">
-                <image lazy-load="true" src="{{imgUrl + item.bannerImg}}" mode="widthFix"></image>
-              </view>
-            </swiper-item>
-          </block>
-        </swiper>
-      </view>
+  <view id="j_page" class="container">
+    <view>
       <block>
-        <view class="nav">
-          <view class="{{navActive ? 'navA' : ''}}" bindtap="gongying">
-            供应
-          </view>
-          <view class="{{navActive ? '' : 'navA'}}" bindtap="qiugou">
-            求购
-          </view>
+        <view class="page-section page-section-spacing swiper">
+          <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" vertical="{{vertical}}" interval="{{interval}}" duration="{{duration}}" previous-margin="{{previousMargin}}px" next-margin="{{nextMargin}}px">
+            <block wx:for="{{bannerList}}" wx:key="*this">
+              <swiper-item>
+                <view class="swiper-item">
+                  <image lazy-load="true" src="{{imgUrl + item.bannerImg}}" mode="widthFix"></image>
+                </view>
+              </swiper-item>
+            </block>
+          </swiper>
         </view>
-      </block>
-      <block>
-        <view class="select">
-          <view class="nav1" bindtap="fenlei">{{flMsg}}</view>
-          <view class="nav1" bindtap="diqu">{{dqMsg}}</view>
-          <view class="nav1" bindtap="paixu">{{pxMsg}}</view>
-        </view>
-      </block>
-      <block>
-        <view class='section-wrap'>
-          <view class="section" style="height: {{viewHeight}}px;">
-            <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeOne}}" wx:key="*this">
-                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
-            <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeTwo}}" wx:key="*this">
-                <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
-            <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeThree}}" wx:key="*this">
-                <view id="t{{item.id}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
+        <block>
+          <view class="nav">
+            <view class="{{navActive ? 'navA' : ''}}" bindtap="gongying">
+              供应
+            </view>
+            <view class="{{navActive ? '' : 'navA'}}" bindtap="qiugou">
+              求购
+            </view>
           </view>
-        </view>
-      </block>
-      <!-- <view class="btn-area">
+        </block>
+        <block>
+          <view class="select">
+            <view class="nav1" bindtap="fenlei">{{flMsg}}</view>
+            <view class="nav1" bindtap="diqu">{{dqMsg}}</view>
+            <view class="nav1" bindtap="paixu">{{pxMsg}}</view>
+          </view>
+        </block>
+        <block>
+          <view class='section-wrap'>
+            <view class="section" style="height: {{viewHeight}}px;">
+              <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeOne}}" wx:key="*this">
+                  <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+              <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeTwo}}" wx:key="*this">
+                  <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+              <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeThree}}" wx:key="*this">
+                  <view id="t{{item.id}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+            </view>
+          </view>
+        </block>
+        <!-- <view class="btn-area">
         <button size="mini" bindtap="tap">click me to scroll into view</button>
       </view> -->
-      <block wx:for="{{newList}}" wx:key="*this">
-        <view class="newList">
-          <view catchtap="onTouch" data-id="{{item.id}}">
-            <view class="userMsg">
-              <view class="userImg">
-                <image lazy-load="true" src="{{item.icon}}" mode="widthFix"></image>
-              </view>
-              <view class="username">
-                <view class="name">
-                  <view class="namel">{{item.userName?item.userName:'悦农通'}}</view>
-                  <view class="time">{{item.publishTime}}</view>
+        <block wx:for="{{newList}}" wx:key="*this">
+          <view class="newList">
+            <view catchtap="onTouch" data-id="{{item.id}}">
+              <view class="userMsg">
+                <view class="userImg">
+                  <image lazy-load="true" src="{{item.icon}}" mode="widthFix"></image>
                 </view>
-                <view class="address">
-                  <text>{{item.area}}</text>
+                <view class="username">
+                  <view class="name">
+                    <view class="namel">{{item.userName?item.userName:'悦农通'}}</view>
+                    <view class="time">{{item.publishTime}}</view>
+                  </view>
+                  <view class="address">
+                    <text>{{item.area}}</text>
+                  </view>
                 </view>
               </view>
+              <view class="title">
+                <text>{{item.title}}</text>
+              </view>
+              <view class="detail">
+                <text>{{item.detail}}</text>
+              </view>
+              <view class="imgFile">
+                <block wx:for="{{item.fileList}}" wx:key="*this">
+                  <image lazy-load="true" src="{{item}}" mode="aspectFill"></image>
+                </block>
+              </view>
             </view>
-            <view class="title">
-              <text>{{item.title}}</text>
-            </view>
-            <view class="detail">
-              <text>{{item.detail}}</text>
-            </view>
-            <view class="imgFile">
-              <block wx:for="{{item.fileList}}" wx:key="*this">
-                <image lazy-load="true" src="{{item}}" mode="aspectFill"></image>
-              </block>
+            <view class="rddz">
+              <view class="dz" data-index="{{index}}" data-id="{{item.id}}" data-iz="{{item.isCollection}}" bindtap='shouCang'>
+                <image lazy-load="true" wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
+                <image lazy-load="true" wx:else src="../../images/sc.png" mode='widthFix'></image>
+                <text>{{item.collectionNum}}人收藏</text>
+              </view>
+              <view class="rd">
+                <image lazy-load="true" src="../../images/rd.png" mode='widthFix'></image>
+                <text>{{item.reading}}人阅读</text>
+              </view>
             </view>
           </view>
-          <view class="rddz">
-            <view class="dz" data-index="{{index}}" data-id="{{item.id}}" data-iz="{{item.isCollection}}" bindtap='shouCang'>
-              <image lazy-load="true" wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
-              <image lazy-load="true" wx:else src="../../images/sc.png" mode='widthFix'></image>
-              <text>{{item.collectionNum}}人收藏</text>
-            </view>
-            <view class="rd">
-              <image lazy-load="true" src="../../images/rd.png" mode='widthFix'></image>
-              <text>{{item.reading}}人阅读</text>
-            </view>
-          </view>
-        </view>
+        </block>
       </block>
-    </block>
-  </view>
-</view>
-<view class='footer'>
-  <view class="nav">
-    <image src="../../images/gq.png"></image>
-    <text>首页</text>
-  </view>
-  <view class="nav" bindtap="open">
-    <image src="../../images/gq.png"></image>
-    <text>发布</text>
-  </view>
-  <view class="nav" bindtap='bindUserTap'>
-    <image src="../../images/gq.png"></image>
-    <text>我的</text>
-  </view>
-</view>
-<view class="{{mask}}" catchtouchmove="preventTouchMove">
-  <view class='bottom'>
-    <image class="close" bindtap="close" src="../../images/close-gray.png"></image>
-    <view class='nav'>
-      <view bindtap="supply">
-        <image src='../../images/035.png'></image>
-        <text>发布供应</text>
-      </view>
-    </view>
-    <view class='nav'>
-      <view bindtap='buy'>
-        <image src='../../images/036.png'></image>
-        <text>发布求购</text>
-      </view>
     </view>
   </view>
-</view>
+  <view class='footer'>
+    <view class="nav">
+      <image src="../../images/tab_shichang_pre2.png"></image>
+      <text>首页</text>
+    </view>
+    <view class="nav" bindtap="open">
+      <image src="../../images/tab_more_btn_add.png"></image>
+      <text>发布</text>
+    </view>
+    <view class="nav" bindtap='bindUserTap'>
+      <image src="../../images/tab_shichang_4.png"></image>
+      <text>我的</text>
+    </view>
+  </view>
+  <view class="{{mask}}" catchtouchmove="preventTouchMove">
+    <view class='bottom'>
+      <image class="close" bindtap="close" src="../../images/close-gray.png"></image>
+      <view class='nav'>
+        <view bindtap="supply">
+          <image src='../../images/035.png'></image>
+          <text>发布供应</text>
+        </view>
+      </view>
+      <view class='nav'>
+        <view bindtap='buy'>
+          <image src='../../images/036.png'></image>
+          <text>发布求购</text>
+        </view>
+      </view>
+    </view>
+  </view>

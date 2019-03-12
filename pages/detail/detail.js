@@ -12,22 +12,28 @@ Page({
     supplyTime: '',
     phoneNumber: '',
     isCollection: false,
-    priceDW: ""
+    priceDW: "",
+    loca50010: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     if (app.globalData.imgUrl) {
       this.setData({
         imgUrl: app.globalData.imgUrl
       });
     }
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      });
+    }
     console.log(options)
     var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/detail/" + options.id,
+      url: this.data.loca50010 + "/supply/detail/" + options.id,
       header: {
         "Content-Type": "application/json",
         "login_token": my_token
@@ -82,7 +88,7 @@ Page({
     });
 
   },
-  shouCang: function(e) {
+  shouCang: function (e) {
     console.log(e)
     console.log(e.currentTarget.dataset.iz);
     console.log(e.currentTarget.dataset.id);
@@ -90,7 +96,7 @@ Page({
     var my_token = wx.getStorageSync("token");
     if (e.currentTarget.dataset.iz) {
       wx.request({
-        url: "http://120.78.209.238:50010/v1/user/collection/cancel",
+        url: this.data.loca50010 + "/user/collection/cancel",
         method: "post",
         header: {
           "Content-Type": "application/json",
@@ -116,7 +122,7 @@ Page({
       });
     } else {
       wx.request({
-        url: "http://120.78.209.238:50010/v1/user/collection/save",
+        url: this.data.loca50010 + "/user/collection/save",
         method: "post",
         header: {
           "Content-Type": "application/json",
@@ -142,8 +148,9 @@ Page({
       });
     }
   },
-  ylImg: function() {
+  ylImg: function (e) {
     console.log("预览图片")
+    console.log(e)
     if (this.data.fileList) {
       wx.previewImage({
         current: this.data.fileList[0], // 当前显示图片的http链接
@@ -154,45 +161,45 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
-  tel: function() {
+  tel: function () {
     console.log()
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber

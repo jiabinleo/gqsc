@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/userCenter/userCenter",
     "pages/myCollection/myCollection",
     "pages/detail/detail",
     "pages/myBuy/myBuy",
     "pages/myRelease/myRelease",
     "pages/supply/supply",
     "pages/buy/buy",
-    "pages/userCenter/userCenter",
     "pages/mySupply/mySupply",
     "pages/logs/logs"
   ],

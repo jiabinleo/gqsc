@@ -11,7 +11,7 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse("button.open-type.getUserInfo"),
+
     //
     bannerList: [],
     indicatorDots: true,
@@ -64,13 +64,13 @@ Page({
       pageSize: 3,
       order: ""
     },
-    token: null,
+    token: "",
     user: null,
     mask: "mask-close",
-    openid: null,
     active1: null,
     active2: null,
-    active3: null
+    active3: null,
+    loca50010: null
   },
   //事件处理函数
   bindViewTap: function () {
@@ -84,39 +84,21 @@ Page({
     });
   },
   onLoad: function () {
-    var _this = this;
-    if (app.globalData.userInfo) {
+    if (wx.getStorageSync('token')) {
       this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      });
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        });
-      };
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo;
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          });
-        }
-      });
+        token: wx.getStorageSync('token')
+      })
+    }
+    if (app.globalData.loca50010) {
+      this.setData({
+        loca50010: app.globalData.loca50010
+      })
     }
     //获取用户信息
-    if (wx.getStorageSync("token")) {
-      this.data.token = wx.getStorageSync("token");
-    }
     if (wx.getStorageSync("user")) {
-      this.data.user = wx.getStorageSync("user");
+      this.setData({
+        user: wx.getStorageSync("user")
+      })
     }
     //banner
     if (app.globalData.imgUrl) {
@@ -125,7 +107,7 @@ Page({
       });
     }
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/bannerList",
+      url: this.data.loca50010 + "/supply/bannerList",
       header: {
         "Content-Type": "application/json"
       },
@@ -141,12 +123,11 @@ Page({
             duration: 2000
           })
         }
-
       }
     });
     //分类
     wx.request({
-      url: "http://120.78.209.238:50010/v1/goodsCategory/getAllTree",
+      url: this.data.loca50010 + "/goodsCategory/getAllTree",
       header: {
         "Content-Type": "application/json"
       },
@@ -185,7 +166,7 @@ Page({
     });
     //地区
     wx.request({
-      url: "http://120.78.209.238:50010/v1/area/getAllTree",
+      url: this.data.loca50010 + "/area/getAllTree",
       header: {
         "Content-Type": "application/json"
       },
@@ -488,7 +469,6 @@ Page({
     });
   },
   loadCity: function (latitude, longitude) {
-    var that = this;
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
@@ -501,11 +481,11 @@ Page({
     });
 
     myAmapFun.getWeather({
-      success: function (data) {
-        that.setData({
+      success: data => {
+        this.setData({
           weather: data
         });
-        that.liveData(data.liveData.adcode);
+        this.liveData(data.liveData.adcode);
         //成功回调
       },
       fail: function (info) {
@@ -516,15 +496,15 @@ Page({
   },
   liveData: function (adcode) {
     console.log(adcode);
-    var that = this;
     wx.request({
-      url: "http://120.78.209.238:50010/v1/area/getAreaIdByCode?code=" + adcode,
+      url: this.data.loca50010 + "/area/getAreaIdByCode?code=" + adcode,
       header: {
         "Content-Type": "application/json"
       },
       success: res => {
+        console.log(res)
         wx.request({
-          url: "http://120.78.209.238:50010/v1/area/getParentList?id=" +
+          url: this.data.loca50010 + "/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
@@ -551,12 +531,11 @@ Page({
     var that = this;
     var icon = null;
     var fileList = null;
-    var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/getPage",
+      url: this.data.loca50010 + "/supply/getPage",
       header: {
         "Content-Type": "application/json",
-        "login_token": my_token
+        "login_token": this.data.token
       },
       data: {
         cropId: pageData.cropId,
@@ -566,14 +545,14 @@ Page({
         pageSize: pageData.pageSize,
         order: pageData.order
       },
-      success: function (res) {
+      success: res => {
         var newsList = res.data.data.page.rows;
         for (let i = 0; i < res.data.data.page.rows.length; i++) {
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
             if (icon.indexOf("/")) {} else {
-              newsList[i].icon = that.data.imgUrl + icon;
+              newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
             newsList[i].icon = "";
@@ -582,11 +561,11 @@ Page({
             newsList[i].fileList = fileList.split(",");
             for (let j = 0; j < newsList[i].fileList.length; j++) {
               newsList[i].fileList[j] =
-                that.data.imgUrl + newsList[i].fileList[j];
+                this.data.imgUrl + newsList[i].fileList[j];
             }
           }
         }
-        that.setData({
+        this.setData({
           newList: newsList
         });
       }
@@ -598,12 +577,11 @@ Page({
     var that = this;
     var icon = null;
     var fileList = null;
-    var my_token = wx.getStorageSync("token");
     wx.request({
-      url: "http://120.78.209.238:50010/v1/supply/getPage",
+      url: this.data.loca50010 + "/supply/getPage",
       header: {
         "Content-Type": "application/json",
-        "login_token": my_token
+        "login_token": this.data.token
       },
       data: {
         type: pageData.type,
@@ -613,7 +591,7 @@ Page({
         order: pageData.order
       },
       success: function (res) {
-        if (that.data.newList.length === res.data.data.page.total) {
+        if (this.data.newList.length === res.data.data.page.total) {
           return;
         }
         var newsList = res.data.data.page.rows;
@@ -622,7 +600,7 @@ Page({
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
             if (icon.indexOf("/")) {} else {
-              newsList[i].icon = that.data.imgUrl + icon;
+              newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
             newsList[i].icon = "";
@@ -631,7 +609,7 @@ Page({
             newsList[i].fileList = fileList.split(",");
             for (let j = 0; j < newsList[i].fileList.length; j++) {
               newsList[i].fileList[j] =
-                that.data.imgUrl + newsList[i].fileList[j];
+                this.data.imgUrl + newsList[i].fileList[j];
             }
           }
         }
@@ -669,78 +647,8 @@ Page({
     console.log(this.data.pageData);
     console.log("下拉刷新");
   },
-  getUserInfo: function (e) {
-    wx.login({
-      success: res => {
-        console.log(res);
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        if (res.code) {
-          //发起网络请求
-          wx.request({
-            url: "https://api.weixin.qq.com/sns/jscode2session?appid=wx2623aa28384009f5&secret=0063ddf49973e5cb547661200a8e3b21&js_code=" +
-              res.code +
-              "&grant_type=authorization_code",
-            data: {
-              code: res.code
-            },
-            success: res => {
-              if (res.data.openid) {
-                app.globalData.userInfo = e.detail.userInfo;
-                this.setData({
-                  userInfo: e.detail.userInfo,
-                  hasUserInfo: true
-                });
-                console.log(e.detail.userInfo);
-                var userInfo = e.detail.userInfo;
-                this.setData({
-                  openid: res.data.openid
-                });
-                this.autoLogin(
-                  res.data.openid,
-                  userInfo.avatarUrl,
-                  userInfo.nickName,
-                  userInfo.gender
-                );
-              } else {
-                this.getUserInfo();
-              }
-            }
-          });
-        } else {
-          console.log("获取用户登录态失败！" + res.errMsg);
-        }
-      }
-    });
-  },
-  autoLogin: function (openId, icon, userName, sex) {
-    wx.request({
-      url: "http://120.78.209.238:50010/v1/user/otherLogin",
-      method: "post",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        otherLogin: "wx",
-        openId: openId,
-        icon: icon,
-        userName: userName,
-        sex: sex
-      },
-      success: res => {
-        console.log(res);
-        if (res.data.code == 0) {
-          wx.setStorageSync("token", res.data.data.token);
-          wx.setStorageSync("user", res.data.data.user);
-          console.log(res.data.data.token);
-          this.setData({
-            token: res.data.data.token,
-            user: res.data.data.user
-          });
-          this.onLoad();
-        }
-      }
-    });
-  },
+
+
   close: function () {
     this.setData({
       mask: "mask-close"
@@ -769,17 +677,13 @@ Page({
     });
   },
   shouCang: function (e) {
-    console.log(e.currentTarget.dataset.iz);
-    console.log(e.currentTarget.dataset.id);
-    console.log(e.currentTarget.dataset.index);
-    var my_token = wx.getStorageSync("token");
     if (e.currentTarget.dataset.iz) {
       wx.request({
-        url: "http://120.78.209.238:50010/v1/user/collection/cancel",
+        url: this.data.loca50010 + "/user/collection/cancel",
         method: "post",
         header: {
           "Content-Type": "application/json",
-          login_token: my_token
+          login_token: this.data.token
         },
         data: {
           "id": e.currentTarget.dataset.id,
@@ -805,11 +709,11 @@ Page({
       });
     } else {
       wx.request({
-        url: "http://120.78.209.238:50010/v1/user/collection/save",
+        url: this.data.loca50010 + "/user/collection/save",
         method: "post",
         header: {
           "Content-Type": "application/json",
-          login_token: my_token
+          "login_token": this.data.token
         },
         data: {
           "id": e.currentTarget.dataset.id,
@@ -830,10 +734,27 @@ Page({
               icon: 'success',
               duration: 2000
             })
+          } else if (res.data.code === "9") {
+            this.toLoginPage()
           }
         }
       });
     }
+  },
+  toLoginPage: function () {
+    wx.showModal({
+      title: '未登录',
+      content: '确认跳转到登录页面',
+      success(res) {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: "../userCenter/userCenter"
+          });
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面显示
