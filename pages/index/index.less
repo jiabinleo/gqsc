@@ -320,24 +320,46 @@
   display: none;
 }
 
-// .loginMask {
-//   position: absolute;
-//   left: 0;
-//   bottom: 0;
-//   right: 0;
-//   top: 0;
-//   z-index: 100;
+.loginMask-close {
+  display: none;
+}
 
-//   background: rgba(0, 0, 0, 0.5);
+.loginMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 
-//   .inner {
-//     margin: 0 auto;
-//     width: 600rpx;
-//     background: #ffffff;
-//     position: absolute;
-//     z-index: 999;
-//     // top: 40%;
-//     // left: 40%;
-//     // transform: translate(-50%, -50%);
-//   }
-// }
+  .inner {
+    margin: 0 auto;
+    width: 600rpx;
+    background: #ffffff;
+    position: absolute;
+    z-index: 999;
+    top: 40%;
+    left: 75rpx;
+
+    .title {
+      text-align: center;
+      height: 100rpx;
+    }
+
+    .btn {
+      overflow: hidden;
+
+      button {
+        width: 300rpx;
+        float: left;
+
+        &::after {
+          border: none;
+          background-color: none;
+        }
+      }
+    }
+  }
+}

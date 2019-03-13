@@ -71,7 +71,8 @@ Page({
     active1: null,
     active2: null,
     active3: null,
-    loca50010: null
+    loca50010: null,
+    loginMask: "loginMask-close"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -796,25 +797,53 @@ Page({
               duration: 2000
             });
           } else if (res.data.code === "9") {
-            this.toLoginPage();
+            this.setData({
+              loginMask: "loginMask"
+            });
           }
         }
       });
     }
   },
-  toLoginPage: function() {
-    wx.showModal({
-      title: "未登录",
-      content: "确认跳转到登录页面",
-      success(res) {
-        if (res.confirm) {
-          wx.navigateTo({
-            url: "../userCenter/userCenter"
+  getUserInfo: function(e) {
+    this.setData({
+      loginMask: "loginMask-close"
+    });
+    wx.login({
+      success: res => {
+        if (res.code) {
+          wx.request({
+            url: this.data.loca50010 + "/user/xcxLogin",
+            method: "post",
+            header: {
+              "Content-Type": "application/json"
+            },
+            data: {
+              icon: e.detail.userInfo.avatarUrl,
+              userName: e.detail.userInfo.nickName,
+              sex: e.detail.userInfo.gender,
+              js_code: res.code
+            },
+            success: res => {
+              if (res.data.code === "0") {
+                this.setData({
+                  hasUserInfo: true
+                });
+                wx.setStorageSync("token", res.data.data.token);
+                wx.setStorageSync("user", res.data.data.user);
+                this.onLoad();
+              }
+            }
           });
-        } else if (res.cancel) {
-          console.log("用户点击取消");
+        } else {
+          console.log("获取用户登录态失败！" + res.errMsg);
         }
       }
+    });
+  },
+  hideMask:function(){
+    this.setData({
+      loginMask: "loginMask-close"
     });
   },
   /**

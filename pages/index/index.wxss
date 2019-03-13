@@ -264,3 +264,40 @@
 .mask-close {
   display: none;
 }
+.loginMask-close {
+  display: none;
+}
+.loginMask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.loginMask .inner {
+  margin: 0 auto;
+  width: 600rpx;
+  background: #ffffff;
+  position: absolute;
+  z-index: 999;
+  top: 40%;
+  left: 75rpx;
+}
+.loginMask .inner .title {
+  text-align: center;
+  height: 100rpx;
+}
+.loginMask .inner .btn {
+  overflow: hidden;
+}
+.loginMask .inner .btn button {
+  width: 300rpx;
+  float: left;
+}
+.loginMask .inner .btn button::after {
+  border: none;
+  background-color: none;
+}

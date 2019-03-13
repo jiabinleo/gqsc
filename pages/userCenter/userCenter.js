@@ -53,7 +53,6 @@ Page({
         });
       };
     } else {
-      console.log("000");
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo;
@@ -70,8 +69,6 @@ Page({
     });
   },
   getUserInfo: function(e) {
-    console.log(e.detail.userInfo);
-
     wx.login({
       success: res => {
         console.log(res);

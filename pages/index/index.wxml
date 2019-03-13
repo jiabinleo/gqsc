@@ -134,16 +134,14 @@
     </view>
   </view>
 </view>
-<!-- <block>
-  <view class="loginMask">
+<block>
+  <view class="{{loginMask}}" catchtouchmove="preventTouchMove">
     <view class="inner">
-      <view>取消</view>
-      <view>登录</view>
-      <view>
-        <button>取消</button>
-        <button>确认</button>
+      <view class='title'>请先登录</view>
+      <view class='btn'>
+        <button bindtap='hideMask'>取消</button>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">确认</button>
       </view>
     </view>
-
   </view>
-</block> -->
+</block>
