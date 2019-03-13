@@ -413,48 +413,6 @@ Page({
           wx.navigateBack({
             delta: 1
           })
-        } else if (res.data.code === "9") {
-          console.log('99999999')
-          wx.showToast({
-            title: "正在重新登录",
-            icon: "none",
-            duration: 2000
-          });
-          this.autoLogin(
-            app.globalData.openid,
-            app.globalData.userInfo.avatarUrl,
-            app.globalData.userInfo.nickName,
-            app.globalData.userInfo.gender
-          );
-        }
-      }
-    });
-  },
-  autoLogin: function (openId, icon, userName, sex) {
-    wx.request({
-      url: this.data.loca50010 + "/user/otherLogin",
-      method: "post",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        otherLogin: "wx",
-        openId: openId,
-        icon: icon,
-        userName: userName,
-        sex: sex
-      },
-      success: res => {
-        console.log(res);
-        if (res.data.code == 0) {
-          wx.setStorageSync("token", res.data.data.token);
-          wx.setStorageSync("user", res.data.data.user);
-          console.log(res.data.data.token);
-          this.setData({
-            token: res.data.data.token,
-            user: res.data.data.user
-          });
-          this.save();
         }
       }
     });

@@ -17,16 +17,22 @@ Page({
     btn1: 'btn',
     btn2: '',
     pageType: 1,
-    loca50010: null
+    loca50010: null,
+    token: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     this.setData({
       imgUrl: app.globalData.imgUrl
     })
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      })
+    }
     wx.setNavigationBarTitle({
       title: '我的发布'
     })
@@ -37,14 +43,13 @@ Page({
     }
     this.getMyPage()
   },
-  getMyPage: function () {
+  getMyPage: function() {
     var pageData = this.data.pageData
-    var my_token = wx.getStorageSync("token");
     wx.request({
       url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
-        login_token: my_token
+        "login_token": this.data.token
       },
       data: {
         type: pageData.type,
@@ -66,60 +71,18 @@ Page({
           this.setData({
             pageRows: pageRows
           })
-        } else if (res.data.code === "9") {
-          wx.showToast({
-            title: "正在重新登录",
-            icon: "none",
-            duration: 2000
-          });
-          this.autoLogin(
-            app.globalData.openid,
-            app.globalData.userInfo.avatarUrl,
-            app.globalData.userInfo.nickName,
-            app.globalData.userInfo.gender
-          );
         }
       }
     });
   },
-  autoLogin: function (openId, icon, userName, sex) {
-    wx.request({
-      url: this.data.loca50010 + "/user/otherLogin",
-      method: "post",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        otherLogin: "wx",
-        openId: openId,
-        icon: icon,
-        userName: userName,
-        sex: sex
-      },
-      success: res => {
-        console.log(res);
-        if (res.data.code == 0) {
-          wx.setStorageSync("token", res.data.data.token);
-          wx.setStorageSync("user", res.data.data.user);
-          console.log(res.data.data.token);
-          this.setData({
-            token: res.data.data.token,
-            user: res.data.data.user
-          });
-          this.getMyPage()
-        }
-      }
-    });
-  },
-  onReachBottom: function () {
+  onReachBottom: function() {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
-    var my_token = wx.getStorageSync("token");
     wx.request({
       url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
-        login_token: my_token
+        "login_token": this.data.token
       },
       data: {
         type: pageData.type,
@@ -150,7 +113,7 @@ Page({
       }
     });
   },
-  delMsg: function (e) {
+  delMsg: function(e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -161,12 +124,11 @@ Page({
       confirmColor: '#3CC51F',
       success: res => {
         if (res.confirm) {
-          var my_token = wx.getStorageSync("token");
           wx.request({
             url: this.data.loca50010 + "/supply/cancel/" + e.currentTarget.dataset.id,
             header: {
               "Content-Type": "application/json",
-              login_token: my_token
+              "login_token": this.data.token
             },
             success: res => {
               if (res.data.code === "0") {
@@ -187,7 +149,7 @@ Page({
       }
     })
   },
-  gq: function (e) {
+  gq: function(e) {
     console.log(e.currentTarget.dataset.type)
     var pageData = this.data.pageData
     pageData.type = Number(e.currentTarget.dataset.type)
@@ -211,11 +173,11 @@ Page({
     })
     this.getMyPage()
   },
-  touchList: function (e) {
+  touchList: function(e) {
     console.log(e.currentTarget.dataset.id)
     console.log('=======')
   },
-  onTouch: function (e) {
+  onTouch: function(e) {
     console.log(e.currentTarget.dataset.type)
     if (e.currentTarget.dataset.type == 1) {
       wx.navigateTo({
@@ -231,38 +193,38 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
-  preventTouchMove: function () {},
+  preventTouchMove: function() {},
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -270,7 +232,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

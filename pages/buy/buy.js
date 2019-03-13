@@ -34,13 +34,17 @@ Page({
     active2: null,
     active3: null,
     loca50010: null,
-    uploadImg: null
+    uploadImg: null,
+    token: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    if (wx.getStorageSync("token")) {
+      token: wx.getStorageSync("token")
+    }
     if (app.globalData.loca50010) {
       this.setData({
         loca50010: app.globalData.loca50010
@@ -218,49 +222,49 @@ Page({
       });
     }
   },
-  hideFenlei: function () {
+  hideFenlei: function() {
     this.setData({
       fenlei: "fenlei-close"
     });
   },
-  zsmp: function () {},
+  zsmp: function() {},
   //数据双向绑定
-  titleFn: function (e) {
+  titleFn: function(e) {
     this.setData({
       _title: e.detail.value
     });
   },
-  totalAmountFn: function (e) {
+  totalAmountFn: function(e) {
     this.setData({
       _totalAmount: e.detail.value
     });
   },
-  minAmountFn: function (e) {
+  minAmountFn: function(e) {
     this.setData({
       _minAmount: e.detail.value
     });
   },
-  priceFn: function (e) {
+  priceFn: function(e) {
     this.setData({
       _price: e.detail.value
     });
   },
-  contactsFn: function (e) {
+  contactsFn: function(e) {
     this.setData({
       _contacts: e.detail.value
     });
   },
-  telephoneFn: function (e) {
+  telephoneFn: function(e) {
     this.setData({
       _telephone: e.detail.value
     });
   },
-  detailFn: function (e) {
+  detailFn: function(e) {
     this.setData({
       _detail: e.detail.value
     });
   },
-  supplyTimeFn: function (e) {
+  supplyTimeFn: function(e) {
     console.log(e.detail.value);
 
     this.setData({
@@ -269,7 +273,7 @@ Page({
     });
   },
   //上传图片
-  chooseImage: function () {
+  chooseImage: function() {
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
@@ -299,14 +303,14 @@ Page({
               upfile: file
             });
           },
-          fail: function (res) {
+          fail: function(res) {
             console.log("fail");
           }
         });
       }
     });
   },
-  save: function () {
+  save: function() {
     var upfiles = this.data.upfile;
     var _fileList = "";
     for (let i = 0; i < upfiles.length; i++) {
@@ -394,13 +398,12 @@ Page({
         duration: 1000
       });
     } else {
-      var my_token = wx.getStorageSync("token");
       wx.request({
         url: this.data.loca50010 + "/supply/save",
         method: "POST",
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          login_token: my_token
+          "login_token": this.data.token
         },
         data: data,
         success: res => {
@@ -417,55 +420,12 @@ Page({
                 delta: 1
               }, 2000)
             })
-          } else if (res.data.code === "9") {
-            console.log('99999999')
-            wx.showToast({
-              title: "正在重新登录",
-              icon: "none",
-              duration: 2000
-            });
-            this.autoLogin(
-              app.globalData.openid,
-              app.globalData.userInfo.avatarUrl,
-              app.globalData.userInfo.nickName,
-              app.globalData.userInfo.gender
-            );
           }
         }
       });
     }
-
   },
-  autoLogin: function (openId, icon, userName, sex) {
-    wx.request({
-      url: this.data.loca50010 + "/user/otherLogin",
-      method: "post",
-      header: {
-        "Content-Type": "application/json"
-      },
-      data: {
-        otherLogin: "wx",
-        openId: openId,
-        icon: icon,
-        userName: userName,
-        sex: sex
-      },
-      success: res => {
-        console.log(res);
-        if (res.data.code == 0) {
-          wx.setStorageSync("token", res.data.data.token);
-          wx.setStorageSync("user", res.data.data.user);
-          console.log(res.data.data.token);
-          this.setData({
-            token: res.data.data.token,
-            user: res.data.data.user
-          });
-          this.save();
-        }
-      }
-    });
-  },
-  locFn: function () {
+  locFn: function() {
     var address = wx.getStorageSync("address");
     console.log(address);
     if (address) {
@@ -475,7 +435,7 @@ Page({
       });
     }
   },
-  delImg: function (e) {
+  delImg: function(e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -497,26 +457,26 @@ Page({
       }
     })
   },
-  preventTouchMove: function () {},
+  preventTouchMove: function() {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -526,11 +486,11 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {},
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {}
+  onShareAppMessage: function() {}
   // preventTouchMove: function() {}
 });

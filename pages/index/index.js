@@ -27,7 +27,8 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [{
+    getAllTreePaixu: [
+      {
         text: "不限",
         id: ""
       },
@@ -73,32 +74,32 @@ Page({
     loca50010: null
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  bindUserTap: function () {
-    wx.navigateTo({
-      url: "../userCenter/userCenter"
-    });
-  },
-  onLoad: function () {
-    if (wx.getStorageSync('token')) {
+  // bindUserTap: function () {
+  //   wx.redirectTo({
+  //     url: "../userCenter/userCenter"
+  //   });
+  // },
+  onLoad: function() {
+    if (wx.getStorageSync("token")) {
       this.setData({
-        token: wx.getStorageSync('token')
-      })
+        token: wx.getStorageSync("token")
+      });
     }
     if (app.globalData.loca50010) {
       this.setData({
         loca50010: app.globalData.loca50010
-      })
+      });
     }
     //获取用户信息
     if (wx.getStorageSync("user")) {
       this.setData({
         user: wx.getStorageSync("user")
-      })
+      });
     }
     //banner
     if (app.globalData.imgUrl) {
@@ -119,9 +120,9 @@ Page({
         } else {
           wx.showToast({
             title: res.data.message,
-            icon: 'none',
+            icon: "none",
             duration: 2000
-          })
+          });
         }
       }
     });
@@ -136,26 +137,34 @@ Page({
           this.setData({
             getAllTreeFenlei: res.data.data.trees
           });
-          var treeFenlei = this.data.getAllTreeFenlei
+          var treeFenlei = this.data.getAllTreeFenlei;
           treeFenlei.unshift({
             id: "",
             pid: "",
-            text: "全部",
-            children: []
-          })
+            text: "不限"
+          });
           for (let i = 0; i < treeFenlei.length; i++) {
-            treeFenlei[i].children.unshift({
-              id: treeFenlei[i].id,
-              pid: treeFenlei[i].pid,
-              text: treeFenlei[i].text,
-              children: []
-            })
-            for (let j = 0; j < treeFenlei[i].children.length; j++) {
-              treeFenlei[i].children[j].children.unshift({
-                id: treeFenlei[i].children[j].id,
-                pid: treeFenlei[i].children[j].pid,
-                text: treeFenlei[i].children[j].text
-              })
+            if ("children" in treeFenlei[i]) {
+              if (treeFenlei[i].children.length) {
+                treeFenlei[i].children.unshift({
+                  id: treeFenlei[i].id,
+                  pid: treeFenlei[i].pid,
+                  text: treeFenlei[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeFenlei[i].children.length; j++) {
+                  if ("children" in treeFenlei[i].children[j]) {
+                    if (treeFenlei[i].children[j].children.length) {
+                      treeFenlei[i].children[j].children.unshift({
+                        id: treeFenlei[i].children[j].id,
+                        pid: treeFenlei[i].children[j].pid,
+                        text: treeFenlei[i].children[j].text,
+                        showText: "不限"
+                      });
+                    }
+                  }
+                }
+              }
             }
           }
           this.setData({
@@ -175,26 +184,32 @@ Page({
           this.setData({
             getAllTreeDiqu: res.data.data.trees
           });
-          var treeDiqu = this.data.getAllTreeDiqu
+          var treeDiqu = this.data.getAllTreeDiqu;
           treeDiqu.unshift({
             id: "",
             pid: "",
-            text: "全部",
-            children: []
-          })
+            text: "不限"
+          });
           for (let i = 0; i < treeDiqu.length; i++) {
-            treeDiqu[i].children.unshift({
-              id: treeDiqu[i].id,
-              pid: treeDiqu[i].pid,
-              text: treeDiqu[i].text,
-              children: []
-            })
-            for (let j = 0; j < treeDiqu[i].children.length; j++) {
-              treeDiqu[i].children[j].children.unshift({
-                id: treeDiqu[i].children[j].id,
-                pid: treeDiqu[i].children[j].pid,
-                text: treeDiqu[i].children[j].text
-              })
+            if ("children" in treeDiqu[i]) {
+              if (treeDiqu[i].children.length) {
+                treeDiqu[i].children.unshift({
+                  id: treeDiqu[i].id,
+                  pid: treeDiqu[i].pid,
+                  text: treeDiqu[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeDiqu[i].children.length; j++) {
+                  if ("children" in treeDiqu[i].children[j]) {
+                    treeDiqu[i].children[j].children.unshift({
+                      id: treeDiqu[i].children[j].id,
+                      pid: treeDiqu[i].children[j].pid,
+                      text: treeDiqu[i].children[j].text,
+                      showText: "不限"
+                    });
+                  }
+                }
+              }
             }
           }
           this.setData({
@@ -208,7 +223,7 @@ Page({
     console.log();
   },
   //nav
-  gongying: function () {
+  gongying: function() {
     this.setData({
       navActive: true,
       fl: false,
@@ -223,7 +238,7 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function () {
+  qiugou: function() {
     this.setData({
       navActive: false,
       fl: false,
@@ -258,10 +273,13 @@ Page({
   },
   fenlei() {
     this.setData({
+      treeOne: [],
+      treeTwo: [],
+      treeThree: [],
       active1: null,
       active2: null,
       active3: null
-    })
+    });
     if (this.data.fl) {
       this.setData({
         fl: false,
@@ -281,24 +299,17 @@ Page({
       this.setData({
         treeOne: this.data.getAllTreeFenlei
       });
-      if (this.data.treeOne) {
-        this.setData({
-          treeTwo: this.data.treeOne[0].children
-        });
-        if (this.data.treeTwo) {
-          this.setData({
-            treeThree: this.data.treeTwo[0].children
-          });
-        }
-      }
     }
   },
   diqu() {
     this.setData({
+      treeOne: [],
+      treeTwo: [],
+      treeThree: [],
       active1: null,
       active2: null,
       active3: null
-    })
+    });
     if (this.data.dq) {
       this.setData({
         fl: false,
@@ -318,26 +329,17 @@ Page({
       this.setData({
         treeOne: this.data.getAllTreeDiqu
       });
-      if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
-        this.setData({
-          treeTwo: this.data.treeOne[0].children
-        });
-        if (this.data.treeTwo) {
-          console.log(this.data.treeTwo);
-          this.setData({
-            treeThree: this.data.treeTwo[0].children
-          });
-        }
-      }
     }
   },
   paixu() {
     this.setData({
+      treeOne: [],
+      treeTwo: [],
+      treeThree: [],
       active1: null,
       active2: null,
       active3: null
-    })
+    });
     if (this.data.px) {
       this.setData({
         fl: false,
@@ -354,157 +356,225 @@ Page({
       });
     }
     this.setData({
-      treeOne: [],
-      treeTwo: this.data.getAllTreePaixu,
-      treeThree: []
+      treeTwo: this.data.getAllTreePaixu
     });
   },
   oneTag(e) {
+    console.log(e);
     this.setData({
       active1: e.target.dataset.id,
       active2: null,
-      active3: null
-    })
-    if (this.data.treeOne[e.target.dataset.id].children.length) {
-      this.setData({
-        treeTwo: this.data.treeOne[e.target.dataset.id].children
-      });
-      if (this.data.treeTwo[0].children.length) {
-        console.log(e.target);
+      active3: null,
+      treeTwo: [],
+      treeThree: []
+    });
+    if ("children" in this.data.treeOne[e.target.dataset.id]) {
+      if (this.data.treeOne[e.target.dataset.id].children.length) {
+        console.log(this.data.treeOne[e.target.dataset.id].children);
+        console.log(this.data.treeOne[e.target.dataset.id].children);
         this.setData({
-          treeThree: this.data.treeTwo[0].children
+          treeTwo: this.data.treeOne[e.target.dataset.id].children
         });
       } else {
-        console.log(this.data.treeTwo);
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[0].text,
-            id: this.data.treeTwo[0].id
-          }]
-        });
-      }
-    } else {
-      this.setData({
-        treeTwo: [{
-          text: e._relatedInfo.anchorTargetText,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-      this.setData({
-        treeThree: [{
-          text: this.data.treeTwo[0].text,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-    }
-  },
-  twoTag(e) {
-    this.setData({
-      active2: e.target.dataset.id
-    })
-    if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      console.log(e.target.dataset.id);
-      if (this.data.treeTwo[e.target.dataset.id].children.length) {
-        this.setData({
-          treeThree: this.data.treeTwo[e.target.dataset.id].children
-        });
-      } else {
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[e.target.dataset.id].text,
-            id: e.target.id.split("t")[1]
-          }]
-        });
-      }
-    } else {
-      if (this.data.px) {
+        if (this.data.fl) {
+          var pageData = this.data.pageData;
+          pageData.cropId = e.target.id.split("t")[1];
+          this.setData({
+            pageData: pageData,
+            flMsg: e.target.dataset.text
+          });
+        } else if (this.data.dq) {
+          var pageData = this.data.pageData;
+          pageData.cropId = e.target.id.split("t")[1];
+          this.setData({
+            pageData: pageData,
+            dqMsg: e.target.dataset.text
+          });
+        }
+        this.getPage(this.data.pageData);
         this.setData({
           fl: false,
           dq: false,
           px: false,
           viewHeight: 0
         });
-        this.data.pageData.pageNum = 1;
-        this.data.pageData.order = this.data.getAllTreePaixu[
-          e.target.dataset.id
-        ].id;
+      }
+    } else {
+      if (this.data.fl) {
+        var pageData = this.data.pageData;
+        pageData.cropId = "";
+        pageData.pageNum = 1;
+        this.setData({
+          pageData: pageData,
+          flMsg: e.target.dataset.text
+        });
+      } else if (this.data.dq) {
+        var pageData = this.data.pageData;
+        pageData.areaId = "";
+        pageData.pageNum = 1;
+        this.setData({
+          pageData: pageData,
+          dqMsg: e.target.dataset.text
+        });
+      }
+      this.getPage(this.data.pageData);
+      this.setData({
+        fl: false,
+        dq: false,
+        px: false,
+        viewHeight: 0
+      });
+    }
+  },
+  twoTag(e) {
+    var pageData = this.data.pageData;
+    if (this.data.px) {
+      pageData.pageNum = 1;
+      pageData.order = this.data.getAllTreePaixu[e.target.dataset.id].id;
+      this.setData({
+        pxMsg: e.target.dataset.text,
+        pageData: pageData
+      });
+      this.getPage(this.data.pageData);
+      this.setData({
+        fl: false,
+        dq: false,
+        px: false,
+        viewHeight: 0
+      });
+    } else {
+      this.setData({
+        active2: e.target.dataset.id,
+        treeThree: []
+      });
+      if ("children" in this.data.treeTwo[e.target.dataset.id]) {
+        if (this.data.treeTwo[e.target.dataset.id].children.length) {
+          this.setData({
+            treeThree: this.data.treeTwo[e.target.dataset.id].children
+          });
+        } else {
+          if (this.data.fl) {
+            pageData.cropId = e.target.id.split("t")[1];
+            pageData.pageNum = 1;
+            console.log(e);
+            this.setData({
+              pageData: pageData,
+              flMsg: e.target.dataset.text
+            });
+          } else if (this.data.dq) {
+            var pageData = this.data.pageData;
+            pageData.areaId = e.target.id.split("t")[1];
+            pageData.pageNum = 1;
+            this.setData({
+              pageData: pageData,
+              dqMsg: e.target.dataset.text
+            });
+          }
+          this.getPage(this.data.pageData);
+          this.setData({
+            fl: false,
+            dq: false,
+            px: false,
+            viewHeight: 0
+          });
+        }
+      } else {
+        if (this.data.fl) {
+          var pageData = this.data.pageData;
+          pageData.cropId = e.target.id.split("t")[1];
+          pageData.pageNum = 1;
+          this.setData({
+            pageData: pageData,
+            flMsg: e.target.dataset.text
+          });
+        } else if (this.data.dq) {
+          var pageData = this.data.pageData;
+          pageData.areaId = e.target.id.split("t")[1];
+          pageData.pageNum = 1;
+          this.setData({
+            pageData: pageData,
+            dqMsg: e.target.dataset.text
+          });
+        }
         this.getPage(this.data.pageData);
         this.setData({
-          pxMsg: e._relatedInfo.anchorTargetText
+          fl: false,
+          dq: false,
+          px: false,
+          viewHeight: 0
         });
       }
     }
   },
   threeTag(e) {
-    console.log(e._relatedInfo.anchorTargetText)
+    var pageData = this.data.pageData;
     if (this.data.fl) {
-      this.data.pageData.cropId = e.target.id.split("t")[1];
+      pageData.cropId = e.target.id.split("t")[1];
       this.setData({
-        flMsg: e._relatedInfo.anchorTargetText
+        pageData: pageData,
+        flMsg: e.target.dataset.text
       });
     } else if (this.data.dq) {
-      this.data.pageData.areaId = e.target.id.split("t")[1];
+      pageData.areaId = e.target.id.split("t")[1];
       this.setData({
-        dqMsg: e._relatedInfo.anchorTargetText
+        pageData: pageData,
+        dqMsg: e.target.dataset.text
       });
     }
+    this.getPage(this.data.pageData);
     this.setData({
       fl: false,
       dq: false,
       px: false,
       viewHeight: 0
     });
-    this.getPage(this.data.pageData);
   },
   //定位
-  loadInfo: function () {
+  loadInfo: function() {
     var that = this;
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function (res) {
+      success: function(res) {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
         that.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function (latitude, longitude) {
+  loadCity: function(latitude, longitude) {
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function (data) {
+      success: function(data) {
         // console.log(data);
       },
-      fail: function (info) {}
+      fail: function(info) {}
     });
 
     myAmapFun.getWeather({
       success: data => {
-        this.setData({
-          weather: data
-        });
         this.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function (info) {
+      fail: function(info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function (adcode) {
-    console.log(adcode);
+  liveData: function(adcode) {
     wx.request({
       url: this.data.loca50010 + "/area/getAreaIdByCode?code=" + adcode,
       header: {
         "Content-Type": "application/json"
       },
       success: res => {
-        console.log(res)
         wx.request({
-          url: this.data.loca50010 + "/area/getParentList?id=" +
+          url:
+            this.data.loca50010 +
+            "/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
             "Content-Type": "application/json"
@@ -518,24 +588,19 @@ Page({
               "address",
               res.data.data.list[res.data.data.list.length - 1]
             );
-            this.setData({
-              dqMsg: res.data.data.list[res.data.data.list.length - 1].areaName
-            })
           }
         });
       }
     });
   },
-  getPage: function (pageData) {
-    console.log(pageData);
-    var that = this;
+  getPage: function(pageData) {
     var icon = null;
     var fileList = null;
     wx.request({
       url: this.data.loca50010 + "/supply/getPage",
       header: {
         "Content-Type": "application/json",
-        "login_token": this.data.token
+        login_token: this.data.token
       },
       data: {
         cropId: pageData.cropId,
@@ -551,7 +616,8 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {} else {
+            if (icon.indexOf("/")) {
+            } else {
               newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
@@ -571,26 +637,23 @@ Page({
       }
     });
   },
-  onReachBottom: function () {
+  onReachBottom: function() {
     this.data.pageData.pageNum += 1;
     var pageData = this.data.pageData;
+    console.log(pageData);
     var that = this;
     var icon = null;
     var fileList = null;
+    console.log(pageData);
     wx.request({
       url: this.data.loca50010 + "/supply/getPage",
       header: {
         "Content-Type": "application/json",
-        "login_token": this.data.token
+        login_token: this.data.token
       },
-      data: {
-        type: pageData.type,
-        areaId: pageData.areaId,
-        pageNum: pageData.pageNum,
-        pageSize: pageData.pageSize,
-        order: pageData.order
-      },
-      success: function (res) {
+      data: pageData,
+      success: res => {
+        console.log(res);
         if (this.data.newList.length === res.data.data.page.total) {
           return;
         }
@@ -599,7 +662,8 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {} else {
+            if (icon.indexOf("/")) {
+            } else {
               newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
@@ -623,7 +687,7 @@ Page({
       }
     });
   },
-  onTouch: function (e) {
+  onTouch: function(e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
@@ -639,28 +703,27 @@ Page({
         pageSize: 3,
         order: ""
       },
-      flMsg: '选择分类',
-      dqMsg: '选择地区',
-      pxMsg: '排序方式'
-    })
+      flMsg: "选择分类",
+      dqMsg: "选择地区",
+      pxMsg: "排序方式"
+    });
     this.onLoad();
     console.log(this.data.pageData);
     console.log("下拉刷新");
   },
 
-
-  close: function () {
+  close: function() {
     this.setData({
       mask: "mask-close"
     });
   },
-  open: function () {
+  open: function() {
     this.setData({
       mask: "mask"
     });
   },
-  preventTouchMove: function () {},
-  supply: function () {
+  preventTouchMove: function() {},
+  supply: function() {
     wx.navigateTo({
       url: "../supply/supply"
     });
@@ -668,7 +731,7 @@ Page({
       mask: "mask-close"
     });
   },
-  buy: function () {
+  buy: function() {
     wx.navigateTo({
       url: "../buy/buy"
     });
@@ -676,7 +739,7 @@ Page({
       mask: "mask-close"
     });
   },
-  shouCang: function (e) {
+  shouCang: function(e) {
     if (e.currentTarget.dataset.iz) {
       wx.request({
         url: this.data.loca50010 + "/user/collection/cancel",
@@ -686,24 +749,23 @@ Page({
           login_token: this.data.token
         },
         data: {
-          "id": e.currentTarget.dataset.id,
-          "code": "gqsc"
+          id: e.currentTarget.dataset.id,
+          code: "gqsc"
         },
         success: res => {
           console.log(res);
           if (res.data.code === "0") {
-
-            var asd = this.data.newList
-            asd[e.currentTarget.dataset.index].isCollection = false
-            asd[e.currentTarget.dataset.index].collectionNum -= 1
+            var asd = this.data.newList;
+            asd[e.currentTarget.dataset.index].isCollection = false;
+            asd[e.currentTarget.dataset.index].collectionNum -= 1;
             this.setData({
               newList: asd
-            })
+            });
             wx.showToast({
-              title: '取消收藏',
-              icon: 'none',
+              title: "取消收藏",
+              icon: "none",
               duration: 2000
-            })
+            });
           }
         }
       });
@@ -713,51 +775,50 @@ Page({
         method: "post",
         header: {
           "Content-Type": "application/json",
-          "login_token": this.data.token
+          login_token: this.data.token
         },
         data: {
-          "id": e.currentTarget.dataset.id,
-          "code": "gqsc"
+          id: e.currentTarget.dataset.id,
+          code: "gqsc"
         },
         success: res => {
           console.log(res);
           if (res.data.code === "0") {
-
-            var asd = this.data.newList
-            asd[e.currentTarget.dataset.index].isCollection = true
-            asd[e.currentTarget.dataset.index].collectionNum += 1
+            var asd = this.data.newList;
+            asd[e.currentTarget.dataset.index].isCollection = true;
+            asd[e.currentTarget.dataset.index].collectionNum += 1;
             this.setData({
               newList: asd
-            })
+            });
             wx.showToast({
-              title: '收藏成功',
-              icon: 'success',
+              title: "收藏成功",
+              icon: "success",
               duration: 2000
-            })
+            });
           } else if (res.data.code === "9") {
-            this.toLoginPage()
+            this.toLoginPage();
           }
         }
       });
     }
   },
-  toLoginPage: function () {
+  toLoginPage: function() {
     wx.showModal({
-      title: '未登录',
-      content: '确认跳转到登录页面',
+      title: "未登录",
+      content: "确认跳转到登录页面",
       success(res) {
         if (res.confirm) {
           wx.navigateTo({
             url: "../userCenter/userCenter"
           });
         } else if (res.cancel) {
-          console.log('用户点击取消')
+          console.log("用户点击取消");
         }
       }
-    })
+    });
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {}
+  onShow: function() {}
 });

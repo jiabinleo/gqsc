@@ -37,7 +37,7 @@
   width: 50%;
   border-radius: 0;
   text-align: center;
-  font-size: 24rpx;
+  font-size: 28rpx;
   line-height: 82rpx;
 }
 .select {
@@ -72,7 +72,7 @@
   display: inline-block;
   width: 33%;
   text-align: center;
-  font-size: 24rpx;
+  font-size: 28rpx;
 }
 .section-wrap .section scroll-view view {
   line-height: 50rpx;
@@ -114,7 +114,7 @@
 }
 .newList .userMsg .username .name .time {
   float: right;
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #999999;
 }
 .newList .userMsg .username .address {
@@ -128,12 +128,12 @@
   border-radius: 20rpx;
 }
 .newList .title {
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #666666;
   line-height: 36rpx;
 }
 .newList .detail {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #999999;
   line-height: 36rpx;
 }
