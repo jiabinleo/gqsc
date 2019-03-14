@@ -27,8 +27,7 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [
-      {
+    getAllTreePaixu: [{
         text: "不限",
         id: ""
       },
@@ -75,7 +74,7 @@ Page({
     loginMask: "loginMask-close"
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: "../logs/logs"
     });
@@ -85,7 +84,12 @@ Page({
   //     url: "../userCenter/userCenter"
   //   });
   // },
-  onLoad: function() {
+  onLoad: function () {
+    var pageData = this.data.pageData;
+    pageData.pageNum = 1;
+    this.setData({
+      pageData: pageData
+    });
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
@@ -127,6 +131,7 @@ Page({
         }
       }
     });
+    this.getPage(pageData)
     //分类
     wx.request({
       url: this.data.loca50010 + "/goodsCategory/getAllTree",
@@ -220,11 +225,10 @@ Page({
       }
     });
     //定位
-    this.loadInfo();
-    console.log();
+    // this.loadInfo();
   },
   //nav
-  gongying: function() {
+  gongying: function () {
     this.setData({
       navActive: true,
       fl: false,
@@ -239,7 +243,7 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  qiugou: function() {
+  qiugou: function () {
     this.setData({
       navActive: false,
       fl: false,
@@ -531,27 +535,26 @@ Page({
     });
   },
   //定位
-  loadInfo: function() {
-    var that = this;
+  loadInfo: function () {
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
-      success: function(res) {
+      success: res => {
         var latitude = res.latitude; //维度
         var longitude = res.longitude; //经度
-        that.loadCity(latitude, longitude);
+        this.loadCity(latitude, longitude);
       }
     });
   },
-  loadCity: function(latitude, longitude) {
+  loadCity: function (latitude, longitude) {
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
     myAmapFun.getRegeo({
       location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function(data) {
+      success: function (data) {
         // console.log(data);
       },
-      fail: function(info) {}
+      fail: function (info) {}
     });
 
     myAmapFun.getWeather({
@@ -559,13 +562,13 @@ Page({
         this.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function(info) {
+      fail: function (info) {
         //失败回调
         console.log(info);
       }
     });
   },
-  liveData: function(adcode) {
+  liveData: function (adcode) {
     wx.request({
       url: this.data.loca50010 + "/area/getAreaIdByCode?code=" + adcode,
       header: {
@@ -573,8 +576,7 @@ Page({
       },
       success: res => {
         wx.request({
-          url:
-            this.data.loca50010 +
+          url: this.data.loca50010 +
             "/area/getParentList?id=" +
             res.data.data.area.id,
           header: {
@@ -594,9 +596,12 @@ Page({
       }
     });
   },
-  getPage: function(pageData) {
+  getPage: function (pageData) {
     var icon = null;
     var fileList = null;
+    wx.showLoading({
+      title: "加载中"
+    });
     wx.request({
       url: this.data.loca50010 + "/supply/getPage",
       header: {
@@ -617,8 +622,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
@@ -635,17 +639,21 @@ Page({
         this.setData({
           newList: newsList
         });
+        wx.hideLoading();
       }
     });
   },
-  onReachBottom: function() {
-    this.data.pageData.pageNum += 1;
+  onReachBottom: function () {
+    wx.showLoading({
+      title: "加载中"
+    });
     var pageData = this.data.pageData;
-    console.log(pageData);
-    var that = this;
+    pageData.pageNum++;
+    this.setData({
+      pageData: pageData
+    });
     var icon = null;
     var fileList = null;
-    console.log(pageData);
     wx.request({
       url: this.data.loca50010 + "/supply/getPage",
       header: {
@@ -655,7 +663,17 @@ Page({
       data: pageData,
       success: res => {
         console.log(res);
+        wx.hideLoading();
         if (this.data.newList.length === res.data.data.page.total) {
+          wx.showToast({
+            title: "没有新的内容",
+            icon: "none",
+            duration: 1000
+          });
+          pageData.pageNum--;
+          this.setData({
+            pageData: pageData
+          });
           return;
         }
         var newsList = res.data.data.page.rows;
@@ -663,8 +681,7 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {
-            } else {
+            if (icon.indexOf("/")) {} else {
               newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
@@ -679,16 +696,16 @@ Page({
           }
         }
         for (let i = 0; i < newsList.length; i++) {
-          that.data.newList.push(newsList[i]);
+          this.data.newList.push(newsList[i]);
         }
-        var news = that.data.newList;
-        that.setData({
+        var news = this.data.newList;
+        this.setData({
           newList: news
         });
       }
     });
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.id
     });
@@ -713,34 +730,76 @@ Page({
     console.log("下拉刷新");
   },
 
-  close: function() {
+  close: function () {
     this.setData({
       mask: "mask-close"
     });
   },
-  open: function() {
+  open: function () {
     this.setData({
       mask: "mask"
     });
   },
-  preventTouchMove: function() {},
-  supply: function() {
-    wx.navigateTo({
-      url: "../supply/supply"
-    });
-    this.setData({
-      mask: "mask-close"
-    });
+  preventTouchMove: function () {},
+  supply: function () {
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../supply/supply"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
-  buy: function() {
-    wx.navigateTo({
-      url: "../buy/buy"
-    });
-    this.setData({
-      mask: "mask-close"
-    });
+  buy: function () {
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../buy/buy"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
-  shouCang: function(e) {
+  shouCang: function (e) {
     if (e.currentTarget.dataset.iz) {
       wx.request({
         url: this.data.loca50010 + "/user/collection/cancel",
@@ -805,7 +864,7 @@ Page({
       });
     }
   },
-  getUserInfo: function(e) {
+  getUserInfo: function (e) {
     this.setData({
       loginMask: "loginMask-close"
     });
@@ -841,7 +900,7 @@ Page({
       }
     });
   },
-  hideMask:function(){
+  hideMask: function () {
     this.setData({
       loginMask: "loginMask-close"
     });
@@ -849,5 +908,5 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {}
+  onShow: function () {}
 });

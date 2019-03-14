@@ -19,7 +19,10 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    wx.showLoading({
+      title: "加载中"
+    });
     if (app.globalData.imgUrl) {
       this.setData({
         imgUrl: app.globalData.imgUrl
@@ -39,6 +42,7 @@ Page({
         "login_token": my_token
       },
       success: res => {
+        wx.hideLoading();
         var _marketSupply = res.data.data.marketSupply
         this.setData({
           isCollection: _marketSupply.isCollection
@@ -88,7 +92,7 @@ Page({
     });
 
   },
-  shouCang: function (e) {
+  shouCang: function(e) {
     console.log(e)
     console.log(e.currentTarget.dataset.iz);
     console.log(e.currentTarget.dataset.id);
@@ -148,7 +152,7 @@ Page({
       });
     }
   },
-  ylImg: function (e) {
+  ylImg: function(e) {
     console.log("预览图片")
     console.log(e)
     if (this.data.fileList) {
@@ -161,45 +165,45 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  tel: function () {
+  tel: function() {
     console.log()
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber

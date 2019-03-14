@@ -285,10 +285,20 @@
   z-index: 999;
   top: 40%;
   left: 75rpx;
+  border-radius: 10rpx;
+  overflow: hidden;
 }
 .loginMask .inner .title {
   text-align: center;
-  height: 100rpx;
+  color: #333333;
+  padding: 40rpx 0 20rpx;
+  font-size: 30rpx;
+}
+.loginMask .inner .detial {
+  text-align: center;
+  padding: 30rpx 0 50rpx;
+  color: #666666;
+  font-size: 28rpx;
 }
 .loginMask .inner .btn {
   overflow: hidden;
@@ -296,8 +306,18 @@
 .loginMask .inner .btn button {
   width: 300rpx;
   float: left;
+  padding: 0;
+  border: none;
 }
 .loginMask .inner .btn button::after {
   border: none;
   background-color: none;
+}
+.loginMask .inner .btn button:last-of-type::after {
+  content: "去登录";
+  font-size: 68rpx;
+  border: none;
+  background-color: #3fbef1;
+  color: #ffffff;
+  border-radius: 0;
 }
