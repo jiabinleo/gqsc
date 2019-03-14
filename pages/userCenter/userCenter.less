@@ -92,6 +92,7 @@
                 top: 44rpx;
                 left: 50%;
                 transform: translate(-50%, -50%);
+
                 image {
                     width: 100rpx;
                     height: 100rpx;
@@ -179,4 +180,72 @@
 
 .mask-close {
     display: none;
+}
+
+.loginMask-close {
+    display: none;
+}
+
+.loginMask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    .inner {
+        margin: 0 auto;
+        width: 600rpx;
+        background: #ffffff;
+        position: absolute;
+        z-index: 999;
+        top: 40%;
+        left: 75rpx;
+        border-radius: 10rpx;
+        overflow: hidden;
+
+        .title {
+            text-align: center;
+            color: #333333;
+            padding: 40rpx 0 20rpx;
+            font-size: 30rpx;
+        }
+
+        .detial {
+            text-align: center;
+            padding: 30rpx 0 50rpx;
+            color: #666666;
+            font-size: 28rpx;
+        }
+
+        .btn {
+            overflow: hidden;
+
+            button {
+                width: 300rpx;
+                float: left;
+                padding: 0;
+                border: none;
+
+                &::after {
+                    border: none;
+                    background-color: none;
+                }
+
+                &:last-of-type {
+                    &::after {
+                        content: "去登录";
+                        font-size: 68rpx;
+                        border: none;
+                        background-color: #3fbef1;
+                        color: #ffffff;
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+    }
 }

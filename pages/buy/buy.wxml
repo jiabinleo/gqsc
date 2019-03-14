@@ -1,7 +1,7 @@
 <view class="wrap">
   <view>
     <text>标题</text>
-    <input type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input focus="true" type="text" bindinput="titleFn" placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>求购类型</text>
@@ -14,11 +14,11 @@
   </view>
   <view>
     <text>总数量（斤）</text>
-    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number" bindinput='totalAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>起购量（斤）</text>
-    <input type="text" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
     <text>求购价格</text>
@@ -36,7 +36,7 @@
   </view>
   <view>
     <text>联系电话</text>
-    <input type="text" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number"  maxlength="11" bindinput="telephoneFn" placeholder-class="sr" placeholder='请输入11位手机号码'></input>
   </view>
   <view>
     <text>商品详情</text>

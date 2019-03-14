@@ -66,7 +66,7 @@
               <view class="username">
                 <view class="name">
                   <view class="namel">{{item.userName?item.userName:'悦农通'}}</view>
-                  <view class="time">{{item.publishTime}}</view>
+                  <view class="time">{{item.time}}</view>
                 </view>
                 <view class="address">
                   <text>{{item.area}}</text>

@@ -59,3 +59,15 @@
     </view>
   </view>
 </view>
+<block>
+  <view class="{{loginMask}}" catchtouchmove="preventTouchMove">
+    <view class="inner">
+      <view class='title'>请先登录</view>
+      <view class="detial">该功能需要登录才能使用</view>
+      <view class='btn'>
+        <button bindtap='hideMask'>取消</button>
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">去登录</button>
+      </view>
+    </view>
+  </view>
+</block>

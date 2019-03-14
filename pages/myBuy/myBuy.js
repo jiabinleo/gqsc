@@ -408,11 +408,13 @@ Page({
           wx.showToast({
             title: "修改成功",
             icon: "success",
-            duration: 2000
+            duration: 1000
           });
-          wx.navigateBack({
-            delta: 1
-          })
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1000)
         }
       }
     });

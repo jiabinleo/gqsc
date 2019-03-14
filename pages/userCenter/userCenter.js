@@ -12,7 +12,8 @@ Page({
     token: null,
     loca50010: null,
     userInfo: {},
-    hasUserInfo: false
+    hasUserInfo: false,
+    loginMask: "loginMask-close"
   },
 
   /**
@@ -76,9 +77,14 @@ Page({
     }, 1000);
   },
   getUserInfo: function (e) {
+    wx.showLoading({
+      title: "加载中"
+    });
+    this.setData({
+      loginMask: "loginMask-close"
+    });
     wx.login({
       success: res => {
-        console.log(res);
         if (res.code) {
           wx.request({
             url: this.data.loca50010 + "/user/xcxLogin",
@@ -110,14 +116,68 @@ Page({
     });
   },
   bindReleaseTap: function () {
-    wx.navigateTo({
-      url: "../myRelease/myRelease"
-    });
+    // wx.navigateTo({
+    //   url: "../myRelease/myRelease"
+    // });
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../myRelease/myRelease"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
   bindCollectionTap: function () {
-    wx.navigateTo({
-      url: "../myCollection/myCollection"
-    });
+    // wx.navigateTo({
+    //   url: "../myCollection/myCollection"
+    // });
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../myCollection/myCollection"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
   close: function () {
     this.setData({
@@ -131,19 +191,66 @@ Page({
   },
   preventTouchMove: function () {},
   supply: function () {
-    wx.navigateTo({
-      url: "../supply/supply"
-    });
-    this.setData({
-      mask: "mask-close"
-    });
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../supply/supply"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
   buy: function () {
-    wx.navigateTo({
-      url: "../buy/buy"
-    });
+    wx.request({
+      url: this.data.loca50010 + "/user/collection/list",
+      header: {
+        "Content-Type": "application/json",
+        login_token: this.data.token
+      },
+      success: res => {
+        if (res.data.code === "0") {
+          wx.navigateTo({
+            url: "../buy/buy"
+          });
+          this.setData({
+            mask: "mask-close"
+          });
+        } else if (res.data.code === "9") {
+          this.setData({
+            loginMask: "loginMask"
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+  hideMask: function () {
     this.setData({
-      mask: "mask-close"
+      loginMask: "loginMask-close"
     });
   },
   /**

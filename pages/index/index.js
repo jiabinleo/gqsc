@@ -79,11 +79,6 @@ Page({
       url: "../logs/logs"
     });
   },
-  // bindUserTap: function () {
-  //   wx.redirectTo({
-  //     url: "../userCenter/userCenter"
-  //   });
-  // },
   onLoad: function () {
     var pageData = this.data.pageData;
     pageData.pageNum = 1;
@@ -225,7 +220,7 @@ Page({
       }
     });
     //定位
-    // this.loadInfo();
+    this.loadInfo();
   },
   //nav
   gongying: function () {
@@ -549,16 +544,10 @@ Page({
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
-    myAmapFun.getRegeo({
-      location: "" + longitude + "," + latitude + "", //location的格式为'经度,纬度'
-      success: function (data) {
-        // console.log(data);
-      },
-      fail: function (info) {}
-    });
 
     myAmapFun.getWeather({
       success: data => {
+        console.log(data)
         this.liveData(data.liveData.adcode);
         //成功回调
       },
@@ -583,10 +572,10 @@ Page({
             "Content-Type": "application/json"
           },
           success: res => {
-            this.data.pageData.areaId =
-              res.data.data.list[res.data.data.list.length - 1].id;
-            this.getPage(this.data.pageData);
-            console.log();
+            // this.data.pageData.areaId =
+            //   res.data.data.list[res.data.data.list.length - 1].id;
+            // this.getPage(this.data.pageData);
+            // console.log();
             wx.setStorageSync(
               "address",
               res.data.data.list[res.data.data.list.length - 1]
@@ -635,6 +624,7 @@ Page({
                 this.data.imgUrl + newsList[i].fileList[j];
             }
           }
+          newsList[i].time = this.timeConversion(newsList[i].publishTime)
         }
         this.setData({
           newList: newsList
@@ -694,6 +684,7 @@ Page({
                 this.data.imgUrl + newsList[i].fileList[j];
             }
           }
+          newsList[i].time = this.timeConversion(newsList[i].publishTime)
         }
         for (let i = 0; i < newsList.length; i++) {
           this.data.newList.push(newsList[i]);
@@ -865,6 +856,9 @@ Page({
     }
   },
   getUserInfo: function (e) {
+    wx.showLoading({
+      title: "加载中"
+    });
     this.setData({
       loginMask: "loginMask-close"
     });
@@ -904,6 +898,23 @@ Page({
     this.setData({
       loginMask: "loginMask-close"
     });
+  },
+  timeConversion: function timeConversion(oldTime, tipMsg) {
+    var timeText = ""
+    if (tipMsg == undefined) {
+      var tipMsg = "刚刚发布";
+    }
+    var disTime = Date.parse(new Date()) - new Date(oldTime).getTime();
+    if (disTime < 60 * 1000) {
+      timeText = tipMsg;
+    } else if (disTime < 60 * 60 * 1000) {
+      timeText = parseInt(disTime / 60 / 1000) + "\u5206\u949F\u524D";
+    } else if (disTime < 24 * 60 * 60 * 1000) {
+      timeText = parseInt(disTime / 60 / 60 / 1000) + "\u5C0F\u65F6\u524D";
+    } else {
+      timeText = oldTime.split(' ')[0];
+    }
+    return timeText;
   },
   /**
    * 生命周期函数--监听页面显示

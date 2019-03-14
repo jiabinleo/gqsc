@@ -412,13 +412,13 @@ Page({
             wx.showToast({
               title: "供应信息发布成功",
               icon: "success",
-              duration: 2000
+              duration: 1000
             });
             setTimeout(() => {
               wx.navigateBack({
                 delta: 1
               })
-            }, 2000)
+            }, 1000)
           }
         }
       });

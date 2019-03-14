@@ -13,13 +13,14 @@ Page({
     phoneNumber: '',
     isCollection: false,
     priceDW: "",
-    loca50010: null
+    loca50010: null,
+    loginMask: "loginMask-close"
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     wx.showLoading({
       title: "加载中"
     });
@@ -63,7 +64,6 @@ Page({
         } else {
           _fileList = _marketSupply.fileList
         }
-
         var publishTime = _marketSupply.publishTime.split(' ')[0]
         var supplyTime = _marketSupply.supplyTime.split(' ')[0].split('-')
         var _supplyTime = supplyTime[0] + '年' + supplyTime[1] + '月' + supplyTime[2] + '日'
@@ -87,16 +87,10 @@ Page({
           supplyTime: _supplyTime,
           phoneNumber: _marketSupply.telephone
         })
-
       }
     });
-
   },
-  shouCang: function(e) {
-    console.log(e)
-    console.log(e.currentTarget.dataset.iz);
-    console.log(e.currentTarget.dataset.id);
-    console.log(e.currentTarget.dataset.index);
+  shouCang: function (e) {
     var my_token = wx.getStorageSync("token");
     if (e.currentTarget.dataset.iz) {
       wx.request({
@@ -147,12 +141,22 @@ Page({
               icon: 'success',
               duration: 2000
             })
+          } else if (res.data.code === "9") {
+            this.setData({
+              loginMask: "loginMask"
+            });
+          } else {
+            wx.showToast({
+              title: res.data.message,
+              icon: 'none',
+              duration: 1000
+            })
           }
         }
       });
     }
   },
-  ylImg: function(e) {
+  ylImg: function (e) {
     console.log("预览图片")
     console.log(e)
     if (this.data.fileList) {
@@ -162,48 +166,88 @@ Page({
       })
     }
   },
+  getUserInfo: function (e) {
+    this.setData({
+      loginMask: "loginMask-close"
+    });
+    wx.login({
+      success: res => {
+        if (res.code) {
+          wx.request({
+            url: this.data.loca50010 + "/user/xcxLogin",
+            method: "post",
+            header: {
+              "Content-Type": "application/json"
+            },
+            data: {
+              icon: e.detail.userInfo.avatarUrl,
+              userName: e.detail.userInfo.nickName,
+              sex: e.detail.userInfo.gender,
+              js_code: res.code
+            },
+            success: res => {
+              if (res.data.code === "0") {
+                this.setData({
+                  hasUserInfo: true
+                });
+                wx.setStorageSync("token", res.data.data.token);
+                wx.setStorageSync("user", res.data.data.user);
+              }
+            }
+          });
+        } else {
+          console.log("获取用户登录态失败！" + res.errMsg);
+        }
+      }
+    });
+  },
+  hideMask: function () {
+    this.setData({
+      loginMask: "loginMask-close"
+    });
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
-  tel: function() {
+  tel: function () {
     console.log()
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber
