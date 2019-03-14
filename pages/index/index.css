@@ -96,18 +96,19 @@
   float: left;
 }
 .newList .userMsg .userImg image {
-  width: 56rpx;
-  height: 56rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
 }
 .newList .userMsg .username {
   margin-top: -4rpx;
   float: left;
   margin-left: 16rpx;
-  width: 600rpx;
+  width: 552rpx;
 }
 .newList .userMsg .username .name {
   overflow: hidden;
-  font-size: 26rpx;
+  font-size: 30rpx;
 }
 .newList .userMsg .username .name .namel {
   float: left;
@@ -118,7 +119,7 @@
   color: #999999;
 }
 .newList .userMsg .username .address {
-  margin-top: -18rpx;
+  margin-top: -8rpx;
 }
 .newList .userMsg .username .address text {
   font-size: 16rpx;
@@ -128,14 +129,14 @@
   border-radius: 20rpx;
 }
 .newList .title {
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #666666;
   line-height: 36rpx;
 }
 .newList .detail {
-  font-size: 26rpx;
+  font-size: 30rpx;
   color: #999999;
-  line-height: 36rpx;
+  line-height: 38rpx;
 }
 .newList .imgFile {
   margin-top: 35rpx;
@@ -151,6 +152,7 @@
 }
 .newList .rddz {
   overflow: hidden;
+  border-bottom: solid 1rpx #eeeeee;
 }
 .newList .rddz text {
   font-size: 24rpx;

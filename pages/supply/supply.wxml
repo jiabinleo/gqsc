@@ -21,7 +21,7 @@
     <input type="number" bindinput='minAmountFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
-    <text>供应价格</text>
+    <text>供应价格（元/斤）</text>
     <input type="text" bindinput='priceFn' placeholder-class="sr" placeholder='请输入'></input>
   </view>
   <view>
