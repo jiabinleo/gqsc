@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/myRelease/myRelease",
     "pages/mySupply/mySupply",
     "pages/myCollection/myCollection",
-    "pages/index/index",
     "pages/supply/supply",
     "pages/userCenter/userCenter",
     "pages/detail/detail",

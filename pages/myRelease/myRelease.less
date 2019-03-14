@@ -33,10 +33,35 @@
     font-size: 22rpx;
 
     .list {
-        border-bottom: solid 1rpx #d3d3d3;
-        padding: 35rpx 0;
+        position: relative;
+        padding: 18rpx 0rpx;
         overflow: hidden;
         height: 150rpx;
+        margin-top: 4rpx;
+        // border-radius: 10rpx;
+        border-bottom: solid #eeeeee 1rpx;
+
+        .listMask {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0);
+        }
+
+        .over {
+            position: absolute;
+            right: 0rpx;
+            top: 0rpx;
+            z-index: 30;
+            width: 80rpx;
+        }
+
+        .overHide {
+            display: none;
+        }
 
         .left {
             float: left;
@@ -50,7 +75,7 @@
         }
 
         .center {
-            width: 356rpx;
+            width: 315rpx;
             margin-left: 16rpx;
             float: left;
             margin-right: 12rpx;
@@ -92,19 +117,47 @@
             }
         }
 
-        .right {
-            position: relative;
-            width: 60rpx;
-            float: right;
-            height: 150rpx;
+        .top {
+            position: absolute;
+            right: 0rpx;
+            top: 14rpx;
+            z-index: 10;
+            width: 88rpx;
+            height: 75rpx;
+            text-align: center;
 
             image {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 50rpx;
-                height: 50rpx;
+                width: 40rpx;
+                opacity: 0.5;
+            }
 
+            text {
+                display: block;
+                font-size: 22rpx;
+                color: #666666;
+                margin-top: -10rpx;
+            }
+        }
+
+        .bottom {
+            position: absolute;
+            right: 0rpx;
+            z-index: 30;
+            bottom: 12rpx;
+            width: 88rpx;
+            height: 75rpx;
+            text-align: center;
+
+            image {
+                width: 40rpx;
+            }
+
+            text {
+                display: block;
+                font-size: 22rpx;
+                color: #666666;
+                // font-weight: 600;
+                margin-top: -6rpx;
             }
         }
     }

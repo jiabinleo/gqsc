@@ -25,10 +25,31 @@
   font-size: 22rpx;
 }
 .list-wrap .list {
-  border-bottom: solid 1rpx #d3d3d3;
-  padding: 35rpx 0;
+  position: relative;
+  padding: 18rpx 0rpx;
   overflow: hidden;
   height: 150rpx;
+  margin-top: 4rpx;
+  border-bottom: solid #eeeeee 1rpx;
+}
+.list-wrap .list .listMask {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0);
+}
+.list-wrap .list .over {
+  position: absolute;
+  right: 0rpx;
+  top: 0rpx;
+  z-index: 30;
+  width: 80rpx;
+}
+.list-wrap .list .overHide {
+  display: none;
 }
 .list-wrap .list .left {
   float: left;
@@ -40,7 +61,7 @@
   border-radius: 10rpx;
 }
 .list-wrap .list .center {
-  width: 356rpx;
+  width: 315rpx;
   margin-left: 16rpx;
   float: left;
   margin-right: 12rpx;
@@ -76,16 +97,40 @@
 .list-wrap .list .center .areaTime text:last-of-type {
   padding-left: 10rpx;
 }
-.list-wrap .list .right {
-  position: relative;
-  width: 60rpx;
-  float: right;
-  height: 150rpx;
-}
-.list-wrap .list .right image {
+.list-wrap .list .top {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50rpx;
-  height: 50rpx;
+  right: 0rpx;
+  top: 14rpx;
+  z-index: 10;
+  width: 88rpx;
+  height: 75rpx;
+  text-align: center;
+}
+.list-wrap .list .top image {
+  width: 40rpx;
+  opacity: 0.5;
+}
+.list-wrap .list .top text {
+  display: block;
+  font-size: 22rpx;
+  color: #666666;
+  margin-top: -10rpx;
+}
+.list-wrap .list .bottom {
+  position: absolute;
+  right: 0rpx;
+  z-index: 30;
+  bottom: 12rpx;
+  width: 88rpx;
+  height: 75rpx;
+  text-align: center;
+}
+.list-wrap .list .bottom image {
+  width: 40rpx;
+}
+.list-wrap .list .bottom text {
+  display: block;
+  font-size: 22rpx;
+  color: #666666;
+  margin-top: -6rpx;
 }
