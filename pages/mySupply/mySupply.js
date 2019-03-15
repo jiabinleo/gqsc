@@ -47,8 +47,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    console.log(options.id)
+  onLoad: function(options) {
     //获取数据
     this.setData({
       id: options.id
@@ -285,49 +284,49 @@ Page({
       });
     }
   },
-  hideFenlei: function () {
+  hideFenlei: function() {
     this.setData({
       fenlei: "fenlei-close"
     });
   },
-  zsmp: function () {},
+  zsmp: function() {},
   //数据双向绑定
-  titleFn: function (e) {
+  titleFn: function(e) {
     this.setData({
       _title: e.detail.value
     });
   },
-  totalAmountFn: function (e) {
+  totalAmountFn: function(e) {
     this.setData({
       _totalAmount: e.detail.value
     });
   },
-  minAmountFn: function (e) {
+  minAmountFn: function(e) {
     this.setData({
       _minAmount: e.detail.value
     });
   },
-  priceFn: function (e) {
+  priceFn: function(e) {
     this.setData({
       _price: e.detail.value
     });
   },
-  contactsFn: function (e) {
+  contactsFn: function(e) {
     this.setData({
       _contacts: e.detail.value
     });
   },
-  telephoneFn: function (e) {
+  telephoneFn: function(e) {
     this.setData({
       _telephone: e.detail.value
     });
   },
-  detailFn: function (e) {
+  detailFn: function(e) {
     this.setData({
       _detail: e.detail.value
     });
   },
-  supplyTimeFn: function (e) {
+  supplyTimeFn: function(e) {
     console.log(e.detail.value);
 
     this.setData({
@@ -336,7 +335,7 @@ Page({
     });
   },
   //上传图片
-  chooseImage: function () {
+  chooseImage: function() {
     wx.chooseImage({
       count: 1,
       sizeType: ["compressed"],
@@ -367,14 +366,14 @@ Page({
               upfile: file
             });
           },
-          fail: function (res) {
+          fail: function(res) {
             console.log("fail");
           }
         });
       }
     });
   },
-  save: function () {
+  save: function() {
     var upfiles = this.data.upfile;
     var _fileList = "";
     for (let i = 0; i < upfiles.length; i++) {
@@ -418,11 +417,22 @@ Page({
               delta: 1
             })
           }, 1000)
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "success",
+            duration: 1000
+          });
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1000)
         }
       }
     });
   },
-  locFn: function () {
+  locFn: function() {
     var address = wx.getStorageSync("address");
     console.log(address);
     if (address) {
@@ -432,8 +442,8 @@ Page({
       });
     }
   },
-  preventTouchMove: function () {},
-  delImg: function (e) {
+  preventTouchMove: function() {},
+  delImg: function(e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -445,9 +455,12 @@ Page({
       success: res => {
         if (res.confirm) {
           var upfile = this.data.upfile
+          var upfileWx = this.data.upfileWx
           upfile.splice(e.currentTarget.dataset.index, 1)
+          upfileWx.splice(e.currentTarget.dataset.index, 1)
           this.setData({
-            upfile: upfile
+            upfile: upfile,
+            upfileWx: upfileWx
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
@@ -455,25 +468,38 @@ Page({
       }
     })
   },
+  ylImg: function(e) {
+    if (this.data.upfile) {
+      var imgList = this.data.upfile
+      var newImgLIst = []
+      for (let i = 0; i < imgList.length; i++) {
+        newImgLIst.push(this.data.imgUrl + imgList[i])
+      }
+      wx.previewImage({
+        current: newImgLIst[e.currentTarget.dataset.index], // 当前显示图片的http链接
+        urls: newImgLIst // 需要预览的图片http链接列表
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function() {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function() {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function() {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function() {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -483,11 +509,11 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {},
+  onReachBottom: function() {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {}
+  onShareAppMessage: function() {}
   // preventTouchMove: function() {}
 });

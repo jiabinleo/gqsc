@@ -25,6 +25,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     this.setData({
       imgUrl: app.globalData.imgUrl
     })
@@ -44,18 +45,13 @@ Page({
     this.getMyPage()
   },
   getMyPage: function () {
-    var pageData = this.data.pageData
     wx.request({
       url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
         "login_token": this.data.token
       },
-      data: {
-        type: pageData.type,
-        pageNum: 1,
-        pageSize: pageData.pageSize
-      },
+      data: this.data.pageData,
       success: res => {
         if (res.data.code === "0") {
           var pageRows = res.data.data.page.rows
@@ -76,21 +72,25 @@ Page({
     });
   },
   onReachBottom: function () {
-    this.data.pageData.pageNum += 1;
-    var pageData = this.data.pageData;
+    var pageData = this.data.pageData
+    pageData.pageNum += 1;
+    this.setData({
+      pageData: pageData
+    })
     wx.request({
       url: this.data.loca50010 + "/supply/getMyPage",
       header: {
         "Content-Type": "application/json",
         "login_token": this.data.token
       },
-      data: {
-        type: pageData.type,
-        pageNum: pageData.pageNum,
-        pageSize: pageData.pageSize
-      },
+      data: this.data.pageData,
       success: res => {
         if (this.data.pageRows.length === res.data.data.page.total) {
+          var pageData = this.data.pageData
+          pageData.pageNum -= 1;
+          this.setData({
+            pageData: pageData
+          })
           return;
         }
         var newsList = res.data.data.page.rows;
@@ -104,7 +104,6 @@ Page({
             newsList[i].time = newsList[i].publishTime
             this.data.pageRows.push(newsList[i]);
           }
-
         }
         var news = this.data.pageRows;
         this.setData({
@@ -150,7 +149,6 @@ Page({
     })
   },
   gq: function (e) {
-    console.log(e.currentTarget.dataset.type)
     var pageData = this.data.pageData
     pageData.type = Number(e.currentTarget.dataset.type)
     pageData.pageNum = 1
@@ -172,10 +170,6 @@ Page({
       pageData: pageData
     })
     this.getMyPage()
-  },
-  touchList: function (e) {
-    console.log(e.currentTarget.dataset.id)
-    console.log('=======')
   },
   onTouch: function (e) {
     console.log(e.currentTarget.dataset.type)
@@ -201,6 +195,7 @@ Page({
       success: res => {
         console.log(res)
         if (res.data.code === "0") {
+          this.onLoad()
           wx.showToast({
             title: res.data.message,
             icon: 'success',
@@ -221,7 +216,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      pageRows: [],
+      pageData: {
+        type: 1,
+        pageNum: 1,
+        pageSize: 6
+      }
+    })
+    this.onLoad()
   },
 
   /**
@@ -242,7 +245,12 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    var pageData = this.data.pageData
+    pageData.pageNum = 1
+    this.setData({
+      pageData: pageData
+    })
+    this.onLoad()
   },
   preventTouchMove: function () {},
   /**

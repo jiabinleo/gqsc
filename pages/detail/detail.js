@@ -157,11 +157,9 @@ Page({
     }
   },
   ylImg: function (e) {
-    console.log("预览图片")
-    console.log(e)
     if (this.data.fileList) {
       wx.previewImage({
-        current: this.data.fileList[0], // 当前显示图片的http链接
+        current: this.data.fileList[e.currentTarget.dataset.index], // 当前显示图片的http链接
         urls: this.data.fileList // 需要预览的图片http链接列表
       })
     }

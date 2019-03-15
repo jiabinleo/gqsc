@@ -6,11 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pageData: {
-      type: 1,
-      pageNum: 1,
-      pageSize: 6
-    },
     pageRows: [],
     imgUrl: null,
     modalFlag: true,
@@ -24,7 +19,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     if (app.globalData.imgUrl) {
       this.setData({
         imgUrl: app.globalData.imgUrl
@@ -45,8 +40,7 @@ Page({
     }
     this.getMyPage()
   },
-  getMyPage: function() {
-    var pageData = this.data.pageData
+  getMyPage: function () {
     wx.request({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
@@ -58,13 +52,8 @@ Page({
           console.log(res)
           var pageRows = res.data.data.list
           for (let i = 0; i < pageRows.length; i++) {
-            // if (pageRows[i].icon) {
             pageRows[i].icon = this.data.imgUrl + pageRows[i].icon
             pageRows[i].time = pageRows[i].updateTime
-            // } else {
-            //   pageRows[i].icon = pageRows[i].icon
-            //   pageRows[i].time = pageRows[i].updateTime
-            // }
           }
           this.setData({
             pageRows: pageRows
@@ -73,7 +62,7 @@ Page({
       }
     });
   },
-  delMsg: function(e) {
+  delMsg: function (e) {
     console.log(e)
     this.setData({
       modalFlag: false
@@ -114,11 +103,8 @@ Page({
       }
     })
   },
-  gq: function(e) {
+  gq: function (e) {
     console.log(e.currentTarget.dataset.type)
-    var pageData = this.data.pageData
-    pageData.type = Number(e.currentTarget.dataset.type)
-    pageData.pageNum = 1
     this.setData({
       pageType: e.currentTarget.dataset.type
     })
@@ -133,53 +119,51 @@ Page({
         btn1: ''
       })
     }
-    this.setData({
-      pageData: pageData
-    })
     this.getMyPage()
   },
-  onTouch: function(e) {
+  onTouch: function (e) {
     wx.navigateTo({
       url: "../detail/detail?id=" + e.currentTarget.dataset.detailid
     });
   },
   onPullDownRefresh() {
-    console.log('刷新了')
     wx.stopPullDownRefresh();
     this.onLoad();
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.onLoad();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
+  onUnload: function () {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  preventTouchMove: function() {},
+  preventTouchMove: function () {
+    this.onLoad()
+  },
   /**
    * 页面上拉触底事件的处理函数
    */
@@ -187,7 +171,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   }
 })

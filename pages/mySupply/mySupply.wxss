@@ -55,21 +55,36 @@
 }
 .upfile {
   margin: 0 35rpx;
+  overflow: hidden;
 }
-.upfile view {
+.upfile .up {
   font-size: 28rpx;
   color: #666666;
   padding: 30rpx 0;
   margin-bottom: 24rpx;
   border-bottom: #eeeeee solid 1rpx;
 }
-.upfile image {
+.upfile .imgWrap {
+  position: relative;
   width: 220rpx;
   height: 150rpx;
+  float: left;
+  margin-top: 10rpx;
   margin-left: 10rpx;
 }
-.upfile image:nth-of-type(3n + 1) {
+.upfile .imgWrap:nth-of-type(3n-1) {
   margin-left: 0;
+}
+.upfile .imgWrap .img {
+  width: 220rpx;
+  height: 150rpx;
+}
+.upfile .imgWrap .del {
+  position: absolute;
+  right: 0;
+  top: -4rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 .fenlei-close {
   display: none;

@@ -58,7 +58,9 @@
       </view> -->
       <block wx:for="{{newList}}" wx:key="*this">
         <view class="newList">
-          <view catchtap="onTouch" data-id="{{item.id}}">
+          <image wx:if="{{item.closeFlag==1}}" class="flagStatus" src="../../images/s.png"></image>
+          <image wx:if="{{item.topOne==1}}" class="flagStatus" src="../../images/t.png"></image>
+          <view catchtap="onTouch" data-user="{{item.userId}}" data-id="{{item.id}}">
             <view class="userMsg">
               <view class="userImg">
                 <image lazy-load="true" src="{{item.icon}}" mode="widthFix"></image>
@@ -66,7 +68,7 @@
               <view class="username">
                 <view class="name">
                   <view class="namel">{{item.userName?item.userName:'悦农通'}}</view>
-                  <view class="time">{{item.time}}</view>
+
                 </view>
                 <view class="address">
                   <text>{{item.area}}</text>
@@ -86,6 +88,7 @@
             </view>
           </view>
           <view class="rddz">
+            <view class="time">{{item.time}}</view>
             <view class="dz" data-index="{{index}}" data-id="{{item.id}}" data-iz="{{item.isCollection}}" bindtap='shouCang'>
               <image lazy-load="true" wx:if="{{item.isCollection}}" src="../../images/sc_pre.png" mode='widthFix'></image>
               <image lazy-load="true" wx:else src="../../images/sc.png" mode='widthFix'></image>

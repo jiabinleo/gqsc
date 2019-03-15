@@ -624,7 +624,7 @@ Page({
                 this.data.imgUrl + newsList[i].fileList[j];
             }
           }
-          newsList[i].time = this.timeConversion(newsList[i].publishTime)
+          newsList[i].time = this.timeConversion(newsList[i].updateTime)
         }
         this.setData({
           newList: newsList
@@ -684,7 +684,7 @@ Page({
                 this.data.imgUrl + newsList[i].fileList[j];
             }
           }
-          newsList[i].time = this.timeConversion(newsList[i].publishTime)
+          newsList[i].time = this.timeConversion(newsList[i].updateTime)
         }
         for (let i = 0; i < newsList.length; i++) {
           this.data.newList.push(newsList[i]);
@@ -697,9 +697,30 @@ Page({
     });
   },
   onTouch: function (e) {
-    wx.navigateTo({
-      url: "../detail/detail?id=" + e.currentTarget.dataset.id
-    });
+    var user = this.data.user
+
+    if (user && user.id) {
+      if (user.id === e.currentTarget.dataset.user) {
+        if (this.data.pageData.type == 1) {
+          wx.navigateTo({
+            url: "../mySupply/mySupply?id=" + e.currentTarget.dataset.id
+          });
+        } else if (this.data.pageData.type == 2) {
+          wx.navigateTo({
+            url: "../myBuy/myBuy?id=" + e.currentTarget.dataset.id
+          });
+        }
+      } else {
+        wx.navigateTo({
+          url: "../detail/detail?id=" + e.currentTarget.dataset.id
+        });
+      }
+    } else {
+      wx.navigateTo({
+        url: "../detail/detail?id=" + e.currentTarget.dataset.id
+      });
+    }
+
   },
   onPullDownRefresh() {
     wx.stopPullDownRefresh();
@@ -919,5 +940,6 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {}
+  onShow: function () {
+  }
 });

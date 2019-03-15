@@ -86,6 +86,12 @@
   padding: 0 35rpx;
   margin-top: 50rpx;
 }
+.newList .flagStatus {
+  float: right;
+  margin-top: -45rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
 .newList:last-of-type {
   padding-bottom: 140rpx;
 }
@@ -112,11 +118,6 @@
 }
 .newList .userMsg .username .name .namel {
   float: left;
-}
-.newList .userMsg .username .name .time {
-  float: right;
-  font-size: 26rpx;
-  color: #999999;
 }
 .newList .userMsg .username .address {
   margin-top: -8rpx;
@@ -152,6 +153,7 @@
 }
 .newList .rddz {
   overflow: hidden;
+  padding-bottom: 50rpx;
   border-bottom: solid 1rpx #eeeeee;
 }
 .newList .rddz text {
@@ -165,6 +167,11 @@
 .newList .rddz .rd image {
   width: 36rpx;
   height: 20rpx;
+}
+.newList .rddz .time {
+  float: left;
+  font-size: 26rpx;
+  color: #999999;
 }
 .newList .rddz .dz {
   float: right;

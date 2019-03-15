@@ -66,8 +66,9 @@
 
 .upfile {
     margin: 0 35rpx;
+    overflow: hidden;
 
-    view {
+    .up {
         font-size: 28rpx;
         color: #666666;
         padding: 30rpx 0;
@@ -75,16 +76,32 @@
         border-bottom: #eeeeee solid 1rpx;
     }
 
-    image {
+    .imgWrap {
+        position: relative;
         width: 220rpx;
         height: 150rpx;
+        float: left;
+        margin-top: 10rpx;
         margin-left: 10rpx;
 
-        // margin-top: 24rpx;
-        &:nth-of-type(3n + 1) {
+        &:nth-of-type(3n-1) {
             margin-left: 0;
         }
+
+        .img {
+            width: 220rpx;
+            height: 150rpx;
+        }
+
+        .del {
+            position: absolute;
+            right: 0;
+            top: -4rpx;
+            width: 40rpx;
+            height: 40rpx;
+        }
     }
+
 }
 
 .fenlei-close {
