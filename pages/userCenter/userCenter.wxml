@@ -45,6 +45,8 @@
       <text>我的</text>
     </view>
   </navigator>
+  <view class="center-top"></view>
+  <view class="center-bottom"></view>
 </view>
 <view class="{{mask}}" catchtouchmove="preventTouchMove">
   <view class='bottom'>

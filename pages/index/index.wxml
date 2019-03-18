@@ -53,9 +53,6 @@
           </view>
         </view>
       </block>
-      <!-- <view class="btn-area">
-        <button size="mini" bindtap="tap">click me to scroll into view</button>
-      </view> -->
       <block wx:for="{{newList}}" wx:key="*this">
         <view class="newList">
           <image wx:if="{{item.closeFlag==1}}" class="flagStatus" src="../../images/s.png"></image>
@@ -119,6 +116,8 @@
       <text>我的</text>
     </view>
   </navigator>
+  <view class="center-top"></view>
+  <view class="center-bottom"></view>
 </view>
 <view class="{{mask}}" catchtouchmove="preventTouchMove">
   <view class='bottom'>

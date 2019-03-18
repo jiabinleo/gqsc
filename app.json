@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/userCenter/userCenter",
     "pages/index/index",
     "pages/supply/supply",
     "pages/buy/buy",
@@ -8,7 +9,6 @@
     "pages/myCollection/myCollection",
     "pages/detail/detail",
     "pages/myBuy/myBuy",
-    "pages/userCenter/userCenter",
     "pages/logs/logs"
   ],
   "window": {

@@ -1,8 +1,5 @@
 /* pages/userCenter/userCenter.wxss */
 .myCenter {
-  width: 100%;
-  height: 100vh;
-  background: #eeeeee;
   padding: 30rpx 35rpx;
 }
 .myCenter .userBg {
@@ -37,6 +34,7 @@
   border-radius: 10rpx;
   width: 680rpx;
   overflow: hidden;
+  box-shadow: 0rpx 2rpx 4rpx 1rpx #eeeeee;
 }
 .myCenter .list .v-wrap {
   background: #ffffff;
@@ -82,6 +80,28 @@
   background: #ffffff;
   border-top: solid 1rpx #eeeeee;
 }
+.footer .center-top {
+  position: absolute;
+  left: 50%;
+  top: 12rpx;
+  z-index: 4;
+  width: 100rpx;
+  height: 102rpx;
+  transform: translate(-55rpx, -54rpx);
+  border-radius: 50%;
+  border: solid 4rpx #eeeeee;
+  background: #ffffff;
+}
+.footer .center-bottom {
+  position: absolute;
+  left: 50%;
+  top: 40rpx;
+  width: 160rpx;
+  height: 80rpx;
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+}
 .footer navigator {
   overflow: hidden;
   width: 33.33%;
@@ -94,14 +114,14 @@
 .footer navigator .nav.navCenter {
   width: 33.33%;
   position: absolute;
-  top: 18rpx;
+  top: 28rpx;
   left: 50%;
+  z-index: 10;
   transform: translate(-50%, -50%);
 }
 .footer navigator .nav.navCenter image {
   width: 100rpx;
   height: 100rpx;
-  border-top: solid 2rpx #eeeeee;
   border-radius: 50%;
   background: #ffffff;
 }

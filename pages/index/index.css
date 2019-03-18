@@ -190,6 +190,29 @@
   bottom: 0;
   z-index: 99;
   background: #ffffff;
+  border-top: 1rpx solid #eeeeee;
+}
+.footer .center-top {
+  position: absolute;
+  left: 50%;
+  top: 12rpx;
+  z-index: 4;
+  width: 100rpx;
+  height: 102rpx;
+  transform: translate(-55rpx, -54rpx);
+  border-radius: 50%;
+  border: solid 4rpx #eeeeee;
+  background: #ffffff;
+}
+.footer .center-bottom {
+  position: absolute;
+  left: 50%;
+  top: 40rpx;
+  width: 160rpx;
+  height: 80rpx;
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
 }
 .footer .nav {
   width: 33.33%;
@@ -198,13 +221,16 @@
 }
 .footer .nav:nth-of-type(2) {
   position: absolute;
-  top: 44rpx;
+  top: 28rpx;
   left: 50%;
+  z-index: 10;
   transform: translate(-50%, -50%);
 }
 .footer .nav:nth-of-type(2) image {
   width: 100rpx;
   height: 100rpx;
+  border-radius: 50%;
+  background: #ffffff;
 }
 .footer .nav:last-of-type {
   float: right;
