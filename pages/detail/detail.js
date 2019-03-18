@@ -34,7 +34,6 @@ Page({
         loca50010: app.globalData.loca50010
       });
     }
-    console.log(options)
     var my_token = wx.getStorageSync("token");
     wx.request({
       url: this.data.loca50010 + "/supply/detail/" + options.id,
@@ -67,7 +66,6 @@ Page({
         var publishTime = _marketSupply.publishTime.split(' ')[0]
         var supplyTime = _marketSupply.supplyTime.split(' ')[0].split('-')
         var _supplyTime = supplyTime[0] + '年' + supplyTime[1] + '月' + supplyTime[2] + '日'
-        console.log(_marketSupply.price)
         var reg = /^[0-9]+.?[0-9]*$/
         if (!reg.test(_marketSupply.price)) {
           if (_marketSupply.price) {} else {
@@ -105,7 +103,6 @@ Page({
           "code": "gqsc"
         },
         success: res => {
-          console.log(res);
           if (res.data.code === "0") {
             this.setData({
               isCollection: false
@@ -131,7 +128,6 @@ Page({
           "code": "gqsc"
         },
         success: res => {
-          console.log(res);
           if (res.data.code === "0") {
             this.setData({
               isCollection: true
@@ -246,12 +242,10 @@ Page({
 
   },
   tel: function () {
-    console.log()
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber
     })
   },
   onPullDownRefresh: function () {
-    console.log('下拉了')
   }
 })

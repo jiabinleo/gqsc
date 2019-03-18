@@ -213,12 +213,10 @@ Page({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
       });
       if (this.data.treeTwo[0].children.length) {
-        console.log(e.target);
         this.setData({
           treeThree: this.data.treeTwo[0].children
         });
       } else {
-        console.log(this.data.treeTwo);
         this.setData({
           treeThree: [{
             text: this.data.treeTwo[0].text,
@@ -246,7 +244,6 @@ Page({
       active2: e.target.dataset.id
     })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
         this.setData({
           treeThree: this.data.treeTwo[e.target.dataset.id].children
@@ -323,8 +320,6 @@ Page({
     });
   },
   supplyTimeFn: function (e) {
-    console.log(e.detail.value);
-
     this.setData({
       supplyTime: e.detail.value,
       _supplyTime: e.detail.value
@@ -353,7 +348,6 @@ Page({
           },
           formData: {},
           success: res => {
-            console.log(res.data);
             var result = JSON.parse(res.data);
             var file = this.data.upfile;
             file.push(result.path);
@@ -362,7 +356,6 @@ Page({
             });
           },
           fail: function (res) {
-            console.log("fail");
           }
         });
       }
@@ -406,7 +399,6 @@ Page({
       },
       data: data,
       success: res => {
-        console.log(res);
         if (res.data.code === "0") {
           wx.showToast({
             title: "修改成功",
@@ -435,7 +427,6 @@ Page({
   },
   locFn: function () {
     var address = wx.getStorageSync("address");
-    console.log(address);
     if (address) {
       this.setData({
         _areaId: address.id,
@@ -445,7 +436,6 @@ Page({
   },
   preventTouchMove: function () {},
   delImg: function (e) {
-    console.log(e)
     this.setData({
       modalFlag: false
     })
@@ -464,7 +454,6 @@ Page({
             upfileWx: upfileWx
           })
         } else if (res.cancel) {
-          console.log('用户点击取消')
         }
       }
     })

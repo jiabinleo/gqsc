@@ -251,19 +251,6 @@ Page({
     this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
-  /////
-  upper(e) {
-    // console.log(e);
-  },
-  lower(e) {
-    // console.log(e);
-  },
-  scroll(e) {
-    // console.log(e);
-  },
-  tap(e) {
-    // console.log(e);
-  },
   tapMove(e) {
     this.setData({
       scrollTop: this.data.scrollTop + 10
@@ -358,7 +345,6 @@ Page({
     });
   },
   oneTag(e) {
-    console.log(e);
     this.setData({
       active1: e.target.dataset.id,
       active2: null,
@@ -368,8 +354,6 @@ Page({
     });
     if ("children" in this.data.treeOne[e.target.dataset.id]) {
       if (this.data.treeOne[e.target.dataset.id].children.length) {
-        console.log(this.data.treeOne[e.target.dataset.id].children);
-        console.log(this.data.treeOne[e.target.dataset.id].children);
         this.setData({
           treeTwo: this.data.treeOne[e.target.dataset.id].children
         });
@@ -454,7 +438,6 @@ Page({
           if (this.data.fl) {
             pageData.cropId = e.target.id.split("t")[1];
             pageData.pageNum = 1;
-            console.log(e);
             this.setData({
               pageData: pageData,
               flMsg: e.target.dataset.text
@@ -545,13 +528,11 @@ Page({
 
     myAmapFun.getWeather({
       success: data => {
-        console.log(data)
         this.liveData(data.liveData.adcode);
         //成功回调
       },
       fail: function (info) {
         //失败回调
-        console.log(info);
       }
     });
   },
@@ -570,10 +551,6 @@ Page({
             "Content-Type": "application/json"
           },
           success: res => {
-            // this.data.pageData.areaId =
-            //   res.data.data.list[res.data.data.list.length - 1].id;
-            // this.getPage(this.data.pageData);
-            // console.log();
             wx.setStorageSync(
               "address",
               res.data.data.list[res.data.data.list.length - 1]
@@ -650,7 +627,6 @@ Page({
       },
       data: pageData,
       success: res => {
-        console.log(res);
         wx.hideLoading();
         if (this.data.newList.length === res.data.data.page.total) {
           wx.showToast({
@@ -751,8 +727,6 @@ Page({
       pxMsg: "排序方式"
     });
     this.onLoad();
-    console.log(this.data.pageData);
-    console.log("下拉刷新");
   },
 
   close: function () {
@@ -838,7 +812,6 @@ Page({
           code: "gqsc"
         },
         success: res => {
-          console.log(res);
           if (res.data.code === "0") {
             var asd = this.data.newList;
             asd[e.currentTarget.dataset.index].isCollection = false;
@@ -867,7 +840,6 @@ Page({
           code: "gqsc"
         },
         success: res => {
-          console.log(res);
           if (res.data.code === "0") {
             var asd = this.data.newList;
             asd[e.currentTarget.dataset.index].isCollection = true;

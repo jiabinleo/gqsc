@@ -54,7 +54,7 @@
     </view>
   </view>
   <view class="imgFile">
-    <block wx:for="{{fileList}}" wx:key="*this">
+    <block wx:for="{{fileList}}" wx:key="index">
       <image bindtap='ylImg' lazy-load="true" data-index="{{index}}" src="{{item}}" mode="aspectFill"></image>
     </block>
   </view>

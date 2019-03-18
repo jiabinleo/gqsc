@@ -113,7 +113,6 @@ Page({
     });
   },
   delMsg: function (e) {
-    console.log(e)
     this.setData({
       modalFlag: false
     })
@@ -172,7 +171,6 @@ Page({
     this.getMyPage()
   },
   onTouch: function (e) {
-    console.log(e.currentTarget.dataset.type)
     if (e.currentTarget.dataset.type == 1) {
       wx.navigateTo({
         url: "../mySupply/mySupply?id=" + e.currentTarget.dataset.id
@@ -185,7 +183,6 @@ Page({
 
   },
   over: function (e) {
-    console.log(e.currentTarget.dataset.id)
     wx.request({
       url: this.data.loca50010 + "/supply/close/" + e.currentTarget.dataset.id,
       header: {
@@ -193,7 +190,6 @@ Page({
         "login_token": this.data.token
       },
       success: res => {
-        console.log(res)
         if (res.data.code === "0") {
           this.onLoad()
           wx.showToast({

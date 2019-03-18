@@ -49,7 +49,7 @@
 <block>
   <view class="upfile">
     <view>上传图片</view>
-    <block wx:for="{{upfileWx}}" wx:key="*this">
+    <block wx:for="{{upfileWx}}" wx:key="index">
       <image catchtap="delImg" data-index="{{index}}" src="{{item}}" mode="aspectFill"></image>
     </block>
     <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
@@ -60,17 +60,17 @@
   <view catchtap="hideFenlei" class='{{fenlei}}' catchtouchmove="preventTouchMove">
     <view catchtap="zsmp" class="section" style="height: 400rpx;">
       <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-        <block wx:for="{{treeOne}}" wx:key="*this">
+        <block wx:for="{{treeOne}}" wx:key="index">
           <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
         </block>
       </scroll-view>
       <scroll-view catchtap="twoTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-        <block wx:for="{{treeTwo}}" wx:key="*this">
+        <block wx:for="{{treeTwo}}" wx:key="index">
           <view id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
         </block>
       </scroll-view>
       <scroll-view catchtap="threeTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-        <block wx:for="{{treeThree}}" wx:key="*this">
+        <block wx:for="{{treeThree}}" wx:key="index">
           <view id="t{{item.id}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
         </block>
       </scroll-view>

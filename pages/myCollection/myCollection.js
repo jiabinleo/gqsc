@@ -41,7 +41,6 @@ Page({
     this.getMyPage()
   },
   getMyPage: function () {
-    console.log("/")
     wx.request({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
@@ -50,7 +49,6 @@ Page({
       },
       success: res => {
         if (res.data.code === "0") {
-          console.log(res)
           var pageRows = res.data.data.list
           for (let i = 0; i < pageRows.length; i++) {
             pageRows[i].icon = this.data.imgUrl + pageRows[i].icon
@@ -64,7 +62,6 @@ Page({
     });
   },
   delMsg: function (e) {
-    console.log(e)
     this.setData({
       modalFlag: false
     })
@@ -105,7 +102,6 @@ Page({
     })
   },
   gq: function (e) {
-    console.log(e.currentTarget.dataset.type)
     this.setData({
       pageType: e.currentTarget.dataset.type
     })

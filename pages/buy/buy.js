@@ -262,8 +262,6 @@ Page({
     });
   },
   supplyTimeFn: function (e) {
-    console.log(e.detail.value);
-
     this.setData({
       supplyTime: e.detail.value,
       _supplyTime: e.detail.value
@@ -292,7 +290,6 @@ Page({
           },
           formData: {},
           success: res => {
-            console.log(res.data);
             var result = JSON.parse(res.data);
             var file = this.data.upfile;
             file.push(result.path);
@@ -301,7 +298,6 @@ Page({
             });
           },
           fail: function (res) {
-            console.log("fail");
           }
         });
       }
@@ -410,9 +406,7 @@ Page({
         },
         data: data,
         success: res => {
-          console.log(res);
           if (res.data.code === "0") {
-            console.log('000000')
             wx.showToast({
               title: "供应信息发布成功",
               icon: "success",
@@ -430,7 +424,6 @@ Page({
   },
   locFn: function () {
     var address = wx.getStorageSync("address");
-    console.log(address);
     if (address) {
       this.setData({
         _areaId: address.id,
@@ -439,7 +432,6 @@ Page({
     }
   },
   delImg: function (e) {
-    console.log(e)
     this.setData({
       modalFlag: false
     })
@@ -455,7 +447,6 @@ Page({
             upfile: upfile
           })
         } else if (res.cancel) {
-          console.log('用户点击取消')
         }
       }
     })

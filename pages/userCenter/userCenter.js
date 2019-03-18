@@ -60,7 +60,6 @@ Page({
       wx.getUserInfo({
         success: res => {
           app.globalData.userInfo = res.userInfo;
-          console.log(res);
           this.setData({
             userInfo: res.userInfo,
             hasUserInfo: true

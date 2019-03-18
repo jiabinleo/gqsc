@@ -7,7 +7,7 @@
   </view>
 </view>
 <view class="list-wrap">
-  <block wx:for="{{pageRows}}" wx:key="*this">
+  <block wx:for="{{pageRows}}" wx:key="index">
     <view class="list" data-id="{{item.id}}" data-type="{{pageType}}" catchtap="onTouch">
       <view class="{{item.closeFlag==1?'listMask':''}}"></view>
       <image src="../../images/s.png" class="{{item.closeFlag==1?'over':'overHide'}}" mode="widthFix"></image>

@@ -1,5 +1,5 @@
 <view class="list-wrap">
-  <block wx:for="{{pageRows}}" wx:key="*this">
+  <block wx:for="{{pageRows}}" wx:key="index">
     <view class="list" data-id="{{item.id}}" data-detailId="{{item.detailId}}" data-type="{{pageType}}" catchtap="onTouch">
       <view class="left">
         <image lazy-load="true" src="{{item.icon}}" mode="aspectFill"></image>
