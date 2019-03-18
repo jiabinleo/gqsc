@@ -4,7 +4,7 @@
 }
 .wrap view {
   border-bottom: solid 1rpx #eeeeee;
-  font-size: 28rpx;
+  font-size: 30rpx;
   line-height: 86rpx;
   overflow: hidden;
 }
@@ -82,7 +82,7 @@
 .upfile .imgWrap .del {
   position: absolute;
   right: 0;
-  top: -4rpx;
+  top: 0rpx;
   width: 40rpx;
   height: 40rpx;
 }
@@ -131,5 +131,9 @@
 }
 .save {
   margin: 35rpx;
+}
+.save::after {
   background: #27a6e6;
+  content: "确认信息";
+  font-size: 68rpx;
 }

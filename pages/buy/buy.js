@@ -43,7 +43,9 @@ Page({
    */
   onLoad: function (options) {
     if (wx.getStorageSync("token")) {
-      token: wx.getStorageSync("token")
+      this.setData({
+        token: wx.getStorageSync("token")
+      })
     }
     if (app.globalData.loca50010) {
       this.setData({
@@ -106,7 +108,6 @@ Page({
         treeOne: this.data.getAllTreeFenlei
       });
       if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
         this.setData({
           treeTwo: this.data.treeOne[0].children
         });
@@ -132,7 +133,6 @@ Page({
         treeOne: this.data.getAllTreeDiqu
       });
       if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
         this.setData({
           treeTwo: this.data.treeOne[0].children
         });
@@ -155,12 +155,10 @@ Page({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
       });
       if (this.data.treeTwo[0].children.length) {
-        console.log(e.target);
         this.setData({
           treeThree: this.data.treeTwo[0].children
         });
       } else {
-        console.log(this.data.treeTwo);
         this.setData({
           treeThree: [{
             text: this.data.treeTwo[0].text,
@@ -188,7 +186,6 @@ Page({
       active2: e.target.dataset.id
     })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
         this.setData({
           treeThree: this.data.treeTwo[e.target.dataset.id].children
@@ -317,6 +314,12 @@ Page({
       _fileList += upfiles[i] + ",";
     }
     _fileList = _fileList.slice(0, _fileList.length - 1);
+    var priceTip;
+    if (this.data._price) {
+      priceTip = this.data._price
+    } else {
+      priceTip = "面议"
+    }
     var data = {
       areaId: this.data._areaId,
       cropId: this.data._cropId,
@@ -326,7 +329,7 @@ Page({
       telephone: this.data._telephone,
       minAmount: this.data._minAmount,
       totalAmount: this.data._totalAmount,
-      price: this.data._price,
+      price: priceTip,
       supplyTime: this.data._supplyTime,
       type: this.data._type,
       fileList: _fileList

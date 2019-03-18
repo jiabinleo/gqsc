@@ -262,8 +262,6 @@ Page({
     }
   },
   threeTag(e) {
-    console.log(e._relatedInfo.anchorTargetText);
-    console.log(e.target);
     if (this.data.fl) {
       this.setData({
         type: e._relatedInfo.anchorTargetText,
@@ -404,9 +402,19 @@ Page({
       success: res => {
         console.log(res);
         if (res.data.code === "0") {
-          console.log('000000')
           wx.showToast({
             title: "修改成功",
+            icon: "success",
+            duration: 1000
+          });
+          setTimeout(() => {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: res.data.message,
             icon: "success",
             duration: 1000
           });
@@ -442,15 +450,31 @@ Page({
       success: res => {
         if (res.confirm) {
           var upfile = this.data.upfile
+          var upfileWx = this.data.upfileWx
           upfile.splice(e.currentTarget.dataset.index, 1)
+          upfileWx.splice(e.currentTarget.dataset.index, 1)
           this.setData({
-            upfile: upfile
+            upfile: upfile,
+            upfileWx: upfileWx
           })
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
       }
     })
+  },
+  ylImg: function (e) {
+    if (this.data.upfile) {
+      var imgList = this.data.upfile
+      var newImgLIst = []
+      for (let i = 0; i < imgList.length; i++) {
+        newImgLIst.push(this.data.imgUrl + imgList[i])
+      }
+      wx.previewImage({
+        current: newImgLIst[e.currentTarget.dataset.index], // 当前显示图片的http链接
+        urls: newImgLIst // 需要预览的图片http链接列表
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

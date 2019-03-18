@@ -10,15 +10,19 @@
     </block>
   </view>
   <view class="list">
-    <view bindtap='bindReleaseTap'>
-      <image class="bf" src="../../images/fb1.png" mode="widthFix"></image>
-      <text>我的发布</text>
-      <image class="af" src="../../images/016.png" mode="widthFix"></image>
+    <view class="v-wrap" bindtap='bindReleaseTap'>
+      <view class="v-list">
+        <image class="bf" src="../../images/fb1.png" mode="widthFix"></image>
+        <text>我的发布</text>
+        <image class="af" src="../../images/016.png" mode="widthFix"></image>
+      </view>
     </view>
-    <view bindtap='bindCollectionTap'>
-      <image class="bf" src="../../images/sc1.png" mode="widthFix"></image>
-      <text>我的收藏</text>
-      <image class="af" src="../../images/016.png" mode="widthFix"></image>
+    <view class="v-wrap" bindtap='bindCollectionTap'>
+      <view class="v-list">
+        <image class="bf" src="../../images/sc1.png" mode="widthFix"></image>
+        <text>我的收藏</text>
+        <image class="af" src="../../images/016.png" mode="widthFix"></image>
+      </view>
     </view>
   </view>
 </view>

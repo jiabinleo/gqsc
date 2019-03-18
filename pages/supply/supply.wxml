@@ -22,7 +22,7 @@
   </view>
   <view>
     <text>供应价格（元/斤）</text>
-    <input type="text" bindinput='priceFn' placeholder-class="sr" placeholder='请输入'></input>
+    <input type="number" bindinput='priceFn' placeholder-class="sr" placeholder='如未输入，默认为面议'></input>
   </view>
   <view>
     <text>供货截止日期</text>

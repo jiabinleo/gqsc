@@ -4,7 +4,7 @@
 }
 .wrap view {
   border-bottom: solid 1rpx #eeeeee;
-  font-size: 28rpx;
+  font-size: 30rpx;
   line-height: 86rpx;
   overflow: hidden;
 }
@@ -55,21 +55,36 @@
 }
 .upfile {
   margin: 0 35rpx;
+  overflow: hidden;
 }
-.upfile view {
+.upfile .up {
   font-size: 28rpx;
   color: #666666;
   padding: 30rpx 0;
   margin-bottom: 24rpx;
   border-bottom: #eeeeee solid 1rpx;
 }
-.upfile image {
+.upfile .imgWrap {
+  position: relative;
   width: 220rpx;
   height: 150rpx;
+  float: left;
+  margin-top: 10rpx;
   margin-left: 10rpx;
 }
-.upfile image:nth-of-type(3n + 1) {
+.upfile .imgWrap:nth-of-type(3n-1) {
   margin-left: 0;
+}
+.upfile .imgWrap .img {
+  width: 220rpx;
+  height: 150rpx;
+}
+.upfile .imgWrap .del {
+  position: absolute;
+  right: 0;
+  top: 0rpx;
+  width: 40rpx;
+  height: 40rpx;
 }
 .fenlei-close {
   display: none;
@@ -108,7 +123,7 @@
   color: #999999;
   font-size: 24rpx;
   text-align: center;
-   margin: 0 30rpx;
+  margin: 0 30rpx;
 }
 .fenlei .section scroll-view view.active {
   color: #27a6e6;
@@ -116,5 +131,9 @@
 }
 .save {
   margin: 35rpx;
+}
+.save::after {
   background: #27a6e6;
+  content: "确认信息";
+  font-size: 68rpx;
 }

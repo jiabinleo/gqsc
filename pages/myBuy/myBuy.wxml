@@ -47,11 +47,17 @@
 <view class="line"></view>
 <block>
   <view class="upfile">
-    <view>上传图片</view>
+    <view class="up">上传图片</view>
     <block wx:for="{{upfileWx}}" wx:key="*this">
-      <image  catchtap="delImg" data-index="{{index}}" src="{{item}}" mode="aspectFill"></image>
+      <view class="imgWrap" data-index="{{index}}" bindtap='ylImg'>
+        <image class="img" src="{{item}}" mode="aspectFill">
+        </image>
+        <image data-index="{{index}}" catchtap="delImg" class="del" src="../../images/cancel.png" mode="widthFix"></image>
+      </view>
     </block>
-    <image catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
+    <view class="imgWrap">
+      <image class="img" catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
+    </view>
   </view>
 </block>
 <!--供应类型-->

@@ -69,15 +69,11 @@ Page({
       },
       success: res => {
         if (res.data.code === "0") {
-          console.log(res.data.data.marketSupply)
-          console.log(res.data.data.marketSupply.title)
           var fileList = res.data.data.marketSupply.fileList
-          console.log(fileList)
           var fileListArr = []
           if (fileList) {
             fileListArr = fileList.split(',')
           }
-          console.log(fileListArr)
           var supplyTime = res.data.data.marketSupply.supplyTime
           var supplyTimeStr = ""
           if (supplyTime) {
@@ -342,7 +338,6 @@ Page({
       sourceType: ["album", "camera"],
       success: res => {
         var tempFilePaths = res.tempFilePaths;
-        console.log(tempFilePaths[0])
         var fileWx = this.data.upfileWx;
         fileWx.push(tempFilePaths[0]);
         this.setData({

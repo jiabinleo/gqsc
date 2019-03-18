@@ -34,13 +34,19 @@ Page({
     active2: null,
     active3: null,
     loca50010: null,
-    uploadImg: null
+    uploadImg: null,
+    token: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      })
+    }
     if (app.globalData.loca50010) {
       this.setData({
         loca50010: app.globalData.loca50010
@@ -102,7 +108,6 @@ Page({
         treeOne: this.data.getAllTreeFenlei
       });
       if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
         this.setData({
           treeTwo: this.data.treeOne[0].children
         });
@@ -128,7 +133,6 @@ Page({
         treeOne: this.data.getAllTreeDiqu
       });
       if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
         this.setData({
           treeTwo: this.data.treeOne[0].children
         });
@@ -151,12 +155,10 @@ Page({
         treeTwo: this.data.treeOne[e.target.dataset.id].children
       });
       if (this.data.treeTwo[0].children.length) {
-        console.log(e.target);
         this.setData({
           treeThree: this.data.treeTwo[0].children
         });
       } else {
-        console.log(this.data.treeTwo);
         this.setData({
           treeThree: [{
             text: this.data.treeTwo[0].text,
@@ -184,7 +186,6 @@ Page({
       active2: e.target.dataset.id
     })
     if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      console.log(e.target.dataset.id);
       if (this.data.treeTwo[e.target.dataset.id].children.length) {
         this.setData({
           treeThree: this.data.treeTwo[e.target.dataset.id].children
@@ -276,7 +277,6 @@ Page({
       sourceType: ["album", "camera"],
       success: res => {
         var tempFilePaths = res.tempFilePaths;
-        console.log(tempFilePaths[0])
         var fileWx = this.data.upfileWx;
         fileWx.push(tempFilePaths[0]);
         this.setData({
@@ -314,6 +314,12 @@ Page({
       _fileList += upfiles[i] + ",";
     }
     _fileList = _fileList.slice(0, _fileList.length - 1);
+    var priceTip;
+    if (this.data._price) {
+      priceTip = this.data._price
+    } else {
+      priceTip = "面议"
+    }
     var data = {
       areaId: this.data._areaId,
       cropId: this.data._cropId,
@@ -323,12 +329,11 @@ Page({
       telephone: this.data._telephone,
       minAmount: this.data._minAmount,
       totalAmount: this.data._totalAmount,
-      price: this.data._price,
+      price: priceTip,
       supplyTime: this.data._supplyTime,
       type: this.data._type,
       fileList: _fileList
     };
-    console.log(data)
     if (!data.title) {
       wx.showToast({
         title: "请输入标题",
@@ -396,13 +401,12 @@ Page({
         duration: 1000
       });
     } else {
-      var my_token = wx.getStorageSync("token");
       wx.request({
         url: this.data.loca50010 + "/supply/save",
         method: "POST",
         header: {
           "Content-Type": "application/json;charset=UTF-8",
-          login_token: my_token
+          login_token: this.data.token
         },
         data: data,
         success: res => {

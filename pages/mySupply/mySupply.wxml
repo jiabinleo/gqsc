@@ -58,7 +58,6 @@
     <view class="imgWrap">
       <image class="img" catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
     </view>
-
   </view>
 </block>
 <!--供应类型-->

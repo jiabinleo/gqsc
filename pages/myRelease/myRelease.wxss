@@ -74,18 +74,22 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   align-content: center;
-  height: 32rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 30rpx;
   color: #333333;
 }
 .list-wrap .list .center .detail {
+  font-size: 26rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-height: 30rpx;
   -webkit-box-orient: vertical;
   align-content: center;
-  height: 90rpx;
+  height: 86rpx;
   color: #666666;
 }
 .list-wrap .list .center .areaTime {

@@ -216,13 +216,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    var pageData = this.data.pageData
+    pageData.pageNum = 1
     this.setData({
       pageRows: [],
-      pageData: {
-        type: 1,
-        pageNum: 1,
-        pageSize: 6
-      }
+      pageData: pageData
     })
     this.onLoad()
   },

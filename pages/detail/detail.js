@@ -250,5 +250,8 @@ Page({
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber
     })
+  },
+  onPullDownRefresh: function () {
+    console.log('下拉了')
   }
 })
