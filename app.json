@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/userCenter/userCenter",
     "pages/supply/supply",
+    "pages/userCenter/userCenter",
     "pages/buy/buy",
     "pages/myRelease/myRelease",
     "pages/mySupply/mySupply",

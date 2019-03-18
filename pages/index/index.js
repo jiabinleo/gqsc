@@ -11,8 +11,6 @@ Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
-
-    //
     bannerList: [],
     indicatorDots: true,
     vertical: false,
@@ -698,18 +696,33 @@ Page({
   },
   onTouch: function (e) {
     var user = this.data.user
-
     if (user && user.id) {
       if (user.id === e.currentTarget.dataset.user) {
-        if (this.data.pageData.type == 1) {
-          wx.navigateTo({
-            url: "../mySupply/mySupply?id=" + e.currentTarget.dataset.id
-          });
-        } else if (this.data.pageData.type == 2) {
-          wx.navigateTo({
-            url: "../myBuy/myBuy?id=" + e.currentTarget.dataset.id
-          });
-        }
+        wx.request({
+          url: this.data.loca50010 + "/user/collection/list",
+          header: {
+            "Content-Type": "application/json",
+            "login_token": this.data.token
+          },
+          success: res => {
+            if (res.data.code === "0") {
+              if (this.data.pageData.type == 1) {
+                wx.navigateTo({
+                  url: "../mySupply/mySupply?id=" + e.currentTarget.dataset.id
+                });
+              } else if (this.data.pageData.type == 2) {
+                wx.navigateTo({
+                  url: "../myBuy/myBuy?id=" + e.currentTarget.dataset.id
+                });
+              }
+            } else {
+              wx.navigateTo({
+                url: "../detail/detail?id=" + e.currentTarget.dataset.id
+              });
+            }
+          }
+        });
+
       } else {
         wx.navigateTo({
           url: "../detail/detail?id=" + e.currentTarget.dataset.id
@@ -758,7 +771,7 @@ Page({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
         "Content-Type": "application/json",
-        login_token: this.data.token
+        "login_token": this.data.token
       },
       success: res => {
         if (res.data.code === "0") {
@@ -940,6 +953,5 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  }
+  onShow: function () {}
 });

@@ -104,6 +104,12 @@
   padding: 0 35rpx;
   margin-top: 50rpx;
 
+  &:last-of-type {
+    .rddz {
+      border: none;
+    }
+  }
+
   .flagStatus {
     float: right;
     margin-top: -45rpx;
@@ -161,6 +167,15 @@
     font-size: 30rpx;
     color: #666666;
     line-height: 36rpx;
+
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    align-content: center;
+    height: 40rpx;
   }
 
   .detail {
@@ -168,6 +183,14 @@
     color: #999999;
     line-height: 38rpx;
 
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    align-content: center;
+    height: 74rpx;
   }
 
   .imgFile {
