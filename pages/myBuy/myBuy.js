@@ -375,6 +375,12 @@ Page({
       _fileList += upfiles[i] + ",";
     }
     _fileList = _fileList.slice(0, _fileList.length - 1);
+    var priceTip;
+    if (this.data._price) {
+      priceTip = this.data._price
+    } else {
+      priceTip = "面议"
+    }
     var data = {
       id: this.data.id,
       areaId: this.data._areaId,
@@ -385,7 +391,7 @@ Page({
       telephone: this.data._telephone,
       minAmount: this.data._minAmount,
       totalAmount: this.data._totalAmount,
-      price: this.data._price,
+      price: priceTip,
       supplyTime: this.data._supplyTime,
       type: this.data._type,
       fileList: _fileList

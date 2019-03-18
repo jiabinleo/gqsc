@@ -9,6 +9,16 @@
     line-height: 86rpx;
     overflow: hidden;
 
+    .l-t-title {
+      width: 428rpx;
+      float: right;
+      margin-top: 26rpx;
+      font-size: 30rpx;
+      line-height: 28rpx;
+      color: #999999;
+      text-align: right;
+    }
+
     text {
       color: #666666;
     }
@@ -50,7 +60,7 @@
     }
   }
 
-  textarea {
+  .l-detail {
     padding: 20rpx 0;
     margin-bottom: 30rpx;
     width: 100%;
@@ -140,5 +150,10 @@
 
 .save {
   margin: 35rpx;
-  background: #27a6e6;
+
+  &::after {
+    background: #27a6e6;
+    content: "确认信息";
+    font-size: 68rpx;
+  }
 }

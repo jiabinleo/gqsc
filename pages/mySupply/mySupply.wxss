@@ -8,6 +8,15 @@
   line-height: 86rpx;
   overflow: hidden;
 }
+.wrap view .l-t-title {
+  width: 428rpx;
+  float: right;
+  margin-top: 26rpx;
+  font-size: 30rpx;
+  line-height: 28rpx;
+  color: #999999;
+  text-align: right;
+}
 .wrap view text {
   color: #666666;
 }
@@ -41,7 +50,7 @@
   border: none;
   color: #999999;
 }
-.wrap textarea {
+.wrap .l-detail {
   padding: 20rpx 0;
   margin-bottom: 30rpx;
   width: 100%;

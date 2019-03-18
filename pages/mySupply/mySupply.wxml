@@ -1,7 +1,8 @@
 <view class="wrap">
   <view>
     <text>标题</text>
-    <input type="text" bindinput="titleFn" placeholder-class="sr" value='{{_title}}' placeholder='请输入标题'></input>
+    <!-- <input type="text" bindinput="titleFn" placeholder-class="sr" value='{{_title}}' placeholder='请输入标题'></input> -->
+    <textarea maxlength="28" focus="true" class="l-t-title" bindblur="bindTextAreaBlur" value='{{_title}}' bindinput="titleFn" auto-height placeholder-class="sr" placeholder="请输入" />
   </view>
   <view>
     <text>供应类型</text>
@@ -22,7 +23,7 @@
   </view>
   <view>
     <text>供应价格</text>
-    <input type="text" bindinput='priceFn' placeholder-class="sr" value='{{price}}' placeholder='请输入'></input>
+    <input type="text" bindinput='priceFn' placeholder-class="sr" value='{{price}}' placeholder='如未输入，默认为面议'></input>
   </view>
   <view>
     <text>供货截止日期</text>
@@ -41,7 +42,7 @@
   <view>
     <text>商品详情</text>
   </view>
-  <textarea bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" value="{{detail}}" placeholder="请输入商品详情" />
+  <textarea class="l-detail" bindblur="bindTextAreaBlur" bindinput="detailFn" auto-height placeholder-class="sr" value="{{detail}}" placeholder="请输入商品详情" />
 </view>
 <!-- 图片上传 -->
 <view class="line"></view>

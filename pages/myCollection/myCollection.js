@@ -41,6 +41,7 @@ Page({
     this.getMyPage()
   },
   getMyPage: function () {
+    console.log("/")
     wx.request({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
@@ -127,7 +128,6 @@ Page({
     });
   },
   onPullDownRefresh() {
-    wx.stopPullDownRefresh();
     this.onLoad();
   },
   /**
