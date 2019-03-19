@@ -1,26 +1,31 @@
 // pages/detail/detail.js
 const app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-    marketSupply: '',
+    marketSupply: "",
     fileList: [],
-    publishTime: '',
-    supplyTime: '',
-    phoneNumber: '',
+    publishTime: "",
+    supplyTime: "",
+    phoneNumber: "",
     isCollection: false,
     priceDW: "",
     loca50010: null,
-    loginMask: "loginMask-close"
+    loginMask: "loginMask-close",
+    ids: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (options && options.id) {
+      wx.setStorageSync("optionsId", options.id);
+    }
+    var optionsId = wx.getStorageSync("optionsId");
+    console.log(optionsId);
     wx.showLoading({
       title: "加载中"
     });
@@ -36,18 +41,19 @@ Page({
     }
     var my_token = wx.getStorageSync("token");
     wx.request({
-      url: this.data.loca50010 + "/supply/detail/" + options.id,
+      url: this.data.loca50010 + "/supply/detail/" + optionsId,
       header: {
         "Content-Type": "application/json",
-        "login_token": my_token
+        login_token: my_token
       },
       success: res => {
+        console.log("...................");
         wx.hideLoading();
-        var _marketSupply = res.data.data.marketSupply
+        var _marketSupply = res.data.data.marketSupply;
         this.setData({
           isCollection: _marketSupply.isCollection
-        })
-        var icon = _marketSupply.icon
+        });
+        var icon = _marketSupply.icon;
         if (icon) {
           if (icon.indexOf("/")) {} else {
             _marketSupply.icon = this.data.imgUrl + icon;
@@ -55,28 +61,31 @@ Page({
         } else {
           _marketSupply.icon = "";
         }
-        var _fileList = []
+        var _fileList = [];
         if (_marketSupply.fileList) {
-          for (let i = 0; i < _marketSupply.fileList.split(',').length; i++) {
-            _fileList.push(this.data.imgUrl + _marketSupply.fileList.split(',')[i])
+          for (let i = 0; i < _marketSupply.fileList.split(",").length; i++) {
+            _fileList.push(
+              this.data.imgUrl + _marketSupply.fileList.split(",")[i]
+            );
           }
         } else {
-          _fileList = _marketSupply.fileList
+          _fileList = _marketSupply.fileList;
         }
-        var publishTime = _marketSupply.publishTime.split(' ')[0]
-        var supplyTime = _marketSupply.supplyTime.split(' ')[0].split('-')
-        var _supplyTime = supplyTime[0] + '年' + supplyTime[1] + '月' + supplyTime[2] + '日'
-        var reg = /^[0-9]+.?[0-9]*$/
+        var publishTime = _marketSupply.publishTime.split(" ")[0];
+        var supplyTime = _marketSupply.supplyTime.split(" ")[0].split("-");
+        var _supplyTime =
+          supplyTime[0] + "年" + supplyTime[1] + "月" + supplyTime[2] + "日";
+        var reg = /^[0-9]+.?[0-9]*$/;
         if (!reg.test(_marketSupply.price)) {
           if (_marketSupply.price) {} else {
             this.setData({
               priceDW: "面议"
-            })
+            });
           }
         } else {
           this.setData({
             priceDW: "元/斤"
-          })
+          });
         }
         this.setData({
           marketSupply: _marketSupply,
@@ -84,7 +93,7 @@ Page({
           publishTime: publishTime,
           supplyTime: _supplyTime,
           phoneNumber: _marketSupply.telephone
-        })
+        });
       }
     });
   },
@@ -99,19 +108,19 @@ Page({
           login_token: my_token
         },
         data: {
-          "id": e.currentTarget.dataset.id,
-          "code": "gqsc"
+          id: e.currentTarget.dataset.id,
+          code: "gqsc"
         },
         success: res => {
           if (res.data.code === "0") {
             this.setData({
               isCollection: false
-            })
+            });
             wx.showToast({
-              title: '取消收藏',
-              icon: 'none',
+              title: "取消收藏",
+              icon: "none",
               duration: 2000
-            })
+            });
           }
         }
       });
@@ -124,19 +133,19 @@ Page({
           login_token: my_token
         },
         data: {
-          "id": e.currentTarget.dataset.id,
-          "code": "gqsc"
+          id: e.currentTarget.dataset.id,
+          code: "gqsc"
         },
         success: res => {
           if (res.data.code === "0") {
             this.setData({
               isCollection: true
-            })
+            });
             wx.showToast({
-              title: '收藏成功',
-              icon: 'success',
-              duration: 2000
-            })
+              title: "收藏成功",
+              icon: "success",
+              duration: 1000
+            });
           } else if (res.data.code === "9") {
             this.setData({
               loginMask: "loginMask"
@@ -144,9 +153,9 @@ Page({
           } else {
             wx.showToast({
               title: res.data.message,
-              icon: 'none',
+              icon: "none",
               duration: 1000
-            })
+            });
           }
         }
       });
@@ -157,7 +166,7 @@ Page({
       wx.previewImage({
         current: this.data.fileList[e.currentTarget.dataset.index], // 当前显示图片的http链接
         urls: this.data.fileList // 需要预览的图片http链接列表
-      })
+      });
     }
   },
   getUserInfo: function (e) {
@@ -187,6 +196,12 @@ Page({
                 wx.setStorageSync("token", res.data.data.token);
                 wx.setStorageSync("user", res.data.data.user);
               }
+              wx.showToast({
+                title: res.data.message,
+                icon: "none",
+                duration: 1000
+              });
+              this.onLoad();
             }
           });
         } else {
@@ -203,49 +218,38 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
-  },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-
-  },
+  onShow: function () {},
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
-
-  },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
+  onUnload: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-
-  },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
+  onShareAppMessage: function () {},
   tel: function () {
     wx.makePhoneCall({
       phoneNumber: this.data.phoneNumber
-    })
+    });
   },
   onPullDownRefresh: function () {
+    this.onLoad()
   }
-})
+});

@@ -297,8 +297,7 @@ Page({
               upfile: file
             });
           },
-          fail: function (res) {
-          }
+          fail: function (res) {}
         });
       }
     });
@@ -390,6 +389,12 @@ Page({
         icon: "none",
         duration: 1000
       });
+    } else if (this.checksum(data.detail) < 25 * 2) {
+      wx.showToast({
+        title: "请至少输入25个字",
+        icon: "none",
+        duration: 1000
+      });
     } else if (!data.fileList) {
       wx.showToast({
         title: "请上传至少一张图片",
@@ -446,10 +451,21 @@ Page({
           this.setData({
             upfile: upfile
           })
-        } else if (res.cancel) {
-        }
+        } else if (res.cancel) {}
       }
     })
+  },
+  checksum: function (chars) {
+    var sum = 0;
+    for (var i = 0; i < chars.length; i++) {
+      var c = chars.charCodeAt(i);
+      if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+        sum++;
+      } else {
+        sum += 2;
+      }
+    }
+    return sum;
   },
   preventTouchMove: function () {},
   /**

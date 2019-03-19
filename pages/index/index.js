@@ -799,6 +799,7 @@ Page({
     })
   },
   shouCang: function (e) {
+    this.getToken()
     if (e.currentTarget.dataset.iz) {
       wx.request({
         url: this.data.loca50010 + "/user/collection/cancel",
@@ -925,5 +926,12 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {}
+  onShow: function () {},
+  getToken: function () {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      })
+    }
+  }
 });

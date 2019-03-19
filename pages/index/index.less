@@ -40,18 +40,31 @@
 
 /*导航*/
 .nav {
+  position: relative;
+
   view {
     display: inline-block;
-    width: 50%;
+    width: 49.5%;
     border-radius: 0;
     text-align: center;
     font-size: 28rpx;
     line-height: 82rpx;
   }
+
+  .navLine {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0rpx;
+    height: 30rpx;
+    border: solid 1rpx #d3d3d3;
+  }
 }
 
 .select {
   width: 100%;
+  border-bottom: solid #eeeeee 1rpx;
 
   view {
     display: inline-block;
@@ -59,12 +72,28 @@
     text-align: center;
     font-size: 28rpx;
     line-height: 82rpx;
+
+    image {
+      width: 16rpx;
+      vertical-align: middle;
+      margin-top: -4rpx;
+    }
+
+    &.navAct {
+      color: #3fbef1;
+    }
   }
 }
 
 .navA {
-  background: #c6c6c6;
-  color: #eeeeee;
+  color: #3fbef1;
+
+  .navb {
+    border-bottom: solid #3fbef1 4rpx;
+    display: inline-block;
+    line-height: 80rpx;
+    padding: 0 6rpx;
+  }
 }
 
 .section-wrap {
@@ -102,7 +131,7 @@
 
 .newList {
   padding: 0 35rpx;
-  margin-top: 50rpx;
+  margin-top: 20rpx;
 
   &:last-of-type {
     .rddz {
@@ -112,7 +141,7 @@
 
   .flagStatus {
     float: right;
-    margin-top: -45rpx;
+    margin-top: -12rpx;
     width: 100rpx;
     height: 100rpx;
   }
@@ -167,7 +196,6 @@
     font-size: 30rpx;
     color: #666666;
     line-height: 36rpx;
-
     text-overflow: -o-ellipsis-lastline;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -194,7 +222,7 @@
   }
 
   .imgFile {
-    margin-top: 35rpx;
+    margin-top: 5rpx;
 
     image {
       width: 220rpx;
@@ -210,7 +238,7 @@
 
   .rddz {
     overflow: hidden;
-    padding-bottom: 50rpx;
+    padding-bottom: 14rpx;
     border-bottom: solid 1rpx #eeeeee;
 
     text {

@@ -40,6 +40,6 @@ App({
     userInfo: null,
     imgUrl: "https://www.kwantler.com.cn",
     uploadImg: 'https://www.kwantler.com.cn',
-    loca50010: 'https://www.kwantler.com.cn/v1',
+    loca50010: 'https://www.kwantler.com.cn/v1'
   }
 })

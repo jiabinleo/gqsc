@@ -32,16 +32,29 @@
   width: 100%;
 }
 /*导航*/
+.nav {
+  position: relative;
+}
 .nav view {
   display: inline-block;
-  width: 50%;
+  width: 49.5%;
   border-radius: 0;
   text-align: center;
   font-size: 28rpx;
   line-height: 82rpx;
 }
+.nav .navLine {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0rpx;
+  height: 30rpx;
+  border: solid 1rpx #d3d3d3;
+}
 .select {
   width: 100%;
+  border-bottom: solid #eeeeee 1rpx;
 }
 .select view {
   display: inline-block;
@@ -50,9 +63,22 @@
   font-size: 28rpx;
   line-height: 82rpx;
 }
+.select view image {
+  width: 16rpx;
+  vertical-align: middle;
+  margin-top: -4rpx;
+}
+.select view.navAct {
+  color: #3fbef1;
+}
 .navA {
-  background: #c6c6c6;
-  color: #eeeeee;
+  color: #3fbef1;
+}
+.navA .navb {
+  border-bottom: solid #3fbef1 4rpx;
+  display: inline-block;
+  line-height: 80rpx;
+  padding: 0 6rpx;
 }
 .section-wrap {
   height: 0;
@@ -84,14 +110,14 @@
 }
 .newList {
   padding: 0 35rpx;
-  margin-top: 50rpx;
+  margin-top: 20rpx;
 }
 .newList:last-of-type .rddz {
   border: none;
 }
 .newList .flagStatus {
   float: right;
-  margin-top: -45rpx;
+  margin-top: -12rpx;
   width: 100rpx;
   height: 100rpx;
 }
@@ -159,7 +185,7 @@
   height: 74rpx;
 }
 .newList .imgFile {
-  margin-top: 35rpx;
+  margin-top: 5rpx;
 }
 .newList .imgFile image {
   width: 220rpx;
@@ -172,7 +198,7 @@
 }
 .newList .rddz {
   overflow: hidden;
-  padding-bottom: 50rpx;
+  padding-bottom: 14rpx;
   border-bottom: solid 1rpx #eeeeee;
 }
 .newList .rddz text {
