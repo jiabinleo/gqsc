@@ -59,7 +59,7 @@ Page({
       areaId: "",
       type: 1,
       pageNum: 1,
-      pageSize: 3,
+      pageSize: 6,
       order: ""
     },
     token: "",
@@ -728,7 +728,7 @@ Page({
         areaId: "",
         type: 1,
         pageNum: 1,
-        pageSize: 3,
+        pageSize: 6,
         order: ""
       },
       flMsg: "选择分类",
