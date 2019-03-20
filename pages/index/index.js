@@ -581,30 +581,39 @@ Page({
         order: pageData.order
       },
       success: res => {
-        var newsList = res.data.data.page.rows;
-        for (let i = 0; i < res.data.data.page.rows.length; i++) {
-          icon = res.data.data.page.rows[i].icon;
-          fileList = res.data.data.page.rows[i].fileList;
-          if (icon) {
-            if (icon.indexOf("/")) {} else {
-              newsList[i].icon = this.data.imgUrl + icon;
-            }
-          } else {
-            newsList[i].icon = "";
-          }
-          if (newsList[i].fileList) {
-            newsList[i].fileList = fileList.split(",");
-            for (let j = 0; j < newsList[i].fileList.length; j++) {
-              newsList[i].fileList[j] =
-                this.data.imgUrl + newsList[i].fileList[j];
-            }
-          }
-          newsList[i].time = this.timeConversion(newsList[i].updateTime)
-        }
-        this.setData({
-          newList: newsList
-        });
         wx.hideLoading();
+        if (res.data.code === "0") {
+          var newsList = res.data.data.page.rows;
+          for (let i = 0; i < res.data.data.page.rows.length; i++) {
+            icon = res.data.data.page.rows[i].icon;
+            fileList = res.data.data.page.rows[i].fileList;
+            if (icon) {
+              if (icon.indexOf("/")) {} else {
+                newsList[i].icon = this.data.imgUrl + icon;
+              }
+            } else {
+              newsList[i].icon = "";
+            }
+            if (newsList[i].fileList) {
+              newsList[i].fileList = fileList.split(",");
+              for (let j = 0; j < newsList[i].fileList.length; j++) {
+                newsList[i].fileList[j] =
+                  this.data.imgUrl + newsList[i].fileList[j];
+              }
+            }
+            newsList[i].time = this.timeConversion(newsList[i].updateTime)
+          }
+          this.setData({
+            newList: newsList
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "none",
+            duration: 1000
+          });
+        }
+
       }
     });
   },
