@@ -391,7 +391,7 @@ Page({
       });
     } else if (this.checksum(data.detail) < 25 * 2) {
       wx.showToast({
-        title: "请至少输入25个字",
+        title: "商品详情请至少输入25个字",
         icon: "none",
         duration: 1000
       });

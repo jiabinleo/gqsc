@@ -13,58 +13,56 @@
           </block>
         </swiper>
       </view>
-      <block>
-        <view class="nav">
-          <view class="{{navActive ? 'navA' : ''}}" bindtap="gongying">
-            <text class="{{navActive ? 'navb' : ''}}">供应</text>
+      <view class="{{content}}">
+        <block>
+          <view class="nav">
+            <view class="{{navActive ? 'navA' : ''}}" bindtap="gongying">
+              <text class="{{navActive ? 'navb' : ''}}">供应</text>
+            </view>
+            <view class="{{navActive ? '' : 'navA'}}" bindtap="qiugou">
+              <text class="{{navActive ? '' : 'navb'}}">求购</text>
+            </view>
+            <view class="navLine"></view>
           </view>
-          <view class="{{navActive ? '' : 'navA'}}" bindtap="qiugou">
-            <text class="{{navActive ? '' : 'navb'}}">求购</text>
+          <view class="select">
+            <view class="{{fl?'navAct':''}}" bindtap="fenlei">{{flMsg}}
+              <image wx:if="{{fl}}" src="../../images/shichang_up.png" mode="widthFix"></image>
+              <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
+            </view>
+            <view class="{{dq?'navAct':''}}" bindtap="diqu">{{dqMsg}}
+              <image wx:if="{{dq}}" src="../../images/shichang_up.png" mode="widthFix"></image>
+              <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
+            </view>
+            <view class="{{px?'navAct':''}}" bindtap="paixu">{{pxMsg}}
+              <image wx:if="{{px}}" src="../../images/shichang_up.png" mode="widthFix"></image>
+              <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
+            </view>
           </view>
-          <view class="navLine"></view>
-        </view>
-      </block>
-      <block>
-        <view class="select">
-          <view class="{{fl?'navAct':''}}" bindtap="fenlei">{{flMsg}}
-            <image wx:if="{{fl}}" src="../../images/shichang_up.png" mode="widthFix"></image>
-            <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
+          <view class='section-wrap'>
+            <view class="section" style="height: {{viewHeight}}px;">
+              <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeOne}}" wx:key="index">
+                  <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+              <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeTwo}}" wx:key="index">
+                  <view wx:if="{{item.showText}}" data-text="{{item.text}}" id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.showText}}</view>
+                  <view wx:else id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+              <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+                <block wx:for="{{treeThree}}" wx:key="index">
+                  <view wx:if="{{item.showText}}" id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.showText}}</view>
+                  <view wx:else id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
+                </block>
+              </scroll-view>
+            </view>
           </view>
-          <view class="{{dq?'navAct':''}}" bindtap="diqu">{{dqMsg}}
-            <image wx:if="{{dq}}" src="../../images/shichang_up.png" mode="widthFix"></image>
-            <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
-          </view>
-          <view class="{{px?'navAct':''}}" bindtap="paixu">{{pxMsg}}
-            <image wx:if="{{px}}" src="../../images/shichang_up.png" mode="widthFix"></image>
-            <image wx:else src="../../images/shichang_down.png" mode="widthFix"></image>
-          </view>
-        </view>
-      </block>
-      <block>
-        <view class='section-wrap'>
-          <view class="section" style="height: {{viewHeight}}px;">
-            <scroll-view bindtap="oneTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeOne}}" wx:key="index">
-                <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
-            <scroll-view bindtap="twoTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeTwo}}" wx:key="index">
-                <view wx:if="{{item.showText}}" data-text="{{item.text}}" id="t{{item.id}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.showText}}</view>
-                <view wx:else id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
-            <scroll-view bindtap="threeTag" scroll-y style="height: {{viewHeight}}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-              <block wx:for="{{treeThree}}" wx:key="index">
-                <view wx:if="{{item.showText}}" id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.showText}}</view>
-                <view wx:else id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
-              </block>
-            </scroll-view>
-          </view>
-        </view>
-      </block>
+        </block>
+      </view>
       <block wx:for="{{newList}}" wx:key="index">
-        <view class="newList">
+        <view class="newList {{newListFixed}}">
           <image wx:if="{{item.closeFlag==1}}" class="flagStatus" src="../../images/s.png"></image>
           <image wx:if="{{item.topOne==1}}" class="flagStatus" src="../../images/t.png"></image>
           <view catchtap="onTouch" data-user="{{item.userId}}" data-id="{{item.id}}">

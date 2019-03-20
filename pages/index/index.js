@@ -69,7 +69,10 @@ Page({
     active2: null,
     active3: null,
     loca50010: null,
-    loginMask: "loginMask-close"
+    loginMask: "loginMask-close",
+    content: "",
+    newListFixed: "",
+    opactiy: 0
   },
   //事件处理函数
   bindViewTap: function () {
@@ -234,6 +237,7 @@ Page({
     });
     this.data.pageData.type = 1;
     this.data.pageData.pageNum = 1;
+    
     this.getPage(this.data.pageData);
   },
   qiugou: function () {
@@ -940,6 +944,21 @@ Page({
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
+      })
+    }
+  },
+  onPageScroll: function (e) {
+    if (e.scrollTop > 150) {
+      this.setData({
+        content: "content",
+        newListFixed: "newListFixed",
+        opactiy: (e.scrollTop - 140) / 100
+      })
+    } else {
+      this.setData({
+        content: "",
+        newListFixed: "",
+        opactiy:0
       })
     }
   }

@@ -41,13 +41,19 @@ Page({
     active2: null,
     active3: null,
     loca50010: null,
-    uploadImg: null
+    uploadImg: null,
+    token: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      })
+    }
     //获取数据
     this.setData({
       id: options.id
@@ -355,8 +361,7 @@ Page({
               upfile: file
             });
           },
-          fail: function (res) {
-          }
+          fail: function (res) {}
         });
       }
     });
@@ -389,41 +394,114 @@ Page({
       type: this.data._type,
       fileList: _fileList
     };
-    var my_token = wx.getStorageSync("token");
-    wx.request({
-      url: this.data.loca50010 + "/supply/save",
-      method: "POST",
-      header: {
-        "Content-Type": "application/json;charset=UTF-8",
-        login_token: my_token
-      },
-      data: data,
-      success: res => {
-        if (res.data.code === "0") {
-          wx.showToast({
-            title: "修改成功",
-            icon: "success",
-            duration: 1000
-          });
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 1000)
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "success",
-            duration: 1000
-          });
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 1000)
+    if (!data.title) {
+      wx.showToast({
+        title: "请输入标题",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.cropId) {
+      wx.showToast({
+        title: "请选择供应类型",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.areaId) {
+      wx.showToast({
+        title: "请选择地区",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.totalAmount) {
+      wx.showToast({
+        title: "请输入总数量",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.minAmount) {
+      wx.showToast({
+        title: "请输入起售量",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.price) {
+      wx.showToast({
+        title: "请输入供应价格",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.supplyTime) {
+      wx.showToast({
+        title: "请选择供货截止日期",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.contacts) {
+      wx.showToast({
+        title: "请输入联系人",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.telephone) {
+      wx.showToast({
+        title: "请输入11位手机号码",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.detail) {
+      wx.showToast({
+        title: "请输入商品详情",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (this.checksum(data.detail) < 25 * 2) {
+      wx.showToast({
+        title: "商品详情请至少输入25个字",
+        icon: "none",
+        duration: 1000
+      });
+    } else if (!data.fileList) {
+      wx.showToast({
+        title: "请上传至少一张图片",
+        icon: "none",
+        duration: 1000
+      });
+    } else {
+      wx.request({
+        url: this.data.loca50010 + "/supply/save",
+        method: "POST",
+        header: {
+          "Content-Type": "application/json;charset=UTF-8",
+          login_token: this.data.token
+        },
+        data: data,
+        success: res => {
+          if (res.data.code === "0") {
+            wx.showToast({
+              title: "修改成功",
+              icon: "success",
+              duration: 1000
+            });
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1
+              })
+            }, 1000)
+          } else {
+            wx.showToast({
+              title: res.data.message,
+              icon: "success",
+              duration: 1000
+            });
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1
+              })
+            }, 1000)
+          }
         }
-      }
-    });
+      });
+    }
   },
   locFn: function () {
     var address = wx.getStorageSync("address");
@@ -453,8 +531,7 @@ Page({
             upfile: upfile,
             upfileWx: upfileWx
           })
-        } else if (res.cancel) {
-        }
+        } else if (res.cancel) {}
       }
     })
   },
@@ -470,6 +547,18 @@ Page({
         urls: newImgLIst // 需要预览的图片http链接列表
       })
     }
+  },
+  checksum: function (chars) {
+    var sum = 0;
+    for (var i = 0; i < chars.length; i++) {
+      var c = chars.charCodeAt(i);
+      if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+        sum++;
+      } else {
+        sum += 2;
+      }
+    }
+    return sum;
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

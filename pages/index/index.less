@@ -38,6 +38,41 @@
   }
 }
 
+.content {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transition: 500;
+
+  .nav {
+    background: #3fbef1;
+    color: #eeeeee;
+    height: 123rpx;
+    line-height: 123rpx;
+
+    .navb {
+      border-bottom: solid 4rpx #ffffff;
+      color: #ffffff;
+    }
+
+    .nava {
+      color: #ffffff;
+    }
+
+  }
+
+  .select {
+    background: #ffffff;
+  }
+}
+
+.newListFixed {
+  &:nth-of-type(3) {
+    margin-top: 226rpx !important;
+  }
+}
+
 /*导航*/
 .nav {
   position: relative;
@@ -58,7 +93,7 @@
     transform: translate(-50%, -50%);
     width: 0rpx;
     height: 30rpx;
-    border: solid 1rpx #d3d3d3;
+    border-right: solid 1rpx #d3d3d3;
   }
 }
 
