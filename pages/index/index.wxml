@@ -156,3 +156,9 @@
     </view>
   </view>
 </block>
+<block>
+  <view bindtap='top' class="{{top}}">
+    <image src="../../images/top.png" mode="widthFix"></image>
+    <view>顶部</view>
+  </view>
+</block>

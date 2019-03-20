@@ -72,7 +72,8 @@ Page({
     loginMask: "loginMask-close",
     content: "",
     newListFixed: "",
-    opactiy: 0
+    opactiy: 0,
+    top: "topHide"
   },
   //事件处理函数
   bindViewTap: function () {
@@ -237,7 +238,7 @@ Page({
     });
     this.data.pageData.type = 1;
     this.data.pageData.pageNum = 1;
-    
+
     this.getPage(this.data.pageData);
   },
   qiugou: function () {
@@ -958,8 +959,23 @@ Page({
       this.setData({
         content: "",
         newListFixed: "",
-        opactiy:0
+        opactiy: 0
       })
     }
+    if (e.scrollTop > 500) {
+      this.setData({
+        top: "top"
+      })
+    } else {
+      this.setData({
+        top: "topHide"
+      })
+    }
+  },
+  top: function () {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 300
+    })
   }
 });
