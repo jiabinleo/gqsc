@@ -1,7 +1,7 @@
 <view class="wrap">
   <view class="userMsg">
     <view class="userImg">
-      <image src="{{marketSupply.icon}}" mode="widthFix"></image>
+      <image lazy-load="true" src="{{marketSupply.icon}}" mode="widthFix"></image>
     </view>
     <view class="username">
       <view class="name">
@@ -60,12 +60,12 @@
   </view>
   <view class='bottom'>
     <view class='left' bindtap="tel">
-      <image src="../../images/7a4e3f53f3722f2b0694cc83653945d.png" mode="widthFix"></image>
+      <image lazy-load="true" src="../../images/7a4e3f53f3722f2b0694cc83653945d.png" mode="widthFix"></image>
       <text>联系供应方</text>
     </view>
     <view class='left' data-id="{{marketSupply.id}}" data-iz="{{isCollection}}" bindtap='shouCang'>
-      <image wx:if="{{isCollection}}" src="../../images/sc_pre.png" mode="widthFix"></image>
-      <image wx:else src="../../images/sc.png" mode="widthFix"></image>
+      <image lazy-load="true" wx:if="{{isCollection}}" src="../../images/sc_pre.png" mode="widthFix"></image>
+      <image lazy-load="true" wx:else src="../../images/sc.png" mode="widthFix"></image>
       <text>收藏</text>
     </view>
   </view>

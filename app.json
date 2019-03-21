@@ -1,15 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/supply/supply",
     "pages/userCenter/userCenter",
+    "pages/supply/supply",
     "pages/buy/buy",
     "pages/myRelease/myRelease",
     "pages/mySupply/mySupply",
     "pages/myCollection/myCollection",
     "pages/detail/detail",
-    "pages/myBuy/myBuy",
-    "pages/logs/logs"
+    "pages/myBuy/myBuy"
   ],
   "window": {
     "backgroundTextStyle": "dark",

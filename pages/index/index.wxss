@@ -1,16 +1,4 @@
 /**index.wxss**/
-.getUserInfo {
-  position: absolute;
-  bottom: 180rpx;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 680rpx;
-  height: 88rpx;
-  border-radius: 44rpx;
-  border: none;
-  background: #ffc43d;
-  color: #ffffff;
-}
 .container {
   background: #ffffff;
 }
@@ -61,10 +49,10 @@
   margin-top: 226rpx !important;
 }
 /*导航*/
-.nav {
+.container .nav {
   position: relative;
 }
-.nav view {
+.container .nav view {
   display: inline-block;
   width: 49.5%;
   border-radius: 0;
@@ -72,7 +60,7 @@
   font-size: 28rpx;
   line-height: 82rpx;
 }
-.nav .navLine {
+.container .nav .navLine {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -140,6 +128,7 @@
 .newList {
   padding: 0 35rpx;
   margin-top: 20rpx;
+  background: #ffffff;
 }
 .newList:last-of-type .rddz {
   border: none;
@@ -221,6 +210,7 @@
   height: 146rpx;
   margin-left: 10rpx;
   margin-top: 10rpx;
+  border-radius: 10rpx;
 }
 .newList .imgFile image:nth-of-type(3n + 1) {
   margin-left: 0;
@@ -239,6 +229,7 @@
   margin-right: 20rpx;
 }
 .newList .rddz .rd image {
+  vertical-align: middle;
   width: 36rpx;
   height: 20rpx;
 }
@@ -258,35 +249,19 @@
 .footer {
   position: relative;
   width: 100%;
-  height: 108rpx;
-  padding-top: 10rpx;
   position: fixed;
   bottom: 0;
   z-index: 99;
-  background: #ffffff;
-  border-top: 1rpx solid #eeeeee;
-}
-.footer .center-top {
-  position: absolute;
-  left: 50%;
-  top: 12rpx;
-  z-index: 4;
-  width: 100rpx;
-  height: 102rpx;
-  transform: translate(-55rpx, -54rpx);
-  border-radius: 50%;
-  border: solid 4rpx #eeeeee;
+  height: 104rpx;
   background: #ffffff;
 }
-.footer .center-bottom {
+.footer .bottom-bg {
   position: absolute;
-  left: 50%;
-  top: 40rpx;
-  width: 160rpx;
-  height: 80rpx;
-  z-index: 6;
-  transform: translate(-50%, -50%);
-  background: #ffffff;
+  left: 0;
+  z-index: -1;
+  bottom: 20rpx;
+  width: 750rpx;
+  height: 142rpx;
 }
 .footer .nav {
   width: 33.33%;
@@ -295,7 +270,7 @@
 }
 .footer .nav:nth-of-type(2) {
   position: absolute;
-  top: 28rpx;
+  top: 24rpx;
   left: 50%;
   z-index: 10;
   transform: translate(-50%, -50%);

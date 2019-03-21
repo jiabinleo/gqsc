@@ -63,12 +63,12 @@
       </view>
       <block wx:for="{{newList}}" wx:key="index">
         <view class="newList {{newListFixed}}">
-          <image wx:if="{{item.closeFlag==1}}" class="flagStatus" src="../../images/s.png"></image>
-          <image wx:if="{{item.topOne==1}}" class="flagStatus" src="../../images/t.png"></image>
+          <image lazy-load="true" wx:if="{{item.closeFlag==1}}" class="flagStatus" src="../../images/s.png"></image>
+          <image lazy-load="true" wx:if="{{item.topOne==1}}" class="flagStatus" src="../../images/t.png"></image>
           <view catchtap="onTouch" data-user="{{item.userId}}" data-id="{{item.id}}">
             <view class="userMsg">
               <view class="userImg">
-                <image lazy-load="true" wx:if="{{item.icon}}" src="{{item.icon}}" mode="widthFix"></image>
+                <image lazy-load="true" src="{{item.icon?item.icon:'../../images/logo.png'}}" mode="widthFix"></image>
               </view>
               <view class="username">
                 <view class="name">
@@ -110,35 +110,34 @@
   </view>
 </view>
 <view class='footer'>
+  <image class="bottom-bg" src="../../images/bottom.png" mode='widthFix'></image>
   <view class="nav">
-    <image src="../../images/tab_shichang_pre2.png"></image>
+    <image lazy-load="true" src="../../images/tab_shichang_pre2.png"></image>
     <text>首页</text>
   </view>
   <view class="nav" bindtap="open">
-    <image src="../../images/tab_more_btn_add.png"></image>
+    <image lazy-load="true" src="../../images/tab_more_btn_add.png"></image>
     <text>发布</text>
   </view>
-  <navigator url='../userCenter/userCenter' open-type="redirect" hover-class="none">
-    <view class="nav" bindtap='bindUserTap'>
-      <image src="../../images/tab_shichang_4.png"></image>
+  <view class="nav">
+    <navigator url='../userCenter/userCenter' open-type="redirect" hover-class="none">
+      <image lazy-load="true" src="../../images/tab_shichang_4.png"></image>
       <text>我的</text>
-    </view>
-  </navigator>
-  <view class="center-top"></view>
-  <view class="center-bottom"></view>
+    </navigator>
+  </view>
 </view>
 <view class="{{mask}}" catchtouchmove="preventTouchMove">
   <view class='bottom'>
-    <image class="close" bindtap="close" src="../../images/close-gray.png"></image>
+    <image lazy-load="true" class="close" bindtap="close" src="../../images/close-gray.png"></image>
     <view class='nav'>
       <view bindtap="supply">
-        <image src='../../images/035.png' mode="widthFix"></image>
+        <image lazy-load="true" src='../../images/035.png' mode="widthFix"></image>
         <text>发布供应</text>
       </view>
     </view>
     <view class='nav'>
       <view bindtap='buy'>
-        <image src='../../images/036.png' mode="widthFix"></image>
+        <image lazy-load="true" src='../../images/036.png' mode="widthFix"></image>
         <text>发布求购</text>
       </view>
     </view>
@@ -158,7 +157,7 @@
 </block>
 <block>
   <view bindtap='top' class="{{top}}">
-    <image src="../../images/top.png" mode="widthFix"></image>
+    <image lazy-load="true" src="../../images/top.png" mode="widthFix"></image>
     <view>顶部</view>
   </view>
 </block>

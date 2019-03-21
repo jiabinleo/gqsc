@@ -10,7 +10,7 @@
   <block wx:for="{{pageRows}}" wx:key="index">
     <view class="list" data-id="{{item.id}}" data-type="{{pageType}}" catchtap="onTouch">
       <view class="{{item.closeFlag==1?'listMask':''}}"></view>
-      <image src="../../images/s.png" class="{{item.closeFlag==1?'over':'overHide'}}" mode="widthFix"></image>
+      <image lazy-load="true" src="../../images/s.png" class="{{item.closeFlag==1?'over':'overHide'}}" mode="widthFix"></image>
       <view class="left">
         <image lazy-load="true" src="{{imgUrl + item.imgFile0}}" mode="aspectFill"></image>
       </view>
@@ -23,13 +23,13 @@
         </view>
       </view>
       <view class='top' catchtap="over" data-id="{{item.id}}">
-        <image wx:if="{{item.closeFlag}}" mode="widthFix" src=""></image>
-        <image wx:else mode="widthFix" src="../../images/s1.png"></image>
+        <image lazy-load="true" wx:if="{{item.closeFlag}}" mode="widthFix" src=""></image>
+        <image lazy-load="true" wx:else mode="widthFix" src="../../images/s1.png"></image>
         <text wx:if="{{item.closeFlag}}"></text>
         <text wx:else>设为完成</text>
       </view>
       <view class='bottom' catchtap="delMsg" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}">
-        <image mode="widthFix" src="../../images/d.png"></image>
+        <image lazy-load="true" mode="widthFix" src="../../images/d.png"></image>
         <text>永久删除</text>
       </view>
     </view>

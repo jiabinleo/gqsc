@@ -173,6 +173,12 @@ Page({
           this.setData({
             getAllTreeFenlei: treeFenlei
           });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "none",
+            duration: 2000
+          });
         }
       }
     });
@@ -218,6 +224,12 @@ Page({
           this.setData({
             getAllTreeDiqu: treeDiqu
           });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "none",
+            duration: 2000
+          });
         }
       }
     });
@@ -226,6 +238,9 @@ Page({
   },
   //nav
   gongying: function () {
+    var pageData = this.data.pageData
+    pageData.type = 1;
+    pageData.pageNum = 1;
     this.setData({
       navActive: true,
       fl: false,
@@ -234,7 +249,8 @@ Page({
       viewHeight: 0,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      pageData: pageData
     });
     this.data.pageData.type = 1;
     this.data.pageData.pageNum = 1;
@@ -242,6 +258,9 @@ Page({
     this.getPage(this.data.pageData);
   },
   qiugou: function () {
+    var pageData = this.data.pageData
+    pageData.type = 2;
+    pageData.pageNum = 1;
     this.setData({
       navActive: false,
       fl: false,
@@ -250,10 +269,9 @@ Page({
       viewHeight: 0,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      pageData: pageData
     });
-    this.data.pageData.type = 2;
-    this.data.pageData.pageNum = 1;
     this.getPage(this.data.pageData);
   },
   tapMove(e) {
@@ -548,20 +566,28 @@ Page({
         "Content-Type": "application/json"
       },
       success: res => {
-        wx.request({
-          url: this.data.loca50010 +
-            "/area/getParentList?id=" +
-            res.data.data.area.id,
-          header: {
-            "Content-Type": "application/json"
-          },
-          success: res => {
-            wx.setStorageSync(
-              "address",
-              res.data.data.list[res.data.data.list.length - 1]
-            );
-          }
-        });
+        if (res.data.code === "0") {
+          wx.request({
+            url: this.data.loca50010 +
+              "/area/getParentList?id=" +
+              res.data.data.area.id,
+            header: {
+              "Content-Type": "application/json"
+            },
+            success: res => {
+              wx.setStorageSync(
+                "address",
+                res.data.data.list[res.data.data.list.length - 1]
+              );
+            }
+          });
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "none",
+            duration: 2000
+          });
+        }
       }
     });
   },
@@ -685,6 +711,7 @@ Page({
     });
   },
   onTouch: function (e) {
+    this.closeNav()
     var user = this.data.user
     if (user && user.id) {
       if (user.id === e.currentTarget.dataset.user) {
@@ -727,18 +754,10 @@ Page({
   },
   onPullDownRefresh() {
     wx.stopPullDownRefresh();
+    var pageData = this.data.pageData;
+    pageData.pageNum = 1
     this.setData({
-      pageData: {
-        cropId: "",
-        areaId: "",
-        type: 1,
-        pageNum: 1,
-        pageSize: 6,
-        order: ""
-      },
-      flMsg: "选择分类",
-      dqMsg: "选择地区",
-      pxMsg: "排序方式"
+      pageData: pageData
     });
     this.onLoad();
   },
@@ -949,6 +968,7 @@ Page({
     }
   },
   onPageScroll: function (e) {
+    this.closeNav()
     if (e.scrollTop > 150) {
       this.setData({
         content: "content",
@@ -977,5 +997,17 @@ Page({
       scrollTop: 0,
       duration: 300
     })
+  },
+  closeNav: function () {
+    this.setData({
+      navActive: true,
+      fl: false,
+      dq: false,
+      px: false,
+      viewHeight: 0,
+      active1: null,
+      active2: null,
+      active3: null
+    });
   }
 });
