@@ -19,7 +19,7 @@
     </view>
     <view class="v-wrap" bindtap='bindCollectionTap'>
       <view class="v-list">
-        <image class="bf" src="../../images/sc1.png" mode="widthFix"></image>
+        <image class="bf" src="../../images/sc_pre.png" mode="widthFix"></image>
         <text>我的收藏</text>
         <image class="af" src="../../images/016.png" mode="widthFix"></image>
       </view>
@@ -41,7 +41,7 @@
   </navigator>
   <navigator>
     <view class="nav" bindtap='bindUserTap'>
-      <image src="../../images/tab_shichang_pre4.png"></image>
+      <image src="../../images/333.png"></image>
       <text>我的</text>
     </view>
   </navigator>

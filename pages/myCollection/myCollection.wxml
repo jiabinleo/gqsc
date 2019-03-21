@@ -13,7 +13,7 @@
         </view>
       </view>
       <view class="right" catchtap="delMsg" data-title="{{item.title}}" data-index="{{index}}" data-id="{{item.id}}" data-detailId="{{item.detailId}}">
-        <image lazy-load="true" src="../../images/del.png" mode="widthFix"></image>
+        <image lazy-load="true" src="../../images/d.png" mode="widthFix"></image>
       </view>
     </view>
   </block>

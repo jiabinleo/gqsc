@@ -158,8 +158,8 @@
 }
 
 .fenlei .section scroll-view view.active {
-  color: #27a6e6;
-  border-bottom: solid 1rpx #27a6e6;
+  color: #ffc43d;
+  border-bottom: solid 1rpx #ffc43d;
 }
 
 .save {
@@ -167,7 +167,7 @@
 }
 
 .save::after {
-  background: #27a6e6;
+  background: #ffc43d;
   content: "确认信息";
   font-size: 68rpx;
 }
