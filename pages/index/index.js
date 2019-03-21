@@ -356,29 +356,56 @@ Page({
     });
   },
   oneTag(e) {
-    this.setData({
-      active1: e.target.dataset.id,
-      active2: null,
-      active3: null,
-      treeTwo: [],
-      treeThree: []
-    });
-    if ("children" in this.data.treeOne[e.target.dataset.id]) {
-      if (this.data.treeOne[e.target.dataset.id].children.length) {
-        this.setData({
-          treeTwo: this.data.treeOne[e.target.dataset.id].children
-        });
+    if (e.target.id) {
+      this.setData({
+        active1: e.target.dataset.id,
+        active2: null,
+        active3: null,
+        treeTwo: [],
+        treeThree: []
+      });
+      if ("children" in this.data.treeOne[e.target.dataset.id]) {
+        if (this.data.treeOne[e.target.dataset.id].children.length) {
+          this.setData({
+            treeTwo: this.data.treeOne[e.target.dataset.id].children
+          });
+        } else {
+          if (this.data.fl) {
+            var pageData = this.data.pageData;
+            pageData.cropId = e.target.id.split("t")[1];
+            this.setData({
+              pageData: pageData,
+              flMsg: e.target.dataset.text
+            });
+          } else if (this.data.dq) {
+            var pageData = this.data.pageData;
+            pageData.cropId = e.target.id.split("t")[1];
+            this.setData({
+              pageData: pageData,
+              dqMsg: e.target.dataset.text
+            });
+          }
+          this.getPage(this.data.pageData);
+          this.setData({
+            fl: false,
+            dq: false,
+            px: false,
+            viewHeight: 0
+          });
+        }
       } else {
         if (this.data.fl) {
           var pageData = this.data.pageData;
-          pageData.cropId = e.target.id.split("t")[1];
+          pageData.cropId = "";
+          pageData.pageNum = 1;
           this.setData({
             pageData: pageData,
             flMsg: e.target.dataset.text
           });
         } else if (this.data.dq) {
           var pageData = this.data.pageData;
-          pageData.cropId = e.target.id.split("t")[1];
+          pageData.areaId = "";
+          pageData.pageNum = 1;
           this.setData({
             pageData: pageData,
             dqMsg: e.target.dataset.text
@@ -392,61 +419,63 @@ Page({
           viewHeight: 0
         });
       }
-    } else {
-      if (this.data.fl) {
-        var pageData = this.data.pageData;
-        pageData.cropId = "";
-        pageData.pageNum = 1;
-        this.setData({
-          pageData: pageData,
-          flMsg: e.target.dataset.text
-        });
-      } else if (this.data.dq) {
-        var pageData = this.data.pageData;
-        pageData.areaId = "";
-        pageData.pageNum = 1;
-        this.setData({
-          pageData: pageData,
-          dqMsg: e.target.dataset.text
-        });
-      }
-      this.getPage(this.data.pageData);
-      this.setData({
-        fl: false,
-        dq: false,
-        px: false,
-        viewHeight: 0
-      });
     }
   },
   twoTag(e) {
-    var pageData = this.data.pageData;
-    if (this.data.px) {
-      pageData.pageNum = 1;
-      pageData.order = this.data.getAllTreePaixu[e.target.dataset.id].id;
-      this.setData({
-        pxMsg: e.target.dataset.text,
-        pageData: pageData
-      });
-      this.getPage(this.data.pageData);
-      this.setData({
-        fl: false,
-        dq: false,
-        px: false,
-        viewHeight: 0
-      });
-    } else {
-      this.setData({
-        active2: e.target.dataset.id,
-        treeThree: []
-      });
-      if ("children" in this.data.treeTwo[e.target.dataset.id]) {
-        if (this.data.treeTwo[e.target.dataset.id].children.length) {
-          this.setData({
-            treeThree: this.data.treeTwo[e.target.dataset.id].children
-          });
+    if (e.target.id) {
+      var pageData = this.data.pageData;
+      if (this.data.px) {
+        pageData.pageNum = 1;
+        pageData.order = this.data.getAllTreePaixu[e.target.dataset.id].id;
+        this.setData({
+          pxMsg: e.target.dataset.text,
+          pageData: pageData
+        });
+        this.getPage(this.data.pageData);
+        this.setData({
+          fl: false,
+          dq: false,
+          px: false,
+          viewHeight: 0
+        });
+      } else {
+        this.setData({
+          active2: e.target.dataset.id,
+          treeThree: []
+        });
+        if ("children" in this.data.treeTwo[e.target.dataset.id]) {
+          if (this.data.treeTwo[e.target.dataset.id].children.length) {
+            this.setData({
+              treeThree: this.data.treeTwo[e.target.dataset.id].children
+            });
+          } else {
+            if (this.data.fl) {
+              pageData.cropId = e.target.id.split("t")[1];
+              pageData.pageNum = 1;
+              this.setData({
+                pageData: pageData,
+                flMsg: e.target.dataset.text
+              });
+            } else if (this.data.dq) {
+              var pageData = this.data.pageData;
+              pageData.areaId = e.target.id.split("t")[1];
+              pageData.pageNum = 1;
+              this.setData({
+                pageData: pageData,
+                dqMsg: e.target.dataset.text
+              });
+            }
+            this.getPage(this.data.pageData);
+            this.setData({
+              fl: false,
+              dq: false,
+              px: false,
+              viewHeight: 0
+            });
+          }
         } else {
           if (this.data.fl) {
+            var pageData = this.data.pageData;
             pageData.cropId = e.target.id.split("t")[1];
             pageData.pageNum = 1;
             this.setData({
@@ -470,56 +499,36 @@ Page({
             viewHeight: 0
           });
         }
-      } else {
-        if (this.data.fl) {
-          var pageData = this.data.pageData;
-          pageData.cropId = e.target.id.split("t")[1];
-          pageData.pageNum = 1;
-          this.setData({
-            pageData: pageData,
-            flMsg: e.target.dataset.text
-          });
-        } else if (this.data.dq) {
-          var pageData = this.data.pageData;
-          pageData.areaId = e.target.id.split("t")[1];
-          pageData.pageNum = 1;
-          this.setData({
-            pageData: pageData,
-            dqMsg: e.target.dataset.text
-          });
-        }
-        this.getPage(this.data.pageData);
-        this.setData({
-          fl: false,
-          dq: false,
-          px: false,
-          viewHeight: 0
-        });
       }
     }
   },
   threeTag(e) {
-    var pageData = this.data.pageData;
-    if (this.data.fl) {
-      pageData.cropId = e.target.id.split("t")[1];
+    console.log(e)
+    if (e.target.id) {
+      var pageData = this.data.pageData;
+      if (this.data.fl) {
+        pageData.cropId = e.target.id.split("t")[1];
+        this.setData({
+          pageData: pageData,
+          flMsg: e.target.dataset.text
+        });
+      } else if (this.data.dq) {
+        pageData.areaId = e.target.id.split("t")[1];
+        this.setData({
+          pageData: pageData,
+          dqMsg: e.target.dataset.text
+        });
+      }
+      // this.getPage(this.data.pageData);
       this.setData({
-        pageData: pageData,
-        flMsg: e.target.dataset.text
-      });
-    } else if (this.data.dq) {
-      pageData.areaId = e.target.id.split("t")[1];
-      this.setData({
-        pageData: pageData,
-        dqMsg: e.target.dataset.text
+        fl: false,
+        dq: false,
+        px: false,
+        viewHeight: 0
       });
     }
-    this.getPage(this.data.pageData);
-    this.setData({
-      fl: false,
-      dq: false,
-      px: false,
-      viewHeight: 0
-    });
+
+
   },
   //定位
   loadInfo: function () {
