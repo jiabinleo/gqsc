@@ -173,12 +173,6 @@ Page({
           this.setData({
             getAllTreeFenlei: treeFenlei
           });
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "none",
-            duration: 2000
-          });
         }
       }
     });
@@ -223,12 +217,6 @@ Page({
           }
           this.setData({
             getAllTreeDiqu: treeDiqu
-          });
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "none",
-            duration: 2000
           });
         }
       }
@@ -581,12 +569,6 @@ Page({
               );
             }
           });
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "none",
-            duration: 2000
-          });
         }
       }
     });
@@ -637,14 +619,7 @@ Page({
           this.setData({
             newList: newsList
           });
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "none",
-            duration: 1000
-          });
         }
-
       }
     });
   },
@@ -752,7 +727,7 @@ Page({
     }
 
   },
-  onPullDownRefresh() {
+  startPullDownRefresh() {
     wx.stopPullDownRefresh();
     var pageData = this.data.pageData;
     pageData.pageNum = 1
