@@ -519,7 +519,7 @@ Page({
           dqMsg: e.target.dataset.text
         });
       }
-      // this.getPage(this.data.pageData);
+      this.getPage(this.data.pageData);
       this.setData({
         fl: false,
         dq: false,
@@ -734,9 +734,9 @@ Page({
         url: "../detail/detail?id=" + e.currentTarget.dataset.id
       });
     }
-
+    
   },
-  startPullDownRefresh() {
+  onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
     var pageData = this.data.pageData;
     pageData.pageNum = 1
