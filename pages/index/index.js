@@ -356,6 +356,7 @@ Page({
     });
   },
   oneTag(e) {
+    console.log(e)
     if (e.target.id) {
       this.setData({
         active1: e.target.dataset.id,
@@ -422,6 +423,7 @@ Page({
     }
   },
   twoTag(e) {
+    console.log(e)
     if (e.target.id) {
       var pageData = this.data.pageData;
       if (this.data.px) {
@@ -734,7 +736,7 @@ Page({
         url: "../detail/detail?id=" + e.currentTarget.dataset.id
       });
     }
-    
+
   },
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();

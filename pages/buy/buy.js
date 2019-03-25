@@ -169,7 +169,7 @@ Page({
     } else {
       this.setData({
         treeTwo: [{
-          text: e._relatedInfo.anchorTargetText,
+          text: e.target.dataset.text,
           id: e.target.id.split("t")[1]
         }]
       });
@@ -203,7 +203,7 @@ Page({
   threeTag(e) {
     if (this.data.fl) {
       this.setData({
-        type: e._relatedInfo.anchorTargetText,
+        type: e.target.dataset.text,
         fenlei: "fenlei-close"
       });
       this.setData({
@@ -211,7 +211,7 @@ Page({
       });
     } else if (this.data.dq) {
       this.setData({
-        are: e._relatedInfo.anchorTargetText,
+        are: e.target.dataset.text,
         fenlei: "fenlei-close"
       });
       this.setData({

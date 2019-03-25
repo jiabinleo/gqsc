@@ -26,16 +26,16 @@
           </view>
           <view class="select">
             <view class="{{fl?'navAct':''}}" bindtap="fenlei">{{flMsg}}
-              <image hidden="{{!fl}}" src="../../images/shichang_up.png" mode="widthFix"></image>
               <image hidden="{{fl}}" src="../../images/shichang_down.png" mode="widthFix"></image>
+              <image hidden="{{!fl}}" src="../../images/shichang_up.png" mode="widthFix"></image>
             </view>
             <view class="{{dq?'navAct':''}}" bindtap="diqu">{{dqMsg}}
-              <image hidden="{{!dq}}" src="../../images/shichang_up.png" mode="widthFix"></image>
               <image hidden="{{dq}}" src="../../images/shichang_down.png" mode="widthFix"></image>
+              <image hidden="{{!dq}}" src="../../images/shichang_up.png" mode="widthFix"></image>
             </view>
             <view class="{{px?'navAct':''}}" bindtap="paixu">{{pxMsg}}
-              <image hidden="{{!px}}" src="../../images/shichang_up.png" mode="widthFix"></image>
               <image hidden="{{px}}" src="../../images/shichang_down.png" mode="widthFix"></image>
+              <image hidden="{{!px}}" src="../../images/shichang_up.png" mode="widthFix"></image>
             </view>
           </view>
           <view class='section-wrap'>

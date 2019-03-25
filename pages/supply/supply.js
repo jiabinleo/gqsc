@@ -145,6 +145,7 @@ Page({
     }
   },
   oneTag(e) {
+    console.log(e)
     this.setData({
       active1: e.target.dataset.id,
       active2: null,
@@ -169,7 +170,7 @@ Page({
     } else {
       this.setData({
         treeTwo: [{
-          text: e._relatedInfo.anchorTargetText,
+          text: e.target.dataset.text,
           id: e.target.id.split("t")[1]
         }]
       });
@@ -182,6 +183,7 @@ Page({
     }
   },
   twoTag(e) {
+    console.log(e)
     this.setData({
       active2: e.target.dataset.id
     })
@@ -201,9 +203,10 @@ Page({
     }
   },
   threeTag(e) {
+    console.log(e)
     if (this.data.fl) {
       this.setData({
-        type: e._relatedInfo.anchorTargetText,
+        type: e.target.dataset.text,
         fenlei: "fenlei-close"
       });
       this.setData({
@@ -211,7 +214,7 @@ Page({
       });
     } else if (this.data.dq) {
       this.setData({
-        are: e._relatedInfo.anchorTargetText,
+        are: e.target.dataset.text,
         fenlei: "fenlei-close"
       });
       this.setData({
