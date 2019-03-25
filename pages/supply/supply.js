@@ -35,7 +35,9 @@ Page({
     active3: null,
     loca50010: null,
     uploadImg: null,
-    token: null
+    token: null,
+    start: null,
+    end: "2999-12-31"
   },
 
   /**
@@ -57,6 +59,7 @@ Page({
         uploadImg: app.globalData.uploadImg
       })
     }
+    this.getDate()
     //分类
     wx.request({
       url: this.data.loca50010 + "/goodsCategory/getAllTree",
@@ -469,6 +472,13 @@ Page({
       }
     }
     return sum;
+  },
+  getDate: function () {
+    var date = new Date()
+    var start = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    this.setData({
+      start: start
+    })
   },
   preventTouchMove: function () {},
   /**
