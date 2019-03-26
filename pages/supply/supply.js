@@ -385,7 +385,7 @@ Page({
     }
     _fileList = _fileList.slice(0, _fileList.length - 1);
     var priceTip;
-    if (this.data._price) {
+    if (Math.fround(this.data._price)) {
       priceTip = this.data._price;
     } else {
       priceTip = "面议";

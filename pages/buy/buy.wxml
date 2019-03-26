@@ -12,7 +12,7 @@
   </view>
   <view>
     <text>求购区域</text>
-    <image class='loc' lazy-load="true" bindtap='locFn' src="../../images/loc.png" mode="widthFix"></image>
+    <image class='loc' lazy-load="true" bindtap='locFn' src="../../images/loc.svg" mode="widthFix"></image>
     <view class="sr" bindtap="diqu">{{are}}</view>
     <image class='right' src="../../images/right.svg"></image>
   </view>

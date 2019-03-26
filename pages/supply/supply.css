@@ -23,9 +23,10 @@
   color: #666666;
 }
 .wrap view .loc {
-  width: 30rpx;
+  width: 48rpx;
+  height: 48rpx;
   padding: 10rpx;
-  vertical-align: -16rpx;
+  vertical-align: -24rpx;
 }
 .wrap view input {
   line-height: 86rpx;
