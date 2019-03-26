@@ -33,7 +33,7 @@
   </view>
   <view>
     <text>求购截止日期</text>
-    <picker mode="date" value="{{date}}" start="2010-12-31" end="2999-12-31" bindchange="supplyTimeFn">
+    <picker mode="date" value="{{date}}" start="{{start}}" end="{{end}}" bindchange="supplyTimeFn">
       <view class="sr">{{supplyTime}}</view>
     </picker>
     <image class='right' src="../../images/right.svg"></image>
@@ -64,23 +64,29 @@
     <image lazy-load="true" catchtap="chooseImage" mode="aspectFill" src="../../images/039.png"></image>
   </view>
 </block>
-<!--供应类型-->
+<!-- 供应类型 -->
 <block>
   <view catchtap="hideFenlei" class='{{fenlei}}' catchtouchmove="preventTouchMove">
     <view catchtap="zsmp" class="section" style="height: 400rpx;">
       <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeOne}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
       <scroll-view catchtap="twoTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeTwo}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
       <scroll-view catchtap="threeTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeThree}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
     </view>

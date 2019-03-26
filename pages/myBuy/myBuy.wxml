@@ -2,41 +2,50 @@
   <view>
     <text>标题</text>
     <textarea maxlength="28" class="l-t-title" bindblur="bindTextAreaBlur" value='{{_title}}' bindinput="titleFn" auto-height placeholder-class="sr" placeholder="请输入" />
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>求购类型</text>
     <view class="sr" bindtap="fenlei">{{type}}</view>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>求购区域</text>
     <image lazy-load="true" class='loc' bindtap='locFn' src="../../images/loc.png" mode="widthFix"></image>
     <view class="sr" bindtap="diqu">{{are}}</view>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>总数量（斤）</text>
-    <input type="text" bindinput='totalAmountFn' placeholder-class="sr" value='{{totalAmount}}' placeholder='请输入'></input>
+    <input type="number" bindinput='totalAmountFn' placeholder-class="sr" value='{{totalAmount}}' placeholder='请输入'></input>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>起购量（斤）</text>
-    <input type="text" bindinput='minAmountFn' placeholder-class="sr" value='{{minAmount}}' placeholder='请输入'></input>
+    <input type="number" bindinput='minAmountFn' placeholder-class="sr" value='{{minAmount}}' placeholder='请输入'></input>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>求购价格</text>
     <input type="text" bindinput='priceFn' placeholder-class="sr" value='{{price}}' placeholder='如未输入，默认为面议'></input>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>求购截止日期</text>
-    <picker mode="date" value="{{date}}" start="2010-12-31" end="2999-12-31" bindchange="supplyTimeFn">
+    <picker mode="date" value="{{date}}" start="{{start}}" end="{{end}}" bindchange="supplyTimeFn">
       <view class="sr">{{supplyTime}}</view>
     </picker>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>联系人</text>
     <input type="text" bindinput="contactsFn" placeholder-class="sr" value='{{contacts}}' placeholder='请输入'></input>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>联系电话</text>
-    <input type="text" bindinput="telephoneFn" placeholder-class="sr" value='{{telephone}}' placeholder='请输入'></input>
+    <input type="number" bindinput="telephoneFn" placeholder-class="sr" value='{{telephone}}' placeholder='请输入'></input>
+    <image class='right' src="../../images/right.svg"></image>
   </view>
   <view>
     <text>商品详情</text>
@@ -50,8 +59,7 @@
     <view class="up">上传图片</view>
     <block wx:for="{{upfileWx}}" wx:key="index">
       <view class="imgWrap" data-index="{{index}}" bindtap='ylImg'>
-        <image lazy-load="true" class="img" src="{{item}}" mode="aspectFill">
-        </image>
+        <image lazy-load="true" class="img" src="{{item}}" mode="aspectFill"></image>
         <image lazy-load="true" data-index="{{index}}" catchtap="delImg" class="del" src="../../images/cancel.png" mode="widthFix"></image>
       </view>
     </block>
@@ -60,23 +68,29 @@
     </view>
   </view>
 </block>
-<!--供应类型-->
+<!-- 供应类型 -->
 <block>
   <view catchtap="hideFenlei" class='{{fenlei}}' catchtouchmove="preventTouchMove">
     <view catchtap="zsmp" class="section" style="height: 400rpx;">
       <scroll-view catchtap="oneTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeOne}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active1 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
       <scroll-view catchtap="twoTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeTwo}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" data-id="{{index}}" class="scroll-view-item bc_green {{active2 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
       <scroll-view catchtap="threeTag" scroll-y style="height: 200px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
         <block wx:for="{{treeThree}}" wx:key="index">
-          <view id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">{{item.text}}</view>
+          <view id="t{{item.id}}" data-text="{{item.text}}" class="scroll-view-item bc_green {{active3 == index?'active':''}}">
+            {{item.showText?item.showText:item.text}}
+          </view>
         </block>
       </scroll-view>
     </view>

@@ -9,6 +9,7 @@ Page({
     treeOne: [],
     treeTwo: [],
     treeThree: [],
+    viewHeight: 0,
     fenlei: "fenlei-close",
     type: "请选择类型",
     are: "请选择地区",
@@ -42,7 +43,9 @@ Page({
     active3: null,
     loca50010: null,
     uploadImg: null,
-    token: null
+    token: null,
+    start: null,
+    end: "2999-12-31"
   },
 
   /**
@@ -119,6 +122,7 @@ Page({
         }
       }
     });
+    this.getDate();
     //分类
     wx.request({
       url: this.data.loca50010 + "/goodsCategory/getAllTree",
@@ -129,6 +133,39 @@ Page({
         if (res.data.code === "0") {
           this.setData({
             getAllTreeFenlei: res.data.data.trees
+          });
+          var treeFenlei = this.data.getAllTreeFenlei;
+          treeFenlei.unshift({
+            id: "",
+            pid: "",
+            text: "不限"
+          });
+          for (let i = 0; i < treeFenlei.length; i++) {
+            if ("children" in treeFenlei[i]) {
+              if (treeFenlei[i].children.length) {
+                treeFenlei[i].children.unshift({
+                  id: treeFenlei[i].id,
+                  pid: treeFenlei[i].pid,
+                  text: treeFenlei[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeFenlei[i].children.length; j++) {
+                  if ("children" in treeFenlei[i].children[j]) {
+                    if (treeFenlei[i].children[j].children.length) {
+                      treeFenlei[i].children[j].children.unshift({
+                        id: treeFenlei[i].children[j].id,
+                        pid: treeFenlei[i].children[j].pid,
+                        text: treeFenlei[i].children[j].text,
+                        showText: "不限"
+                      });
+                    }
+                  }
+                }
+              }
+            }
+          }
+          this.setData({
+            getAllTreeFenlei: treeFenlei
           });
         }
       }
@@ -143,6 +180,37 @@ Page({
         if (res.data.code === "0") {
           this.setData({
             getAllTreeDiqu: res.data.data.trees
+          });
+          var treeDiqu = this.data.getAllTreeDiqu;
+          treeDiqu.unshift({
+            id: "",
+            pid: "",
+            text: "不限"
+          });
+          for (let i = 0; i < treeDiqu.length; i++) {
+            if ("children" in treeDiqu[i]) {
+              if (treeDiqu[i].children.length) {
+                treeDiqu[i].children.unshift({
+                  id: treeDiqu[i].id,
+                  pid: treeDiqu[i].pid,
+                  text: treeDiqu[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeDiqu[i].children.length; j++) {
+                  if ("children" in treeDiqu[i].children[j]) {
+                    treeDiqu[i].children[j].children.unshift({
+                      id: treeDiqu[i].children[j].id,
+                      pid: treeDiqu[i].children[j].pid,
+                      text: treeDiqu[i].children[j].text,
+                      showText: "不限"
+                    });
+                  }
+                }
+              }
+            }
+          }
+          this.setData({
+            getAllTreeDiqu: treeDiqu
           });
         }
       }
@@ -163,23 +231,15 @@ Page({
       dq: false,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      treeOne: [],
+      treeTwo: [],
+      treeThree: []
     });
     if (this.data.getAllTreeFenlei) {
       this.setData({
         treeOne: this.data.getAllTreeFenlei
       });
-      if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
-        this.setData({
-          treeTwo: this.data.treeOne[0].children
-        });
-        if (this.data.treeTwo) {
-          this.setData({
-            treeThree: this.data.treeTwo[0].children
-          });
-        }
-      }
     }
   },
   diqu() {
@@ -189,98 +249,112 @@ Page({
       dq: true,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      treeOne: [],
+      treeTwo: [],
+      treeThree: []
     });
     if (this.data.getAllTreeDiqu) {
       this.setData({
         treeOne: this.data.getAllTreeDiqu
       });
-      if (this.data.treeOne) {
-        // if (this.data.treeOne[0].children) {
+    }
+  },
+  oneTag(e) {
+    if (e.target.id) {
+      this.setData({
+        active1: e.target.dataset.id,
+        active2: null,
+        active3: null,
+        treeTwo: [],
+        treeThree: []
+      })
+      if (
+        this.data.treeOne[e.target.dataset.id] &&
+        "children" in this.data.treeOne[e.target.dataset.id] &&
+        this.data.treeOne[e.target.dataset.id].children.length
+      ) {
         this.setData({
-          treeTwo: this.data.treeOne[0].children
+          treeTwo: this.data.treeOne[e.target.dataset.id].children
         });
-        if (this.data.treeTwo) {
+
+      } else {
+        if (this.data.fl) {
           this.setData({
-            treeThree: this.data.treeTwo[0].children
+            type: e.target.dataset.text,
+            _cropId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        } else if (this.data.dq) {
+          this.setData({
+            are: e.target.dataset.text,
+            _areaId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
           });
         }
       }
     }
   },
-  oneTag(e) {
-    this.setData({
-      active1: e.target.dataset.id,
-      active2: null,
-      active3: null
-    })
-    if (this.data.treeOne[e.target.dataset.id].children.length) {
-      this.setData({
-        treeTwo: this.data.treeOne[e.target.dataset.id].children
-      });
-      if (this.data.treeTwo[0].children.length) {
-        this.setData({
-          treeThree: this.data.treeTwo[0].children
-        });
-      } else {
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[0].text,
-            id: this.data.treeTwo[0].id
-          }]
-        });
-      }
-    } else {
-      this.setData({
-        treeTwo: [{
-          text: e.target.dataset.text,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-      this.setData({
-        treeThree: [{
-          text: this.data.treeTwo[0].text,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-    }
-  },
   twoTag(e) {
-    this.setData({
-      active2: e.target.dataset.id
-    })
-    if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      if (this.data.treeTwo[e.target.dataset.id].children.length) {
-        this.setData({
-          treeThree: this.data.treeTwo[e.target.dataset.id].children
-        });
+    if (e.target.id) {
+      console.log(e);
+      this.setData({
+        active2: e.target.dataset.id
+      });
+      if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
+        if (this.data.treeTwo[e.target.dataset.id].children.length) {
+          this.setData({
+            treeThree: this.data.treeTwo[e.target.dataset.id].children
+          });
+          console.log("999");
+        } else {
+          if (this.data.fl) {
+            this.setData({
+              type: this.data.treeTwo[e.target.dataset.id].text,
+              _cropId: e.target.id.split("t")[1],
+              fenlei: "fenlei-close"
+            });
+          } else if (this.data.dq) {
+            this.setData({
+              are: this.data.treeTwo[e.target.dataset.id].text,
+              _areaId: e.target.id.split("t")[1],
+              fenlei: "fenlei-close"
+            });
+          }
+        }
       } else {
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[e.target.dataset.id].text,
-            id: e.target.id.split("t")[1]
-          }]
-        });
+        if (this.data.fl) {
+          this.setData({
+            type: e.target.dataset.text,
+            _cropId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        } else if (this.data.dq) {
+          this.setData({
+            are: e.target.dataset.text,
+            _areaId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        }
       }
     }
   },
   threeTag(e) {
-    if (this.data.fl) {
-      this.setData({
-        type: e.target.dataset.text,
-        fenlei: "fenlei-close"
-      });
-      this.setData({
-        _cropId: e.target.id.split("t")[1]
-      });
-    } else if (this.data.dq) {
-      this.setData({
-        are: e.target.dataset.text,
-        fenlei: "fenlei-close"
-      });
-      this.setData({
-        _areaId: e.target.id.split("t")[1]
-      });
+    if (e.target.id) {
+      console.log(e);
+      if (this.data.fl) {
+        this.setData({
+          type: e.target.dataset.text,
+          fenlei: "fenlei-close",
+          _cropId: e.target.id.split("t")[1]
+        });
+      } else if (this.data.dq) {
+        this.setData({
+          are: e.target.dataset.text,
+          fenlei: "fenlei-close",
+          _areaId: e.target.id.split("t")[1]
+        });
+      }
     }
   },
   hideFenlei: function () {
@@ -559,6 +633,14 @@ Page({
       }
     }
     return sum;
+  },
+  getDate: function () {
+    var date = new Date();
+    var start =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    this.setData({
+      start: start
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -9,6 +9,7 @@ Page({
     treeOne: [],
     treeTwo: [],
     treeThree: [],
+    viewHeight: 0,
     fenlei: "fenlei-close",
     type: "请选择类型",
     are: "请选择地区",
@@ -47,19 +48,19 @@ Page({
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
-      })
+      });
     }
     if (app.globalData.loca50010) {
       this.setData({
         loca50010: app.globalData.loca50010
-      })
+      });
     }
     if (app.globalData.uploadImg) {
       this.setData({
         uploadImg: app.globalData.uploadImg
-      })
+      });
     }
-    this.getDate()
+    this.getDate();
     //分类
     wx.request({
       url: this.data.loca50010 + "/goodsCategory/getAllTree",
@@ -70,6 +71,39 @@ Page({
         if (res.data.code === "0") {
           this.setData({
             getAllTreeFenlei: res.data.data.trees
+          });
+          var treeFenlei = this.data.getAllTreeFenlei;
+          treeFenlei.unshift({
+            id: "",
+            pid: "",
+            text: "不限"
+          });
+          for (let i = 0; i < treeFenlei.length; i++) {
+            if ("children" in treeFenlei[i]) {
+              if (treeFenlei[i].children.length) {
+                treeFenlei[i].children.unshift({
+                  id: treeFenlei[i].id,
+                  pid: treeFenlei[i].pid,
+                  text: treeFenlei[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeFenlei[i].children.length; j++) {
+                  if ("children" in treeFenlei[i].children[j]) {
+                    if (treeFenlei[i].children[j].children.length) {
+                      treeFenlei[i].children[j].children.unshift({
+                        id: treeFenlei[i].children[j].id,
+                        pid: treeFenlei[i].children[j].pid,
+                        text: treeFenlei[i].children[j].text,
+                        showText: "不限"
+                      });
+                    }
+                  }
+                }
+              }
+            }
+          }
+          this.setData({
+            getAllTreeFenlei: treeFenlei
           });
         }
       }
@@ -85,6 +119,37 @@ Page({
           this.setData({
             getAllTreeDiqu: res.data.data.trees
           });
+          var treeDiqu = this.data.getAllTreeDiqu;
+          treeDiqu.unshift({
+            id: "",
+            pid: "",
+            text: "不限"
+          });
+          for (let i = 0; i < treeDiqu.length; i++) {
+            if ("children" in treeDiqu[i]) {
+              if (treeDiqu[i].children.length) {
+                treeDiqu[i].children.unshift({
+                  id: treeDiqu[i].id,
+                  pid: treeDiqu[i].pid,
+                  text: treeDiqu[i].text,
+                  showText: "不限"
+                });
+                for (let j = 0; j < treeDiqu[i].children.length; j++) {
+                  if ("children" in treeDiqu[i].children[j]) {
+                    treeDiqu[i].children[j].children.unshift({
+                      id: treeDiqu[i].children[j].id,
+                      pid: treeDiqu[i].children[j].pid,
+                      text: treeDiqu[i].children[j].text,
+                      showText: "不限"
+                    });
+                  }
+                }
+              }
+            }
+          }
+          this.setData({
+            getAllTreeDiqu: treeDiqu
+          });
         }
       }
     });
@@ -94,8 +159,8 @@ Page({
       });
     }
     wx.setNavigationBarTitle({
-      title: '发布供应'
-    })
+      title: "发布供应"
+    });
   },
   fenlei() {
     this.setData({
@@ -104,22 +169,15 @@ Page({
       dq: false,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      treeOne: [],
+      treeTwo: [],
+      treeThree: []
     });
     if (this.data.getAllTreeFenlei) {
       this.setData({
         treeOne: this.data.getAllTreeFenlei
       });
-      if (this.data.treeOne) {
-        this.setData({
-          treeTwo: this.data.treeOne[0].children
-        });
-        if (this.data.treeTwo) {
-          this.setData({
-            treeThree: this.data.treeTwo[0].children
-          });
-        }
-      }
     }
   },
   diqu() {
@@ -129,100 +187,111 @@ Page({
       dq: true,
       active1: null,
       active2: null,
-      active3: null
+      active3: null,
+      treeOne: [],
+      treeTwo: [],
+      treeThree: []
     });
     if (this.data.getAllTreeDiqu) {
       this.setData({
         treeOne: this.data.getAllTreeDiqu
       });
-      if (this.data.treeOne) {
+    }
+  },
+  oneTag(e) {
+    if (e.target.id) {
+      this.setData({
+        active1: e.target.dataset.id,
+        active2: null,
+        active3: null,
+        treeTwo: [],
+        treeThree: []
+      });
+      if (
+        this.data.treeOne[e.target.dataset.id] &&
+        "children" in this.data.treeOne[e.target.dataset.id] &&
+        this.data.treeOne[e.target.dataset.id].children.length
+      ) {
         this.setData({
-          treeTwo: this.data.treeOne[0].children
+          treeTwo: this.data.treeOne[e.target.dataset.id].children
         });
-        if (this.data.treeTwo) {
+      } else {
+        if (this.data.fl) {
           this.setData({
-            treeThree: this.data.treeTwo[0].children
+            type: e.target.dataset.text,
+            _cropId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        } else if (this.data.dq) {
+          this.setData({
+            are: e.target.dataset.text,
+            _areaId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
           });
         }
       }
     }
   },
-  oneTag(e) {
-    console.log(e)
-    this.setData({
-      active1: e.target.dataset.id,
-      active2: null,
-      active3: null
-    })
-    if (this.data.treeOne[e.target.dataset.id].children.length) {
-      this.setData({
-        treeTwo: this.data.treeOne[e.target.dataset.id].children
-      });
-      if (this.data.treeTwo[0].children.length) {
-        this.setData({
-          treeThree: this.data.treeTwo[0].children
-        });
-      } else {
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[0].text,
-            id: this.data.treeTwo[0].id
-          }]
-        });
-      }
-    } else {
-      this.setData({
-        treeTwo: [{
-          text: e.target.dataset.text,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-      this.setData({
-        treeThree: [{
-          text: this.data.treeTwo[0].text,
-          id: e.target.id.split("t")[1]
-        }]
-      });
-    }
-  },
   twoTag(e) {
-    console.log(e)
-    this.setData({
-      active2: e.target.dataset.id
-    })
-    if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
-      if (this.data.treeTwo[e.target.dataset.id].children.length) {
-        this.setData({
-          treeThree: this.data.treeTwo[e.target.dataset.id].children
-        });
+    if (e.target.id) {
+      console.log(e);
+      this.setData({
+        active2: e.target.dataset.id
+      });
+      if (this.data.treeTwo[e.target.dataset.id].hasOwnProperty("children")) {
+        if (this.data.treeTwo[e.target.dataset.id].children.length) {
+          this.setData({
+            treeThree: this.data.treeTwo[e.target.dataset.id].children
+          });
+          console.log("999");
+        } else {
+          if (this.data.fl) {
+            this.setData({
+              type: this.data.treeTwo[e.target.dataset.id].text,
+              _cropId: e.target.id.split("t")[1],
+              fenlei: "fenlei-close"
+            });
+          } else if (this.data.dq) {
+            this.setData({
+              are: this.data.treeTwo[e.target.dataset.id].text,
+              _areaId: e.target.id.split("t")[1],
+              fenlei: "fenlei-close"
+            });
+          }
+        }
       } else {
-        this.setData({
-          treeThree: [{
-            text: this.data.treeTwo[e.target.dataset.id].text,
-            id: e.target.id.split("t")[1]
-          }]
-        });
+        if (this.data.fl) {
+          this.setData({
+            type: e.target.dataset.text,
+            _cropId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        } else if (this.data.dq) {
+          this.setData({
+            are: e.target.dataset.text,
+            _areaId: e.target.id.split("t")[1],
+            fenlei: "fenlei-close"
+          });
+        }
       }
     }
   },
   threeTag(e) {
-    console.log(e)
-    if (this.data.fl) {
-      this.setData({
-        type: e.target.dataset.text,
-        fenlei: "fenlei-close"
-      });
-      this.setData({
-        _cropId: e.target.id.split("t")[1]
-      });
-    } else if (this.data.dq) {
-      this.setData({
-        are: e.target.dataset.text,
-        fenlei: "fenlei-close"
-      });
-      this.setData({
-        _areaId: e.target.id.split("t")[1]
-      });
+    if (e.target.id) {
+      console.log(e);
+      if (this.data.fl) {
+        this.setData({
+          type: e.target.dataset.text,
+          fenlei: "fenlei-close",
+          _cropId: e.target.id.split("t")[1]
+        });
+      } else if (this.data.dq) {
+        this.setData({
+          are: e.target.dataset.text,
+          fenlei: "fenlei-close",
+          _areaId: e.target.id.split("t")[1]
+        });
+      }
     }
   },
   hideFenlei: function () {
@@ -317,9 +386,9 @@ Page({
     _fileList = _fileList.slice(0, _fileList.length - 1);
     var priceTip;
     if (this.data._price) {
-      priceTip = this.data._price
+      priceTip = this.data._price;
     } else {
-      priceTip = "面议"
+      priceTip = "面议";
     }
     var data = {
       areaId: this.data._areaId,
@@ -426,8 +495,8 @@ Page({
             setTimeout(() => {
               wx.navigateBack({
                 delta: 1
-              })
-            }, 1000)
+              });
+            }, 1000);
           }
         }
       });
@@ -445,21 +514,21 @@ Page({
   delImg: function (e) {
     this.setData({
       modalFlag: false
-    })
+    });
     wx.showModal({
       title: "确定删除",
-      content: '第 ' + (e.currentTarget.dataset.index + 1) + ' 张图片',
-      confirmColor: '#3CC51F',
+      content: "第 " + (e.currentTarget.dataset.index + 1) + " 张图片",
+      confirmColor: "#3CC51F",
       success: res => {
         if (res.confirm) {
-          var upfile = this.data.upfile
-          upfile.splice(e.currentTarget.dataset.index, 1)
+          var upfile = this.data.upfile;
+          upfile.splice(e.currentTarget.dataset.index, 1);
           this.setData({
             upfile: upfile
-          })
+          });
         } else if (res.cancel) {}
       }
-    })
+    });
   },
   checksum: function (chars) {
     var sum = 0;
@@ -474,11 +543,12 @@ Page({
     return sum;
   },
   getDate: function () {
-    var date = new Date()
-    var start = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    var date = new Date();
+    var start =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     this.setData({
       start: start
-    })
+    });
   },
   preventTouchMove: function () {},
   /**

@@ -128,7 +128,7 @@ Page({
         }
       }
     });
-    this.getPage(pageData)
+    this.getPage(pageData);
     //分类
     wx.request({
       url: this.data.loca50010 + "/goodsCategory/getAllTree",
@@ -226,7 +226,7 @@ Page({
   },
   //nav
   gongying: function () {
-    var pageData = this.data.pageData
+    var pageData = this.data.pageData;
     pageData.type = 1;
     pageData.pageNum = 1;
     this.setData({
@@ -246,7 +246,7 @@ Page({
     this.getPage(this.data.pageData);
   },
   qiugou: function () {
-    var pageData = this.data.pageData
+    var pageData = this.data.pageData;
     pageData.type = 2;
     pageData.pageNum = 1;
     this.setData({
@@ -356,7 +356,7 @@ Page({
     });
   },
   oneTag(e) {
-    console.log(e)
+    console.log(e);
     if (e.target.id) {
       this.setData({
         active1: e.target.dataset.id,
@@ -423,7 +423,7 @@ Page({
     }
   },
   twoTag(e) {
-    console.log(e)
+    console.log(e);
     if (e.target.id) {
       var pageData = this.data.pageData;
       if (this.data.px) {
@@ -505,7 +505,7 @@ Page({
     }
   },
   threeTag(e) {
-    console.log(e)
+    console.log(e);
     if (e.target.id) {
       var pageData = this.data.pageData;
       if (this.data.fl) {
@@ -529,8 +529,6 @@ Page({
         viewHeight: 0
       });
     }
-
-
   },
   //定位
   loadInfo: function () {
@@ -547,7 +545,6 @@ Page({
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
-
     myAmapFun.getWeather({
       success: data => {
         this.liveData(data.liveData.adcode);
@@ -585,6 +582,11 @@ Page({
     });
   },
   getPage: function (pageData) {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      });
+    }
     var icon = null;
     var fileList = null;
     wx.showLoading({
@@ -625,7 +627,7 @@ Page({
                   this.data.imgUrl + newsList[i].fileList[j];
               }
             }
-            newsList[i].time = this.timeConversion(newsList[i].updateTime)
+            newsList[i].time = this.timeConversion(newsList[i].updateTime);
           }
           this.setData({
             newList: newsList
@@ -635,6 +637,11 @@ Page({
     });
   },
   onReachBottom: function () {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      });
+    }
     wx.showLoading({
       title: "加载中"
     });
@@ -684,7 +691,7 @@ Page({
                 this.data.imgUrl + newsList[i].fileList[j];
             }
           }
-          newsList[i].time = this.timeConversion(newsList[i].updateTime)
+          newsList[i].time = this.timeConversion(newsList[i].updateTime);
         }
         for (let i = 0; i < newsList.length; i++) {
           this.data.newList.push(newsList[i]);
@@ -697,15 +704,20 @@ Page({
     });
   },
   onTouch: function (e) {
-    this.closeNav()
-    var user = this.data.user
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        token: wx.getStorageSync("token")
+      });
+    }
+    this.closeNav();
+    var user = this.data.user;
     if (user && user.id) {
       if (user.id === e.currentTarget.dataset.user) {
         wx.request({
           url: this.data.loca50010 + "/user/collection/list",
           header: {
             "Content-Type": "application/json",
-            "login_token": this.data.token
+            login_token: this.data.token
           },
           success: res => {
             if (res.data.code === "0") {
@@ -725,7 +737,6 @@ Page({
             }
           }
         });
-
       } else {
         wx.navigateTo({
           url: "../detail/detail?id=" + e.currentTarget.dataset.id
@@ -736,12 +747,11 @@ Page({
         url: "../detail/detail?id=" + e.currentTarget.dataset.id
       });
     }
-
   },
   onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
     var pageData = this.data.pageData;
-    pageData.pageNum = 1
+    pageData.pageNum = 1;
     this.setData({
       pageData: pageData
     });
@@ -764,7 +774,7 @@ Page({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
         "Content-Type": "application/json",
-        "login_token": this.data.token
+        login_token: this.data.token
       },
       success: res => {
         if (res.data.code === "0") {
@@ -781,12 +791,12 @@ Page({
         } else {
           wx.showToast({
             title: res.data.message,
-            icon: 'none',
+            icon: "none",
             duration: 1000
-          })
+          });
         }
       }
-    })
+    });
   },
   buy: function () {
     wx.request({
@@ -810,15 +820,15 @@ Page({
         } else {
           wx.showToast({
             title: res.data.message,
-            icon: 'none',
+            icon: "none",
             duration: 1000
-          })
+          });
         }
       }
-    })
+    });
   },
   shouCang: function (e) {
-    this.getToken()
+    this.getToken();
     if (e.currentTarget.dataset.iz) {
       wx.request({
         url: this.data.loca50010 + "/user/collection/cancel",
@@ -926,7 +936,7 @@ Page({
     });
   },
   timeConversion: function timeConversion(oldTime, tipMsg) {
-    var timeText = ""
+    var timeText = "";
     if (tipMsg == undefined) {
       var tipMsg = "刚刚发布";
     }
@@ -938,55 +948,61 @@ Page({
     } else if (disTime < 24 * 60 * 60 * 1000) {
       timeText = parseInt(disTime / 60 / 60 / 1000) + "\u5C0F\u65F6\u524D";
     } else {
-      timeText = oldTime.split(' ')[0];
+      timeText = oldTime.split(" ")[0];
     }
     return timeText;
   },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {},
+  onShow: function () {
+    if (wx.getStorageSync("token")) {
+      this.setData({
+        user: wx.getStorageSync("user")
+      });
+    }
+  },
   getToken: function () {
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
-      })
+      });
     }
   },
   onPageScroll: function (e) {
-    this.closeNav()
+    this.closeNav();
     if (e.scrollTop > 150) {
       this.setData({
         content: "content",
         newListFixed: "newListFixed",
         opactiy: (e.scrollTop - 140) / 100
-      })
+      });
     } else {
       this.setData({
         content: "",
         newListFixed: "",
         opactiy: 0
-      })
+      });
     }
     if (e.scrollTop > 500) {
       this.setData({
         top: "top"
-      })
+      });
     } else {
       this.setData({
         top: "topHide"
-      })
+      });
     }
   },
   top: function () {
     wx.pageScrollTo({
       scrollTop: 0,
       duration: 300
-    })
+    });
   },
   closeNav: function () {
     this.setData({
-      navActive: true,
+      // navActive: true,
       fl: false,
       dq: false,
       px: false,
