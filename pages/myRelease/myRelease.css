@@ -80,20 +80,21 @@
   color: #333333;
 }
 .list-wrap .list .center .detail {
-  padding: 8rpx 0;
+  padding: 10rpx 0;
   font-size: 26rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-height: 34rpx;
+  line-height: 36rpx;
   -webkit-box-orient: vertical;
   align-content: center;
-  height: 66rpx;
+  height: 60rpx;
   color: #666666;
 }
 .list-wrap .list .center .areaTime {
+  padding-top: 4rpx;
   font-size: 20rpx;
 }
 .list-wrap .list .center .areaTime text {
