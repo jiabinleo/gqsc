@@ -25,7 +25,8 @@ Page({
     //
     getAllTreeFenlei: [],
     getAllTreeDiqu: [],
-    getAllTreePaixu: [{
+    getAllTreePaixu: [
+      {
         text: "不限",
         id: ""
       },
@@ -76,12 +77,12 @@ Page({
     top: "topHide"
   },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function() {
     wx.navigateTo({
       url: "../logs/logs"
     });
   },
-  onLoad: function () {
+  onLoad: function() {
     var pageData = this.data.pageData;
     pageData.pageNum = 1;
     this.setData({
@@ -225,7 +226,7 @@ Page({
     this.loadInfo();
   },
   //nav
-  gongying: function () {
+  gongying: function() {
     var pageData = this.data.pageData;
     pageData.type = 1;
     pageData.pageNum = 1;
@@ -245,7 +246,7 @@ Page({
 
     this.getPage(this.data.pageData);
   },
-  qiugou: function () {
+  qiugou: function() {
     var pageData = this.data.pageData;
     pageData.type = 2;
     pageData.pageNum = 1;
@@ -531,7 +532,7 @@ Page({
     }
   },
   //定位
-  loadInfo: function () {
+  loadInfo: function() {
     wx.getLocation({
       type: "gcj02", //返回可以用于wx.openLocation的经纬度
       success: res => {
@@ -541,7 +542,7 @@ Page({
       }
     });
   },
-  loadCity: function (latitude, longitude) {
+  loadCity: function(latitude, longitude) {
     var myAmapFun = new amapFile.AMapWX({
       key: markersData.key
     });
@@ -550,12 +551,12 @@ Page({
         this.liveData(data.liveData.adcode);
         //成功回调
       },
-      fail: function (info) {
+      fail: function(info) {
         //失败回调
       }
     });
   },
-  liveData: function (adcode) {
+  liveData: function(adcode) {
     wx.request({
       url: this.data.loca50010 + "/area/getAreaIdByCode?code=" + adcode,
       header: {
@@ -564,7 +565,8 @@ Page({
       success: res => {
         if (res.data.code === "0") {
           wx.request({
-            url: this.data.loca50010 +
+            url:
+              this.data.loca50010 +
               "/area/getParentList?id=" +
               res.data.data.area.id,
             header: {
@@ -581,7 +583,7 @@ Page({
       }
     });
   },
-  getPage: function (pageData) {
+  getPage: function(pageData) {
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
@@ -614,7 +616,8 @@ Page({
             icon = res.data.data.page.rows[i].icon;
             fileList = res.data.data.page.rows[i].fileList;
             if (icon) {
-              if (icon.indexOf("/")) {} else {
+              if (icon.indexOf("/")) {
+              } else {
                 newsList[i].icon = this.data.imgUrl + icon;
               }
             } else {
@@ -636,7 +639,7 @@ Page({
       }
     });
   },
-  onReachBottom: function () {
+  onReachBottom: function() {
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
@@ -678,7 +681,8 @@ Page({
           icon = res.data.data.page.rows[i].icon;
           fileList = res.data.data.page.rows[i].fileList;
           if (icon) {
-            if (icon.indexOf("/")) {} else {
+            if (icon.indexOf("/")) {
+            } else {
               newsList[i].icon = this.data.imgUrl + icon;
             }
           } else {
@@ -703,7 +707,7 @@ Page({
       }
     });
   },
-  onTouch: function (e) {
+  onTouch: function(e) {
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
@@ -748,7 +752,7 @@ Page({
       });
     }
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     wx.stopPullDownRefresh();
     var pageData = this.data.pageData;
     pageData.pageNum = 1;
@@ -758,18 +762,18 @@ Page({
     this.onLoad();
   },
 
-  close: function () {
+  close: function() {
     this.setData({
       mask: "mask-close"
     });
   },
-  open: function () {
+  open: function() {
     this.setData({
       mask: "mask"
     });
   },
-  preventTouchMove: function () {},
-  supply: function () {
+  preventTouchMove: function() {},
+  supply: function() {
     wx.request({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
@@ -798,7 +802,7 @@ Page({
       }
     });
   },
-  buy: function () {
+  buy: function() {
     wx.request({
       url: this.data.loca50010 + "/user/collection/list",
       header: {
@@ -827,7 +831,7 @@ Page({
       }
     });
   },
-  shouCang: function (e) {
+  shouCang: function(e) {
     this.getToken();
     if (e.currentTarget.dataset.iz) {
       wx.request({
@@ -891,7 +895,7 @@ Page({
       });
     }
   },
-  getUserInfo: function (e) {
+  getUserInfo: function(e) {
     wx.showLoading({
       title: "加载中"
     });
@@ -930,7 +934,7 @@ Page({
       }
     });
   },
-  hideMask: function () {
+  hideMask: function() {
     this.setData({
       loginMask: "loginMask-close"
     });
@@ -955,21 +959,21 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
     if (wx.getStorageSync("token")) {
       this.setData({
         user: wx.getStorageSync("user")
       });
     }
   },
-  getToken: function () {
+  getToken: function() {
     if (wx.getStorageSync("token")) {
       this.setData({
         token: wx.getStorageSync("token")
       });
     }
   },
-  onPageScroll: function (e) {
+  onPageScroll: function(e) {
     this.closeNav();
     if (e.scrollTop > 150) {
       this.setData({
@@ -994,13 +998,13 @@ Page({
       });
     }
   },
-  top: function () {
+  top: function() {
     wx.pageScrollTo({
       scrollTop: 0,
       duration: 300
     });
   },
-  closeNav: function () {
+  closeNav: function() {
     this.setData({
       // navActive: true,
       fl: false,
@@ -1012,8 +1016,10 @@ Page({
       active3: null
     });
   },
-  onShareAppMessage: function () {},
-  tabLink: function (e) {
-    console.log(e.target.dataset.link)
+  onShareAppMessage: function() {},
+  tabLink: function(e) {
+    wx.navigateTo({
+      url: "../bannerDetail/bannerDetail?id=" + e.currentTarget.dataset.id
+    });
   }
 });

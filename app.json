@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/bannerDetail/bannerDetail",
     "pages/myRelease/myRelease",
     "pages/supply/supply",
     "pages/buy/buy",
