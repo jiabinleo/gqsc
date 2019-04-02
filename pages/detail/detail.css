@@ -35,8 +35,8 @@
 }
 .wrap .userMsg .username .address text {
   font-size: 16rpx;
-  background: #ffc43d;
-  color: #000000;
+  background: #1D9FE2;
+  color: #ffffff;
   padding: 4rpx;
   border-radius: 20rpx;
 }
@@ -158,7 +158,7 @@
   content: "去登录";
   font-size: 68rpx;
   border: none;
-  background-color: #ffc43d;
+  background-color: #1D9FE2;
   color: #ffffff;
   border-radius: 0;
 }

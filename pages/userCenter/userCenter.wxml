@@ -29,7 +29,7 @@
   </view>
 </view>
 <view class='footer'>
-  <image class="bottom-bg" src="../../images/bottom.png" mode='widthFix'></image>
+  <!-- <image class="bottom-bg" src="../../images/bottom.png" mode='widthFix'></image> -->
   <view class="nav">
     <navigator url='../index/index' open-type="redirect" hover-class="none">
       <image lazy-load="true" src="../../images/tab_shichang_2.png"></image>

@@ -110,7 +110,7 @@
   </view>
 </view>
 <view class='footer'>
-  <image class="bottom-bg" src="../../images/bottom.png" mode='widthFix'></image>
+  <!-- <image class="bottom-bg" src="../../images/bottom.png" mode='widthFix'></image> -->
   <view class="nav">
     <image src="../../images/tab_shichang_pre2.png"></image>
     <text>首页</text>
